@@ -1,0 +1,40 @@
+.infinite-carousel {
+  margin-top: 20em;
+  margin-left: 5%;
+  max-width: 100%;
+  width: 90%;
+  overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #fff 30%, #fff 70%, transparent);
+  mask: linear-gradient(90deg, transparent, #fff 30%, #fff 70%, transparent);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 10em;
+  animation: scroll 200s linear infinite;
+  width: max-content;
+}
+
+.carousel-track.paused {
+  animation-play-state: paused;
+}
+
+.carousel-track img {
+  max-width: 20em;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.carousel-track img:hover{
+    transform: scale(1.2);
+}
+
+/* Animation défilement infini */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

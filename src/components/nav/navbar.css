@@ -1,4 +1,13 @@
+@font-face {
+  font-family: 'Gill Sans';
+  src: url('../../../public/assets/fonts/Gill\ Sans.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 .navbarContainer {
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
   display: flex;
   height: 100px;
   background-color: rgb(48, 45, 45);
@@ -16,6 +25,12 @@
 .logo, .navbarSettings {
   display: flex;
   align-items: center;
+}
+
+.logo :hover{
+    transform: scale(1.2);
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
 }
 
 .navbarSettings {
@@ -44,4 +59,27 @@
 
 .navbarSettings ul a:hover {
   color: orange;
+}
+
+
+.containerList li a {
+  position: relative; /* important pour positionner ::after */
+  text-decoration: none;
+  color: inherit;
+  padding-bottom: 5px;
+}
+
+.containerList li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -95%; 
+    width: 0%;
+    height: 3px;
+    background-color: orange;
+    transition: width 0.3s ease-in-out;
+}
+
+.containerList li a:hover:after {
+    width: 100%; 
 }

@@ -1,14 +1,110 @@
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 100px);
+  padding: 0 40px;
+  background-color: black;
+  gap: 20px;
+  overflow: hidden;
+  position: relative;
+}
 
-.headerContainer{
-    display: flex;
-    height: 700px;
-    width: 100%;
-    background-color: black;
+.headerContainer {
+  position: relative; /* nécessaire pour les images en absolute */
+  overflow: hidden;
+  /* le reste de ton style */
 }
 
 
-.headerContainer img {
 
-    height: 100%;
-    width: 50%;
+.leftHeader {
+  position: absolute;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+  z-index: 2;
+}
+
+.leftHeader button {
+  max-width: 200px;
+  background-color: #FFD700;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.leftHeader button:hover {
+  background-color: #FFC107;
+}
+
+.headerContainer > img {
+  flex: 2;
+  height: 100%;
+  animation: zoomInOut 12s ease-in-out infinite;
+  z-index: 1;
+}
+
+.rightHeader {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  flex: 1;
+  max-width: 300px;
+  z-index: 2;
+}
+
+.rightHeader img {
+  width: 300px;
+  height: auto;
+}
+
+/* Animation */
+@keyframes zoomInOut {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Bouton stylisé avec variables CSS */
+.button {
+  --gold: #FFD700;
+  --gold-dark: #cc6f55;
+  cursor: pointer;
+  width: 184px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.125em;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+  background: var(--gold);
+  border: 2px solid var(--gold-dark);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 0 var(--gold-dark);
+  transform: skew(-10deg);
+  transition: all 0.1s ease;
+  filter: drop-shadow(0 15px 20px var(--gold-dark));
+}
+
+.button:active {
+  letter-spacing: 0;
+  transform: skew(-10deg) translateY(8px);
+  box-shadow: none;
 }
