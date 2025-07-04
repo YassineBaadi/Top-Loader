@@ -1,0 +1,14 @@
+
+.headerContainer{
+    display: flex;
+    height: 700px;
+    width: 100%;
+    background-color: black;
+}
+
+
+.headerContainer img {
+
+    height: 100%;
+    width: 50%;
+}

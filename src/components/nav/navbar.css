@@ -1,0 +1,47 @@
+.navbarContainer {
+  display: flex;
+  height: 100px;
+  background-color: rgb(48, 45, 45);
+  color: white;
+  font-weight: bold;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 20px;
+}
+
+.logo, .navbarItem, .navbarSettings {
+  flex: 1;
+}
+
+.logo, .navbarSettings {
+  display: flex;
+  align-items: center;
+}
+
+.navbarSettings {
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.navbarSettings ul {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbarSettings ul a {
+  cursor: pointer;
+}
+
+.navbarSettings ul a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbarSettings ul a:hover {
+  color: orange;
+}
