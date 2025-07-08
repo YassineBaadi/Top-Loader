@@ -27,9 +27,9 @@
 }
 
 body {
-  background: var(--background);
+background-color: aliceblue;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
 
 }
@@ -39,10 +39,7 @@ body {
   margin: 0em 0;
   height: 1000px;
   text-align: center;
-  background-image: url('../../public/assets/img/bgTendance.png');
-  background-size: cover;       /* ajuste l’image pour couvrir tout le conteneur */
-  background-position: center;  /* centre l’image */
-  background-repeat: no-repeat;
+
   
 }
 
@@ -58,7 +55,7 @@ h1 {
   margin-bottom: -50px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #ededed;
+  color: black;
 
 }
 
@@ -106,4 +103,55 @@ h1 {
   background-size: 50px 100%;
   background-image: linear-gradient(135deg, #f0d22d 25%, transparent 25%), linear-gradient(225deg, #f0d22d 25%, transparent 25%);
   background-position: 0 0;
+}
+
+.guideContainer {
+  position: relative;
+  /* background-image: url('../../public/assets/img/bgGuide.avif');
+   background-size: cover;      
+  background-position: center; 
+  background-repeat: no-repeat; */
+  padding: 2rem;
+  color:black
+}
+
+.guideDiv {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  font-size: 20px;
+}
+
+.textGuide{
+  background-color: rgba(0, 0, 0, 0.541);
+  color: whitesmoke;
+  border-radius: 10px;
+}
+
+.transitionLoop{
+  position: absolute;
+  top: 80%;
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+}
+
+
+.shopHomeContainer{
+    position: relative;
+  /* background-image: url('../../public/assets/img/bgShop.avif');
+   background-size: cover;       
+  background-position: center;  
+  background-repeat: no-repeat; */
+  padding: 2rem;
+  color:black
+}
+
+
+footer{
+  background-color: #f0d22d;
+  width: 100%;
+  height: 500px;
 }
