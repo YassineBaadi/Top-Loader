@@ -36,15 +36,20 @@ background-color: aliceblue;
 
 
 .tendanceContainer{
-  margin: 0em 0;
   height: 1000px;
   text-align: center;
+   background-image: url('../../public/assets/img/bgTendance.jpg');
+   background-size: cover;       /* ajuste l’image pour couvrir tout le conteneur */
+  background-position: center;  /* centre l’image */
+  background-repeat: no-repeat;
+  color: #000;
+
 
   
 }
 
 
-h1 {
+/* h1 {
   position: relative;
   top: 100px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -55,9 +60,10 @@ h1 {
   margin-bottom: -50px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: black;
+    font-weight: 800;
 
-}
+
+} */
 
 
 .startContainer {
@@ -85,73 +91,193 @@ h1 {
 
 
 
-.spikes {
-  position: relative;
-  background: #f0d22d;
-  height: 5vh;
-}
-
-.spikes::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  left: -0%;
-  top: 100%;
-  z-index: 10;
-  display: block;
-  height: 50px;
-  background-size: 50px 100%;
-  background-image: linear-gradient(135deg, #f0d22d 25%, transparent 25%), linear-gradient(225deg, #f0d22d 25%, transparent 25%);
-  background-position: 0 0;
-}
-
-.guideContainer {
-  position: relative;
-  /* background-image: url('../../public/assets/img/bgGuide.avif');
-   background-size: cover;      
-  background-position: center; 
-  background-repeat: no-repeat; */
-  padding: 2rem;
-  color:black
-}
-
-.guideDiv {
-  margin-top: 50px;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  font-size: 20px;
-}
-
-.textGuide{
-  background-color: rgba(0, 0, 0, 0.541);
-  color: whitesmoke;
-  border-radius: 10px;
-}
-
-.transitionLoop{
-  position: absolute;
-  top: 80%;
-  width: 100%;
-  height: 200px;
-  border-radius: 10px;
-}
-
-
-.shopHomeContainer{
-    position: relative;
-  /* background-image: url('../../public/assets/img/bgShop.avif');
-   background-size: cover;       
-  background-position: center;  
-  background-repeat: no-repeat; */
-  padding: 2rem;
-  color:black
-}
 
 
 footer{
-  background-color: #f0d22d;
+  background-color: #313131;
   width: 100%;
   height: 500px;
+}
+
+
+
+.homeContainer{
+
+  
+
+  /* background-image: url('../../public/assets/img/bgArticle.jpg');
+    background-size: cover;       
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed; */
+
+    
+min-height: 100vh;
+  width: 100%;
+  
+}
+
+
+.divider-main {
+    --divider-height: 34px;
+    background-color: white;
+    background-image: url("../../public/assets/img/divider.jpg");
+    background-repeat: repeat-x;
+    background-position: center center;
+    block-size: var(--divider-height);
+    inline-size: 100%;
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+
+
+.shop-section {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+}
+
+.guideSection{
+    background-image: url('../../public/assets/img/bgSectionNoir.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.shopSection{
+  background-image: url('../../public/assets/img/bgSectionGris.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.collectionSection{
+  background-image: url('../../public/assets/img/bgSectionBleu.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.catchSection{
+  background-image: url('../../public/assets/img/bgSectionOrange.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay-darken {
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.418); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.shop-content {
+  color: white;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.shop-content h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.shop-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.shop-btn {
+  background-color: #d00000;
+  color: white;
+  font-weight: bold;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.shop-btn:hover {
+  background-color: #aa0000;
+}
+
+.realShop{
+  width: 400px;
+}
+
+.shop-image-container {
+  position: relative;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.burst-background {
+ 
+  position: absolute;
+  width: 900px;
+  height: 600px;
+ 
+}
+
+.shop-image {
+  position: relative;
+  z-index: 1;
+  max-width:600px;
+  transition: transform 0.3s ease;
+}
+
+.collection-img{
+  width: 400px;
+}
+
+.shop-image:hover {
+  transform: scale(1.05);
+}
+
+.sectionHomeContainer{
+  background-image: url('../../public/assets/img/bgArticle.jpg');
+  background-size: cover;       
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+
+.containerGuidePage{
+  background-image: url("../../public/assets/img/bgArticle.jpg");
+   background-size: cover;       
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* --------------------------
+
+
+    GUIDE PAGE
+
+
+-------------------------- */
+
+
+.cardDiv {
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  text-align: center;
 }

@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="navbarSettings">
         <ul className="containerList">
           <li>
-            <Link href="/" className={isActive('/') ? 'active' : ''}>
+            <Link href="/home" className={isActive('/') ? 'active' : ''}>
               Home
             </Link>
           </li>
