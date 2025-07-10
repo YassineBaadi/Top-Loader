@@ -12,7 +12,7 @@ export default function StartPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push('/home');
-    }, 6000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [router]);

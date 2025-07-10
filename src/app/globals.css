@@ -281,3 +281,248 @@ min-height: 100vh;
   align-items: center;     
   text-align: center;
 }
+
+
+
+
+/* --------------------------
+
+
+    SHOP PAGE
+
+
+-------------------------- */
+
+
+.shopContainer{
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../../public/assets/img/bgShopPage.jpg");
+      background-size: 500px auto;
+    background-attachment: fixed;
+}
+
+
+.articleExtension{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.rocketExtension {
+  background: linear-gradient(to right, #300000, #6e0000);
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.rocketContent {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.rocketText {
+  max-width: 600px;
+  color: white;
+  padding-right: 30px;
+}
+
+.rocketLogo {
+  max-width: 100%;
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+.rocketTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.rocketDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.rocketImages {
+  position: relative;
+  width: 300px;
+  height: 400px;
+}
+
+.card {
+  position: absolute;
+  width: 200px;
+  transition: transform 0.3s ease;
+}
+
+.card1 {
+  top: 0;
+  left: -50px;
+  transform: rotate(-8deg);
+  z-index: 1;
+}
+
+.card2 {
+  top: 80px;
+  left: 80px;
+  transform: rotate(5deg);
+  z-index: 2;
+}
+
+.rocketLogo1{
+  width: 500px;
+}
+
+
+.shopCards{
+  
+    background: linear-gradient(to right, #f38020, #e9e638);
+  height: auto;
+  width: 100vw;
+}
+
+.filtreContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.filterBar {
+  width: 75%;
+  background-color: #6e0000;
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+.filterBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #6e0000;
+  border: 1px solid #400;
+  padding: 5px 0;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  border-radius: 6px;
+}
+
+.dropdownContent button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+.searchContainer {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.searchContainer input {
+  border: none;
+  outline: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: black;
+  padding-left: 8px;
+}
+
+
+
+.pokemonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+  width: 75%;
+}
+
+.pokemonCard {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+.pokemonCard:hover {
+  transform: scale(1.03);
+}
+
+.pokemonCard img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.pokemonCard h3 {
+  margin: 10px 0 5px;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.types span {
+  display: inline-block;
+  background-color: #eee;
+  color: #333;
+  border-radius: 12px;
+  padding: 4px 8px;
+  margin: 2px;
+  font-size: 0.8rem;
+}
+
+
+.pokemonGridContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -41,15 +41,19 @@
     border-bottom-left-radius: 10px;
     justify-content: left; 
    
-  text-align: left;
+  text-align: center;
+}
+.pokemon-name {
+  display: inline-block;
+  font-size: 19px;
+  font-weight: lighter;
+  padding: 10px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.pokemon-name{
-    text-align: center;
-    font-size: 19px;
-    font-weight: lighter;
-    padding: 10px;
-}
+
 
 .pokemon-type{
     background-color: black;
@@ -74,10 +78,96 @@
     letter-spacing: 1px;
 }
 
-.rarity{
-    display: flex;
-  justify-content: center; 
-  align-items: center;     
+.card-with-guide-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.guide-toggle-btn {
+    margin-top: 30%;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  font-size: 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.highlight {
+  outline: 2px dashed #ff9800;
+  outline-offset: 4px;
+  cursor: pointer;
+  transition: outline 0.3s ease;
+}
+
+.pokemon-name {
+  display: inline-block;
+  font-size: 19px;
+  font-weight: lighter;
+  padding: 10px;
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pokemon-type {
+  background-color: black;
+  padding: 7px;
+  color: white;
+  border-radius: 5px;
+  width: 100px;
+  display: block;
+  text-align: center;
+  position: relative;
+  top: -75px;
+}
+
+.rarity {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 5px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.zoom-container {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 15px solid #333;
+  margin-right: 10px;
+}
+
+.zoom-box {
+  position: relative;
+  background-color: white;
+  padding: 15px 20px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 220px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
 }
