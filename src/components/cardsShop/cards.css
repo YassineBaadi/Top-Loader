@@ -5,7 +5,7 @@
 }
 
 .pokemon-card-container {
-  width: 240px; /* Réduit depuis 350px */
+  width: 290px; 
   margin: 20px auto;
   padding: 10px;
   border-radius: 10px;
@@ -25,7 +25,7 @@
 }
 
 .image {
-  width: 150px; /* Réduit depuis 200px */
+  width: 150px;
   height: 150px;
 }
 
@@ -38,11 +38,13 @@
 }
 
 .pokemon-name {
-  text-align: center;
-  font-size: 16px; /* Réduit depuis 19px */
-  font-weight: lighter;
-  padding: 6px;
+  font-size: 30px;
+  font-weight: 500;
+  padding: 4px 0;
+  margin-bottom: 6px; 
+  
 }
+
 
 .pokemon-type {
   background-color: black;
@@ -65,7 +67,7 @@
 
 .pokemon-stats > p {
   letter-spacing: 1px;
-  font-size: 12px;
+  font-size: 15px;
   margin: 2px 0;
 }
 
@@ -75,4 +77,284 @@
   align-items: center;
   text-align: center;
   padding: 5px;
+}
+
+.typesContainer {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  height: 2px; 
+  margin: 4px 0;
+  flex-wrap: wrap;
+  position: relative;
+  top: 30px;
+}
+
+.card-wrapper {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.card-footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.card-price {
+  font-weight: bold;
+  font-size: 16px;
+  background-color: whitesmoke;
+  border: #000000 solid;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.details-button {
+  padding: 6px 12px;
+  font-size: 20px;
+  background-color: #6e0000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.details-button:hover {
+  background-color: #500000;
+}
+
+
+/* FEU */
+.type-feu .background {
+  background: linear-gradient(to right, #ff6a00, #ff8c42);
+}
+.type-feu .content {
+  background: linear-gradient(to right, #ffd6b0, #fff0e0);
+}
+
+.type-feu {
+  background: linear-gradient(to right, #d46718ce, #ff8c42);
+}
+
+/* EAU */
+.type-eau .background {
+  background: linear-gradient(to right, #0093e9, #80d0c7);
+}
+.type-eau .content {
+  background: linear-gradient(to right, #e0f7ff, #cceeff);
+}
+
+/* PLANTE */
+.type-plante .background  {
+  background: linear-gradient(to right, #56ab2f, #a8e063);
+}
+.type-plante .content {
+  background: linear-gradient(to right, #e9f9dc, #d0f0b0);
+}
+
+
+/* ÉLECTRIK */
+
+
+.type-électrik .background {
+  background: linear-gradient(to right, #fceabb, #f8b500);
+}
+.type-électrik .content {
+  background: linear-gradient(to right, #fff8dc, #fff2a8);
+}
+
+/* PSY */
+.type-psy .background {
+  background: linear-gradient(to right, #a044ff, #6a3093);
+}
+.type-psy .content {
+  background: linear-gradient(to right, #f3e6ff, #e0ccff);
+}
+
+/* TÉNÈBRES */
+.type-ténèbres .background {
+  background: linear-gradient(to right, #1f1f1f, #000000);
+}
+.type-ténèbres .content {
+  color: white;
+  background: linear-gradient(to right, #333333, #1a1a1a);
+}
+
+/* DRAGON */
+.type-dragon .background {
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+}
+.type-dragon .content {
+  background: linear-gradient(to right, #e6f0ff, #ccdfff);
+}
+
+/* FÉE */
+.type-fée .background {
+  background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+}
+.type-fée .content {
+  background: linear-gradient(to right, #fff0f6, #ffe3f3);
+}
+
+/* COMBAT */
+.type-combat .background {
+  background: linear-gradient(to right, #b30000, #ff4d4d);
+}
+.type-combat .content {
+  background: linear-gradient(to right, #ffdada, #ffeaea);
+}
+
+/* ROCHE */
+.type-roche .background {
+  background: linear-gradient(to right, #a98f44, #c9b873);
+}
+.type-roche .content {
+  background: linear-gradient(to right, #f5f1dc, #eae0b6);
+}
+
+/* SOL */
+.type-sol .background {
+  background: linear-gradient(to right, #e2b07e, #c97d45);
+}
+.type-sol .content {
+  background: linear-gradient(to right, #fff1dc, #ffe4c2);
+}
+
+/* VOL */
+.type-vol .background {
+  background: linear-gradient(to right, #89f7fe, #66a6ff);
+}
+.type-vol .content {
+  background: linear-gradient(to right, #e6f5ff, #cce0ff);
+}
+
+/* POISON */
+.type-poison .background {
+  background: linear-gradient(to right, #9d50bb, #6e48aa);
+}
+.type-poison .content {
+  background: linear-gradient(to right, #f1e6f7, #decff2);
+}
+
+/* SPECTRE */
+.type-spectre .background {
+  background: linear-gradient(to right, #4e4376, #2b5876);
+}
+.type-spectre .content {
+  background: linear-gradient(to right, #e4e0f5, #c6c3dd);
+}
+
+/* INSECTE */
+.type-insecte .background {
+  background: linear-gradient(to right, #a8c66c, #7bc043);
+}
+.type-insecte .content {
+  background: linear-gradient(to right, #f3fce3, #e3f9c5);
+}
+
+/* GLACE */
+.type-glace .background {
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+}
+.type-glace .content {
+  background: linear-gradient(to right, #e0f9ff, #d6f0ff);
+}
+
+/* ACIER */
+.type-acier .background {
+  background: linear-gradient(to right, #b0bec5, #90a4ae);
+}
+.type-acier .content {
+  background: linear-gradient(to right, #f0f3f5, #dce3e7);
+}
+
+/* NORMAL */
+.type-normal .background {
+  background: linear-gradient(to right, #dddddd, #eeeeee);
+}
+.type-normal .content {
+  background: linear-gradient(to right, #fefefe, #f8f8f8);
+}
+
+
+/* EAU */
+.type-eau {
+  background: linear-gradient(to right, #0074a2, #3fa9bd);
+}
+
+/* PLANTE */
+.type-plante {
+  background: linear-gradient(to right, #3e8022, #76b852);
+}
+
+/* PSY */
+.type-psy {
+  background: linear-gradient(to right, #7a1bb5, #512f91);
+}
+
+/* TÉNÈBRES */
+.type-ténèbres {
+  background: linear-gradient(to right, #111, #2c2c2c);
+}
+
+/* DRAGON */
+.type-dragon {
+  background: linear-gradient(to right, #12284c, #1d3f6e);
+}
+
+/* FÉE */
+.type-fée {
+  background: linear-gradient(to right, #e8a1d3, #caa7f0);
+}
+
+/* COMBAT */
+.type-combat {
+  background: linear-gradient(to right, #800000, #cc3333);
+}
+
+/* ROCHE */
+.type-roche {
+  background: linear-gradient(to right, #8a7539, #bfa968);
+}
+
+/* SOL */
+.type-sol {
+  background: linear-gradient(to right, #b36b00, #d8a35d);
+}
+
+/* VOL */
+.type-vol {
+  background: linear-gradient(to right, #6699ff, #3d79c2);
+}
+
+/* POISON */
+.type-poison {
+  background: linear-gradient(to right, #7b3f8b, #5a3370);
+}
+
+/* SPECTRE */
+.type-spectre {
+  background: linear-gradient(to right, #3b3261, #1c1b3a);
+}
+
+/* INSECTE */
+.type-insecte {
+  background: linear-gradient(to right, #5e8632, #91c446);
+}
+
+/* GLACE */
+.type-glace {
+  background: linear-gradient(to right, #4ba3c7, #7fcde3);
+}
+
+/* ACIER */
+.type-acier {
+  background: linear-gradient(to right, #7d8a94, #5c6b73);
+}
+
+/* NORMAL */
+.type-normal {
+  background: linear-gradient(to right, #bdbdbd, #dcdcdc);
 }

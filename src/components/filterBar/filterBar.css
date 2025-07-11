@@ -1,0 +1,91 @@
+.filtreContainer{
+display: flex;
+flex-direction: column;
+align-items: center;
+
+}
+
+
+.filterBar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 75%;
+  background-color: #6e0000;
+  padding: 10px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  flex-wrap: wrap; 
+  color: white;
+  font-family: 'Arial', sans-serif;
+  margin-top: 100px; /* ✅ Supprimé */
+}
+
+
+.filterBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #6e0000;
+  border: 1px solid #400;
+  padding: 5px 0;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  border-radius: 6px;
+}
+
+.dropdownContent button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+.searchContainer {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 999px;
+  padding: 4px 8px;
+}
+
+.searchContainer input {
+  color: #000;
+  border: none;
+  outline: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: black;
+  padding-left: 8px;
+}

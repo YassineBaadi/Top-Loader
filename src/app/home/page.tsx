@@ -1,4 +1,5 @@
-// ...importations existantes
+"use client";
+
 import Image from "next/image";
 import Navbar from "@/src/components/nav/Navbar";
 import Header from "@/src/components/header/Header";
@@ -9,8 +10,22 @@ import imgShop from '@/public/assets/img/imgShopHome.png'
 import imgAttrapez from '@/public/assets/img/pokeball.png'
 import TransitionLoop from '@/public/assets/img/loopPokeball.gif';
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchPokemons } from "@/src/redux/pokemonSlice";
+import { AppDispatch } from "@/src/store/index"
+
+
+
 
 export default function Home() {
+
+  const dispatch = useDispatch<AppDispatch>()
+
+  useEffect(() => {
+    dispatch(fetchPokemons())
+  }, [dispatch])
+
   return (
     <div className="homeContainer">
       <Header />

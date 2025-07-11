@@ -1,155 +1,101 @@
 "use client"
-import { useState, useRef, useEffect } from 'react'
-import './card.css'
-import Pikachu from '@/public/assets/img/pikachuTest.png'
+import './cards.css'
+import Link from 'next/link'
 
-type ZoomData = {
-  title: string
-  description: string
-  coords: { top: number; left: number }
+type CardProps = {
+  id: number
+  name: string
+  image: string
+  types: string[]
+  rarity: number
+  hp: number
+  attack: number
+  defense: number
 }
 
-export default function Card(): JSX.Element {
-  const [zoom, setZoom] = useState<ZoomData | null>(null)
-  const [guideMode, setGuideMode] = useState<boolean>(false)
+function getPrice(name: string, rarity: number): number {
+  const special = ["Darkrai", "Ectoplasma"]
+  if (special.includes(name)) return 100000
 
-  const nameRef = useRef<HTMLHeadingElement>(null)
-  const typeRef = useRef<HTMLSpanElement>(null)
-  const rarityRef = useRef<HTMLDivElement>(null)
-  const zoomBoxRef = useRef<HTMLDivElement>(null)
-
-  const showZoom = (
-    ref: React.RefObject<HTMLElement>,
-    title: string,
-    description: string
-  ) => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect()
-      const padding = 10
-
-      setZoom({
-        title,
-        description,
-        coords: {
-          top: rect.top + window.scrollY + rect.height / 2 - 50,
-          left: rect.left + window.scrollX + rect.width + padding,
-        },
-      })
-    }
+  switch (rarity) {
+    case 1: return 2
+    case 2: return 10
+    case 3: return 50
+    case 4: return 500
+    case 5: return 2000
+    default: return 0
   }
+}
 
-  const closeZoom = (): void => setZoom(null)
+const typePriority: Record<string, number> = {
+  plante: 15,
+  feu: 15,
+  eau: 15,
+  électrique: 15,
+  insecte: 10,
+  normal: 8,
+  sol: 15,
+  roche: 15,
+  fée: 10,
+  combat: 10,
+  spectre: 15,
+  ténèbres: 15,
+  psy: 15,
+  vol: 10,
+  glace: 15,
+  acier: 12,
+}
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent): void => {
-      if (
-        zoomBoxRef.current &&
-        !zoomBoxRef.current.contains(e.target as Node)
-      ) {
-        closeZoom()
-      }
-    }
+export default function Cards({ id, name, image, types, rarity, hp, attack, defense }: CardProps) {
+  const dominantType = [...types]
+    .map(t => t.toLowerCase())
+    .sort((a, b) => (typePriority[b] || 0) - (typePriority[a] || 0))[0]
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  const sortedTypes = [...types].sort(
+    (a, b) => (typePriority[b.toLowerCase()] || 0) - (typePriority[a.toLowerCase()] || 0)
+  )
+
+  const price = getPrice(name, rarity)
 
   return (
-    <div className="card-with-guide-button">
-      <button
-        onClick={() => setGuideMode(!guideMode)}
-        className="guide-toggle-btn"
-      >
-        {guideMode ? 'Quitter le mode guide' : 'Mode guide'}
-      </button>
-
-      <div className="pokemon-card-container">
+    <div className="card-wrapper">
+      {/* CARTE VISUELLE */}
+      <div className={`pokemon-card-container type-${dominantType}`}>
         <div className="pokemon-card">
           <div className="background">
-            <img src={Pikachu.src} alt="Pikachu" className="image" />
+            <img src={image} alt={name} className="image" />
           </div>
-
           <div className="content">
-            <h1
-              className={`pokemon-name ${guideMode ? 'highlight' : ''}`}
-              onClick={
-                guideMode
-                  ? () =>
-                      showZoom(
-                        nameRef,
-                        'Pikachu',
-                        'Nom du Pokémon, utilisé pour l’identification.'
-                      )
-                  : undefined
-              }
-              ref={nameRef}
-            >
-              Pikachu
-            </h1>
-
-            <span
-              className={`pokemon-type ${guideMode ? 'highlight' : ''}`}
-              onClick={
-                guideMode
-                  ? () =>
-                      showZoom(
-                        typeRef,
-                        'Type : Électrique ⚡',
-                        'Le type détermine les forces et faiblesses du Pokémon.'
-                      )
-                  : undefined
-              }
-              ref={typeRef}
-            >
-              Electric
-            </span>
-
+            <div className="typesContainer">
+              {sortedTypes.map((type) => (
+                <span className="pokemon-type" key={type}>
+                  {type}
+                </span>
+              ))}
+            </div>
+            <h1 className="pokemon-name">{name}</h1>
             <div className="pokemon-stats">
-              <p>Power : 75</p>
-              <p>Power : 75</p>
+              <p>Vie : {hp}</p>
+              <p>Attaque : {attack}</p>
+              <p>Défense : {defense}</p>
             </div>
-
-            <div
-              className={`rarity ${guideMode ? 'highlight' : ''}`}
-              onClick={
-                guideMode
-                  ? () =>
-                      showZoom(
-                        rarityRef,
-                        'Rareté ⭐',
-                        'Plus il y a d’étoiles, plus la carte est rare.'
-                      )
-                  : undefined
-              }
-              ref={rarityRef}
-            >
-              <span>⭐</span>
+            <div className="rarity">
+              {Array.from({ length: rarity }, (_, i) => (
+                <span key={i}>⭐</span>
+              ))}
             </div>
-
             <h1 className="pokemon-logo">Pokémon cards</h1>
           </div>
         </div>
       </div>
 
-      {zoom && (
-        <div
-          className="zoom-container"
-          style={{
-            top: zoom.coords.top,
-            left: zoom.coords.left,
-          }}
-          ref={zoomBoxRef}
-        >
-          <div className="arrow"></div>
-          <div className="zoom-box">
-            <button className="close-btn" onClick={closeZoom}>
-              ✕
-            </button>
-            <h2>{zoom.title}</h2>
-            <p>{zoom.description}</p>
-          </div>
-        </div>
-      )}
+      {/* FOOTER */}
+      <div className="card-footer">
+        <span className="card-price">{price.toLocaleString()} €</span>
+        <Link href={`/carte/${id}`}>
+          <button className="details-button">Détails</button>
+        </Link>
+      </div>
     </div>
   )
 }
