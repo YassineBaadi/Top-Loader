@@ -1,0 +1,132 @@
+.cardDetailContainer {
+   background-image: url("../../../../public/assets/img/bgShopPage.jpg");
+      background-size: 500px auto;
+    background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.mainCardSection {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  margin-top: 200px;
+}
+
+.mainCardImage {
+  width: 500px;
+  height: auto;
+  border-radius: 8px;
+  background-color: rgba(206, 33, 33, 0.521);
+  box-shadow: 0 4px 12px rgb(255, 2, 2);
+}
+
+.cardDescription {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 500px;
+  color: #000;
+  font-size: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.836);
+  
+}
+
+.relatedCardsSection {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.relatedCardsGrid {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+
+h3{
+    font-size: 50px;
+}
+
+
+h4{
+    font-size: 30px;
+}
+
+.evolutionRow {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.evolutionBlock {
+  text-align: center;
+}
+
+.type-table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  font-size: 1.1rem;
+  border: 1px solid #ccc;
+}
+
+.type-table th,
+.type-table td {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+}
+
+.strengths-weaknesses {
+  margin-top: 2rem;
+}
+
+
+.add-to-cart-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #fb4831;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+  background-color: #e10000;
+}
+
+.cardImageBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.loadingPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 150px;
+  min-height: 80vh;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.loadingGif {
+  width: 120px;
+  margin-bottom: 1rem;
+}

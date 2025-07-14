@@ -14,9 +14,16 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchPokemons } from "@/src/redux/pokemonSlice"
 import { RootState, AppDispatch } from "@/src/store/index"
 import FilterBar from "@/src/components/filterBar/FIlterBar"
+import { addBoosterToCollection, addCardsToCollection } from "@/src/redux/collectionSlice"
+import { generateBooster } from "@/src/lib/helpers"
+
+
 
 export default function Shop() {
   const dispatch = useDispatch<AppDispatch>()
+  const pokemons = useSelector((state: RootState) => state.pokemons.data)
+
+  
   const { data: originalPokemons, loading: isLoading } = useSelector((state: RootState) => state.pokemons)
 
   const [filteredPokemons, setFilteredPokemons] = useState(originalPokemons)
@@ -26,6 +33,8 @@ export default function Shop() {
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState<"asc" | "desc" | null>(null)
   const [selectedRarity, setSelectedRarity] = useState<number | null>(null)
+
+  
 
   useEffect(() => {
     dispatch(fetchPokemons())
@@ -73,6 +82,8 @@ export default function Shop() {
           <div className="rocketContent">
             <div className="rocketText">
               <img src={logoEtincelles.src} alt="Logo Étincelles" className="rocketLogo" />
+              
+
               <h2 className="rocketTitle">
                 Parcourez <em>les cartes</em> de l’extension<br />
                 <strong>Écarlate et Violet – Étincelles Déferlantes</strong><br />
@@ -88,7 +99,22 @@ export default function Shop() {
             <div className="rocketImages">
               <img src={card1.src} alt="Carte Pikachu" className="card card1" />
               <img src={card2.src} alt="Carte Noadkoko" className="card card2" />
+              
+
             </div>
+            <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                <button
+                  className="addBoosterBtn"
+                  onClick={() => {
+                    if (pokemons.length === 0) return alert("Aucun Pokémon disponible.")
+                    const booster = generateBooster(pokemons)
+                    dispatch(addBoosterToCollection(booster))
+                    alert("🎁 Booster ajouté à votre collection !")
+                  }}
+                >
+                  📦 Ajouter ce booster à ma collection
+                </button>
+              </div>
           </div>
         </div>
 
@@ -129,7 +155,7 @@ export default function Shop() {
           sort={sort}
           setSort={setSort}
           originalPokemons={originalPokemons}
-          setPokemons={() => {}} // <- non utilisé ici
+          setPokemons={() => {}} 
           selectedRarity={selectedRarity}
           setSelectedRarity={setSelectedRarity}
         />
@@ -153,9 +179,9 @@ export default function Shop() {
                   types={pokemon.apiTypes.map((t) => t.name)}
                   rarity={pokemon.rarity}
                   id={pokemon.id}
-                  hp={pokemon.hp}
-                  attack={pokemon.attack}
-                  defense={pokemon.defense}
+                  hp={pokemon.stats.HP}
+                  attack={pokemon.stats.attack}
+                  defense={pokemon.stats.defense}
                 />
               ))}
             </div>

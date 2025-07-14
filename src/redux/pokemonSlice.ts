@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { getAllPokemons } from "@/src/lib/api"
+import { generateRarity } from "@/src/components/cardsShop/Cards"
 
 type Pokemon = {
   id: number
@@ -24,10 +25,26 @@ const initialState: State = {
   error: null
 }
 
-export const fetchPokemons = createAsyncThunk("pokemons/fetch", async () => {
-  const response = await getAllPokemons()
-  return response
-})
+export const fetchPokemons = createAsyncThunk(
+  "pokemons/fetchPokemons",
+  async () => {
+    const response = await fetch("https://pokebuildapi.fr/api/v1/pokemon")
+    const data = await response.json()
+
+    const enriched = data.map((p) => ({
+      ...p,
+      rarity: generateRarity(p),
+    }))
+
+    return enriched
+  }
+)
+
+type CollectionState = {
+  cards: Pokemon[]
+  boosters: Pokemon[][]
+}
+
 
 const pokemonSlice = createSlice({
   name: "pokemons",
@@ -47,7 +64,9 @@ const pokemonSlice = createSlice({
         state.loading = false
         state.error = action.error.message || "Erreur"
       })
-  }
+      
+  },
+  
 })
 
 export default pokemonSlice.reducer

@@ -1,0 +1,18 @@
+.boosterGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.generateBoosterBtn {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: gold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 2rem auto;
+  display: block;
+}
