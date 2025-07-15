@@ -11,12 +11,30 @@ import bgDetail from '@/public/assets/img/bgDetail.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import LoadingPlaceholder from "./loading"
+import { addToCart } from "@/src/redux/cartSlice"
+import { useState } from "react"
+import Modal from "../../../components/modal/Modal"
+import LoginForm from "../../../features/auth/LoginForm"
+
+
 
 export default function CardDetail() {
   const { id } = useParams()
   const dispatch = useDispatch()
 
   const { data: pokemons, loading } = useSelector((state) => state.pokemons)
+
+  const [showLoginModal, setShowLoginModal] = useState(false)
+
+const handleAddToCart = () => {
+  const user = JSON.parse(localStorage.getItem("currentUser"))
+  if (!user) {
+    setShowLoginModal(true)
+    return
+  }
+  dispatch(addToCart({ type: "card", data: pokemon }))
+}
+
 
   useEffect(() => {
     if (pokemons.length === 0) {
@@ -53,6 +71,8 @@ export default function CardDetail() {
   const price = getPrice(pokemon.name, pokemon.rarity)
 
   return (
+
+    <>
     <div className="cardDetailContainer">
       <HeaderPage title="QUI EST CE POKEMON ?" backgroundImage={bgDetail.src} />
       <div className="divider-main"></div>
@@ -60,7 +80,14 @@ export default function CardDetail() {
       <div className="mainCardSection">
         <div className="cardImageBlock">
           <img className="mainCardImage" src={pokemon.image} alt={pokemon.name} />
-          <button className="add-to-cart-button">Ajouter au panier</button>
+          <button
+  className="add-to-cart-button"
+  onClick={handleAddToCart}
+>
+  Ajouter au panier
+</button>
+
+
         </div>
 
         <div className="cardDescription">
@@ -70,7 +97,9 @@ export default function CardDetail() {
           <p>HP : {pokemon.stats.HP}</p>
           <p>Attaque : {pokemon.stats.attack}</p>
           <p>Défense : {pokemon.stats.defense}</p>
-          <p>Rareté : {pokemon.rarity}</p>
+          <p>Rareté : {Array.from({ length: pokemon.rarity }, (_, i) => (
+    <span key={i}>⭐</span>
+  ))}</p>
           <p>Prix : {price.toLocaleString()}€</p>
 
           <div className="strengths-weaknesses">
@@ -138,5 +167,10 @@ export default function CardDetail() {
         </div>
       </div>
     </div>
+    
+    <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
+  <LoginForm />
+</Modal>
+</>
   )
 }

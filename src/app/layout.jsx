@@ -7,6 +7,7 @@ import { Provider } from "react-redux"
 import { store } from "../store/index"
 import Navbar from "../components/nav/Navbar"
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,8 +31,11 @@ export default function RootLayout({ children }) {
 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Provider store={store}>
-          <Navbar />
-          {children}
+          
+           
+            <Navbar />
+        {children}
+      
         </Provider>
       </body>
     </html>

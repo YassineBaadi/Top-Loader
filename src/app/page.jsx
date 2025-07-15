@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import logo from '@/public/assets/img/logo.png'
 
+
 export default function StartPage() {
   const router = useRouter()
 

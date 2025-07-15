@@ -15,6 +15,13 @@ import { fetchPokemons } from "@/src/redux/pokemonSlice"
 import FilterBar from "@/src/components/filterBar/FIlterBar"
 import { addBoosterToCollection } from "@/src/redux/collectionSlice"
 import { generateBooster } from "@/src/lib/helpers"
+import { generateRarity } from "@/src/components/cardsShop/Cards"
+import { addToCart } from "@/src/redux/cartSlice"
+
+import Modal from "../../components/modal/Modal"
+import LoginForm from "../../features/auth/LoginForm"
+
+
 
 export default function Shop() {
   const dispatch = useDispatch()
@@ -29,6 +36,26 @@ export default function Shop() {
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState(null)
   const [selectedRarity, setSelectedRarity] = useState(null)
+
+  const [showLoginModal, setShowLoginModal] = useState(false)
+
+const handleAddBooster = () => {
+  const user = JSON.parse(localStorage.getItem("currentUser"))
+  if (!user) {
+    setShowLoginModal(true)
+    return
+  }
+
+  if (pokemons.length === 0) {
+    alert("Aucun Pokémon disponible.")
+    return
+  }
+
+  const booster = generateBooster(pokemons)
+  dispatch(addToCart({ type: "booster", data: booster }))
+  alert("📦 Booster ajouté au panier !")
+}
+
 
   useEffect(() => {
     dispatch(fetchPokemons())
@@ -67,6 +94,8 @@ export default function Shop() {
   }, [originalPokemons, selectedType, selectedGeneration, search, sort, selectedRarity])
 
   return (
+
+    <>
     <div className="shopContainer">
       <HeaderPage title="BOUTIQUE" backgroundImage={shopBg.src} />
       <div className="divider-main"></div>
@@ -94,15 +123,11 @@ export default function Shop() {
             <div style={{ textAlign: "center", marginTop: "1rem" }}>
               <button
                 className="addBoosterBtn"
-                onClick={() => {
-                  if (pokemons.length === 0) return alert("Aucun Pokémon disponible.")
-                  const booster = generateBooster(pokemons)
-                  dispatch(addBoosterToCollection(booster))
-                  alert("🎁 Booster ajouté à votre collection !")
-                }}
+                onClick={handleAddBooster}
               >
-                📦 Ajouter ce booster à ma collection
+                📦 Ajouter ce booster au panier
               </button>
+
             </div>
           </div>
         </div>
@@ -159,23 +184,35 @@ export default function Shop() {
             </div>
           ) : (
             <div className="pokemonGrid">
-              {filteredPokemons.map((pokemon) => (
-                <Card
-                  key={pokemon.id}
-                  name={pokemon.name}
-                  image={pokemon.image}
-                  types={pokemon.apiTypes.map((t) => t.name)}
-                  rarity={pokemon.rarity}
-                  id={pokemon.id}
-                  hp={pokemon.stats.HP}
-                  attack={pokemon.stats.attack}
-                  defense={pokemon.stats.defense}
-                />
-              ))}
+              {filteredPokemons.map((pokemon) => {
+  const rarity = generateRarity(pokemon)
+
+  return (
+    <Card
+      key={pokemon.id}
+      name={pokemon.name}
+      image={pokemon.image}
+      types={pokemon.apiTypes.map((t) => t.name)}
+      rarity={rarity} // ← maintenant bien défini
+      id={pokemon.id}
+      hp={pokemon.stats.HP}
+      attack={pokemon.stats.attack}
+      defense={pokemon.stats.defense}
+    />
+  )
+})}
+
             </div>
           )}
         </section>
       </section>
     </div>
+
+    <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
+  <LoginForm />
+</Modal>
+
+</>
+
   )
 }

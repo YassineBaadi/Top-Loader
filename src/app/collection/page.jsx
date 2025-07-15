@@ -9,6 +9,7 @@ import Card from "@/src/components/cardsShop/Cards"
 import FilterBar from "@/src/components/filterBar/FIlterBar"
 import Link from "next/link"
 import shopBg from "@/public/assets/img/bgHeaderShop.png"
+import boosterImg from "@/public/assets/img/boosterRocket.png"
 
 export default function CollectionPage() {
   const purchasedCards = useSelector(state => state.collection.cards)
@@ -28,7 +29,6 @@ export default function CollectionPage() {
         router.push("/login")
       }
     }, [])
-
 
   // Appliquer les filtres à la collection
   useEffect(() => {
@@ -92,10 +92,16 @@ export default function CollectionPage() {
               Aucun booster acheté pour le moment.
             </p>
           ) : (
-            purchasedBoosters.map((_, index) => (
-              <div key={index} className="pokemonCard">
-                <p>Booster #{index + 1}</p>
-                <Link href={`/boosterPage/${index}`}>
+            purchasedBoosters.map((booster, boosterIndex) => (
+              <div key={boosterIndex} className="pokemonCard">
+                <p>Booster #{boosterIndex + 1}</p>
+                <img
+                  src={booster.image || "/assets/img/boosterRocket.png"}
+                  alt="Booster"
+                  style={{ width: "100%", objectFit: "contain" }}
+                />
+                <p>({booster.length} cartes)</p>
+                <Link href={`/boosterPage/${boosterIndex}`}>
                   <button>🎴 Ouvrir ce booster</button>
                 </Link>
               </div>

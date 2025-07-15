@@ -1,0 +1,42 @@
+.catch-container {
+  text-align: center;
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.avatar img {
+  width: 100px;
+  border-radius: 50%;
+  margin: 1rem 0;
+}
+
+.pokemon {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  width: 20%;
+}
+.pokemon:hover {
+  transform: scale(1.05);
+}
+
+.pokemon img {
+  width: 180px;
+  height: auto;
+}
+
+.message {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.to-collection {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}

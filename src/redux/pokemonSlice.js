@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { fetchAllPokemon } from "@/src/lib/api"
+import { generateRarity, getPrice } from "@/src/components/cardsShop/Cards"
+
 
 export const fetchPokemons = createAsyncThunk("pokemons/fetch", async () => {
   const data = await fetchAllPokemon()
@@ -22,7 +24,12 @@ const pokemonSlice = createSlice({
       })
       .addCase(fetchPokemons.fulfilled, (state, action) => {
         state.loading = false
-        state.data = action.payload
+        state.data = action.payload.map((pokemon) => {
+        const rarity = generateRarity(pokemon)
+        const price = getPrice(pokemon.name, rarity)
+        return { ...pokemon, rarity, price }
+      })
+
       })
       .addCase(fetchPokemons.rejected, (state, action) => {
         state.loading = false

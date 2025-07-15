@@ -1,0 +1,83 @@
+.paiement-page {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+.paiement-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.recap-liste {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recap-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.recap-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.recap-info {
+  flex: 1;
+}
+
+.total-section {
+  margin-top: 20px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.payment-method {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-method select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.validate-btn {
+  margin-top: 24px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.validate-btn:hover {
+  background-color: #3c9742;
+}
+
+.success-msg {
+  margin-top: 20px;
+  color: #2e7d32;
+  font-weight: bold;
+}

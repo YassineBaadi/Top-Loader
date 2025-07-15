@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { fetchPokemons } from "@/src/redux/pokemonSlice"
 
+
 export default function Home() {
   const dispatch = useDispatch()
 

@@ -10,10 +10,17 @@ import { useState, useEffect, useRef } from 'react'
 import Modal from '../modal/Modal'
 import LoginForm from '../../features/auth/LoginForm'
 import RegisterForm from '../../features/auth/RegisterForm'
+import CartDrawer from "../../components/cartDrawer/CartDrawer"
+import { useSelector } from "react-redux"
+import { selectCartCount } from "@/src/redux/cartSlice"
+
+
 
 export default function Navbar() {
   const pathname = usePathname()
   const isActive = (path) => pathname === path
+  const [showCart, setShowCart] = useState(false)
+
 
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showRegisterModal, setShowRegisterModal] = useState(false)
@@ -37,7 +44,22 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+
+  const [userEmail, setUserEmail] = useState(null)
+
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+    if (user) setUserEmail(user.email)
+  }
+}, [])
+
+const cartCount = useSelector((state) => selectCartCount(state, userEmail))
+
+
   return (
+
+    <>
     <div className="navbarContainer">
       <div className="logo">
         <img src={Logo.src} alt="Logo" style={{ width: 200, height: 180 }} />
@@ -55,7 +77,7 @@ export default function Navbar() {
             <Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link>
           </li>
           <li>
-            <Link href="/attrapez-les-tous" className={isActive('/attrapez-les-tous') ? 'active' : ''}>
+            <Link href="/catchGame" className={isActive('/catchGame') ? 'active' : ''}>
               Attrapez les tous
             </Link>
           </li>
@@ -147,14 +169,30 @@ export default function Navbar() {
             <RegisterForm />
           </Modal>
 
-          <li>
-            <Link href="/cart"><FontAwesomeIcon icon={faCartShopping} /></Link>
-          </li>
+          <li style={{ position: "relative" }}>
+  <button
+    onClick={() => setShowCart(true)}
+    style={{ background: "transparent", border: "none", color: "white", cursor: "pointer", position: "relative" }}
+  >
+    <FontAwesomeIcon icon={faCartShopping} />
+    {cartCount > 0 && (
+      <span className="cart-badge">{cartCount}</span>
+    )}
+  </button>
+</li>
+
+
           <li>
             <Link href="/settings"><FontAwesomeIcon icon={faGear} /></Link>
           </li>
         </ul>
       </div>
     </div>
+
+    
+    <CartDrawer isOpen={showCart} onClose={() => setShowCart(false)} />
+
+    </>
+    
   )
 }
