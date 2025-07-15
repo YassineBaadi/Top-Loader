@@ -1,6 +1,6 @@
 import './cards.css'
 
-export  function generateRarity(pokemon: Pokemon): number {
+export function generateRarity(pokemon) {
   const legendaryPokemons = [
     "Mewtwo", "Mew", "Lugia", "Ho-Oh", "Rayquaza", "Dialga", "Palkia", "Giratina",
     "Reshiram", "Zekrom", "Kyurem", "Xerneas", "Yveltal", "Zygarde",
@@ -12,26 +12,14 @@ export  function generateRarity(pokemon: Pokemon): number {
   const isGen1 = pokemon.apiGeneration === 1
   const startsWithYorB = pokemon.name.startsWith("Y") || pokemon.name.startsWith("B")
 
-  if (isLegendary) return 5         
-  if (startsWithYorB) return 4       
-  if (isGen1) return 3               
-  if (isGhost) return 2              
-  return 1                           
+  if (isLegendary) return 5
+  if (startsWithYorB) return 4
+  if (isGen1) return 3
+  if (isGhost) return 2
+  return 1
 }
 
-
-type CardProps = {
-  id: number
-  name: string
-  image: string
-  types: string[]
-  rarity: number
-  hp: number
-  attack: number
-  defense: number
-  onImageClick?: () => void // ✅ ajout
-}
-export function getPrice(name: string, rarity: number): number {
+export function getPrice(name, rarity) {
   const special = ["Darkrai", "Ectoplasma"]
   if (special.includes(name)) return 100000
 
@@ -45,7 +33,7 @@ export function getPrice(name: string, rarity: number): number {
   }
 }
 
-const typePriority: Record<string, number> = {
+const typePriority = {
   plante: 15,
   feu: 15,
   eau: 15,
@@ -64,38 +52,38 @@ const typePriority: Record<string, number> = {
   acier: 12,
 }
 
-export default function Cards({ id, name, image, types, rarity, hp, attack, defense, onImageClick }: CardProps) {
+export default function Cards({
+  id,
+  name,
+  image,
+  types,
+  rarity,
+  hp,
+  attack,
+  defense,
+  onImageClick
+}) {
   const dominantType = [...types]
     .map((t) => t.toLowerCase())
     .sort((a, b) => (typePriority[b] || 0) - (typePriority[a] || 0))[0]
 
   const sortedTypes = [...types].sort(
     (a, b) =>
-      (typePriority[b.toLowerCase()] || 0) -
-      (typePriority[a.toLowerCase()] || 0)
+      (typePriority[b.toLowerCase()] || 0) - (typePriority[a.toLowerCase()] || 0)
   )
 
-const price = getPrice(name, rarity)
-
-  // 🔍 Log debug
-  console.log("Card props:", { id, name, rarity, price })
+  const price = getPrice(name, rarity)
 
   return (
     <div className="card-wrapper">
-      {/* LA CARTE VISUELLE */}
+      {/* CARTE VISUELLE */}
       <div className={`pokemon-card-container type-${dominantType}`}>
         <div className="pokemon-card" onClick={(e) => {
-                e.stopPropagation()
-                onImageClick?.()
-              }}>
+          e.stopPropagation()
+          if (onImageClick) onImageClick()
+        }}>
           <div className="background">
-            <img
-              src={image}
-              alt={name}
-              className="image"
-              
-            />
-
+            <img src={image} alt={name} className="image" />
           </div>
           <div className="content">
             <div className="typesContainer">
@@ -111,21 +99,17 @@ const price = getPrice(name, rarity)
               <p>Attaque : {attack}</p>
               <p>Défense : {defense}</p>
             </div>
-
-            
-
             <div className="rarity">
               {Array.from({ length: rarity }, (_, i) => (
                 <span key={i}>⭐</span>
               ))}
             </div>
-
             <h1 className="pokemon-logo">Pokémon cards</h1>
           </div>
         </div>
       </div>
 
-      {/* FOOTER EN DESSOUS */}
+      {/* FOOTER */}
       <div className="card-footer">
         <span className="card-price">
           Prix : {price.toLocaleString()} €

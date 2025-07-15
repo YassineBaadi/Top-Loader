@@ -1,11 +1,6 @@
 import './headerPage.css'
 
-type HeaderPageProps = {
-  title: string
-  backgroundImage: string
-}
-
-export default function HeaderPage({ title, backgroundImage }: HeaderPageProps): JSX.Element {
+export default function HeaderPage({ title, backgroundImage }) {
   return (
     <div
       className="headerPageContainer"

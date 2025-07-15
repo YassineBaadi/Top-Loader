@@ -12,29 +12,23 @@ import PikachuLoading from '@/public/assets/img/pikachuGif.gif'
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchPokemons } from "@/src/redux/pokemonSlice"
-import { RootState, AppDispatch } from "@/src/store/index"
 import FilterBar from "@/src/components/filterBar/FIlterBar"
-import { addBoosterToCollection, addCardsToCollection } from "@/src/redux/collectionSlice"
+import { addBoosterToCollection } from "@/src/redux/collectionSlice"
 import { generateBooster } from "@/src/lib/helpers"
 
-
-
 export default function Shop() {
-  const dispatch = useDispatch<AppDispatch>()
-  const pokemons = useSelector((state: RootState) => state.pokemons.data)
+  const dispatch = useDispatch()
+  const pokemons = useSelector((state) => state.pokemons.data)
 
-  
-  const { data: originalPokemons, loading: isLoading } = useSelector((state: RootState) => state.pokemons)
+  const { data: originalPokemons, loading: isLoading } = useSelector((state) => state.pokemons)
 
   const [filteredPokemons, setFilteredPokemons] = useState(originalPokemons)
 
-  const [selectedType, setSelectedType] = useState<string | null>(null)
-  const [selectedGeneration, setSelectedGeneration] = useState<string | null>(null)
+  const [selectedType, setSelectedType] = useState(null)
+  const [selectedGeneration, setSelectedGeneration] = useState(null)
   const [search, setSearch] = useState("")
-  const [sort, setSort] = useState<"asc" | "desc" | null>(null)
-  const [selectedRarity, setSelectedRarity] = useState<number | null>(null)
-
-  
+  const [sort, setSort] = useState(null)
+  const [selectedRarity, setSelectedRarity] = useState(null)
 
   useEffect(() => {
     dispatch(fetchPokemons())
@@ -82,8 +76,6 @@ export default function Shop() {
           <div className="rocketContent">
             <div className="rocketText">
               <img src={logoEtincelles.src} alt="Logo Étincelles" className="rocketLogo" />
-              
-
               <h2 className="rocketTitle">
                 Parcourez <em>les cartes</em> de l’extension<br />
                 <strong>Écarlate et Violet – Étincelles Déferlantes</strong><br />
@@ -95,36 +87,32 @@ export default function Shop() {
                 ambiance tropicale et décontractée.
               </p>
             </div>
-
             <div className="rocketImages">
-              <img src={card1.src} alt="Carte Pikachu" className="card card1" />
-              <img src={card2.src} alt="Carte Noadkoko" className="card card2" />
-              
-
+              <img src={card1.src} alt="Carte 1" className="card card1" />
+              <img src={card2.src} alt="Carte 2" className="card card2" />
             </div>
             <div style={{ textAlign: "center", marginTop: "1rem" }}>
-                <button
-                  className="addBoosterBtn"
-                  onClick={() => {
-                    if (pokemons.length === 0) return alert("Aucun Pokémon disponible.")
-                    const booster = generateBooster(pokemons)
-                    dispatch(addBoosterToCollection(booster))
-                    alert("🎁 Booster ajouté à votre collection !")
-                  }}
-                >
-                  📦 Ajouter ce booster à ma collection
-                </button>
-              </div>
+              <button
+                className="addBoosterBtn"
+                onClick={() => {
+                  if (pokemons.length === 0) return alert("Aucun Pokémon disponible.")
+                  const booster = generateBooster(pokemons)
+                  dispatch(addBoosterToCollection(booster))
+                  alert("🎁 Booster ajouté à votre collection !")
+                }}
+              >
+                📦 Ajouter ce booster à ma collection
+              </button>
+            </div>
           </div>
         </div>
 
         <div className="rocketExtension">
           <div className="rocketContent">
             <div className="rocketImages">
-              <img src={card1.src} alt="Carte Pikachu" className="card card1 card3" />
-              <img src={card2.src} alt="Carte Noadkoko" className="card card2 card4" />
+              <img src={card1.src} alt="Carte 1" className="card card1 card3" />
+              <img src={card2.src} alt="Carte 2" className="card card2 card4" />
             </div>
-
             <div className="rocketText">
               <img src={logoRocket.src} alt="Logo Rocket" className="rocketLogo1" />
               <h2 className="rocketTitle">
@@ -155,7 +143,7 @@ export default function Shop() {
           sort={sort}
           setSort={setSort}
           originalPokemons={originalPokemons}
-          setPokemons={() => {}} 
+          setPokemons={() => {}}
           selectedRarity={selectedRarity}
           setSelectedRarity={setSelectedRarity}
         />

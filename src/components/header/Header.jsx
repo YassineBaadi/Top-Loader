@@ -1,34 +1,32 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import './header.css';
+import { useEffect, useState } from 'react'
+import './header.css'
 
-import headerBg1 from '../../../public/assets/img/headerBg.jpg';
-import headerBg2 from '../../../public/assets/img/headerBG2.jpg';
+import headerBg1 from '../../../public/assets/img/headerBg.jpg'
+import headerBg2 from '../../../public/assets/img/headerBG2.jpg'
+import cardHeader from '../../../public/assets/img/mewtwocard.webp'
+import teamRocket from '../../../public/assets/img/team-rocket-returns.png'
 
-
-import cardHeader from '../../../public/assets/img/mewtwocard.webp';
-import teamRocket from '../../../public/assets/img/team-rocket-returns.png';
-
-const images = [headerBg1.src, headerBg2.src];
+const images = [headerBg1.src, headerBg2.src]
 
 export default function Header() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 6000);
+      setCurrentImageIndex((prev) => (prev + 1) % images.length)
+    }, 6000)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <div className="headerContainer">
       <div className="leftHeader">
         <img src={teamRocket.src} alt="Team Rocket" />
-        <button className='button'>DETAILS DE L'EXTENSION</button>
-        <button className='button'>VOIR LES CARTES</button>
+        <button className="button">DETAILS DE L'EXTENSION</button>
+        <button className="button">VOIR LES CARTES</button>
       </div>
 
       {images.map((src, index) => (
@@ -54,6 +52,5 @@ export default function Header() {
         <img src={cardHeader.src} alt="Card Header" />
       </div>
     </div>
-  );
+  )
 }
-

@@ -3,7 +3,6 @@
 import { useParams, useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
-import { RootState } from "@/src/store"
 import Card from "@/src/components/cardsShop/Cards"
 import "./page.css"
 import {
@@ -17,8 +16,8 @@ export default function BoosterOpenPage() {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const boosterIndex = parseInt(id as string)
-  const booster = useSelector((state: RootState) => state.collection.boosters[boosterIndex])
+  const boosterIndex = parseInt(id)
+  const booster = useSelector((state) => state.collection.boosters[boosterIndex])
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [revealedCards, setRevealedCards] = useState([])

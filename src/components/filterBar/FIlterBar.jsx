@@ -1,23 +1,5 @@
-
 "use client"
-import { Dispatch, SetStateAction } from "react"
 import './filterBar.css'
-
-
-type FilterBarProps = {
-  selectedType: string | null
-  setSelectedType: Dispatch<SetStateAction<string | null>>
-  selectedGeneration: string | null
-  setSelectedGeneration: Dispatch<SetStateAction<string | null>>
-  search: string
-  setSearch: Dispatch<SetStateAction<string>>
-  sort: "asc" | "desc" | null
-  setSort: Dispatch<SetStateAction<"asc" | "desc" | null>>
-  originalPokemons: any[]
-  setPokemons: Dispatch<SetStateAction<any[]>>
-  setSelectedRarity: Dispatch<SetStateAction<number | null>>
-  selectedRarity: number | null
-}
 
 export default function FilterBar({
   selectedType,
@@ -32,8 +14,7 @@ export default function FilterBar({
   setPokemons,
   selectedRarity,
   setSelectedRarity
-}: FilterBarProps) {
-
+}) {
   const typeFilters = [
     "Feu", "Eau", "Plante", "Électrik", "Psy", "Spectre", "Sol", "Roche", "Vol",
     "Normal", "Poison", "Fée", "Ténèbres", "Combat", "Insecte", "Dragon", "Acier", "Glace"

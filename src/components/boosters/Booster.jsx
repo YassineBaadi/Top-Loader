@@ -1,21 +1,6 @@
 import Card from "@/src/components/cardsShop/Cards"
 
-
-type Pokemon = {
-  id: number
-  name: string
-  image: string
-  apiTypes: { name: string }[]
-  rarity: number
-  stats: {
-    HP: number
-    attack: number
-    defense: number
-  }
-}
-
-
-export default function Booster({ pokemons }: { pokemons: Pokemon[] }) {
+export default function Booster({ pokemons }) {
   return (
     <div className="boosterGrid">
       {pokemons.map(p => (

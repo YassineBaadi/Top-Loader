@@ -3,26 +3,16 @@ import { useState, useRef, useEffect } from 'react'
 import './card.css'
 import Pikachu from '@/public/assets/img/pikachuTest.png'
 
-type ZoomData = {
-  title: string
-  description: string
-  coords: { top: number; left: number }
-}
+export default function Card() {
+  const [zoom, setZoom] = useState(null)
+  const [guideMode, setGuideMode] = useState(false)
 
-export default function Card(): JSX.Element {
-  const [zoom, setZoom] = useState<ZoomData | null>(null)
-  const [guideMode, setGuideMode] = useState<boolean>(false)
+  const nameRef = useRef(null)
+  const typeRef = useRef(null)
+  const rarityRef = useRef(null)
+  const zoomBoxRef = useRef(null)
 
-  const nameRef = useRef<HTMLHeadingElement>(null)
-  const typeRef = useRef<HTMLSpanElement>(null)
-  const rarityRef = useRef<HTMLDivElement>(null)
-  const zoomBoxRef = useRef<HTMLDivElement>(null)
-
-  const showZoom = (
-    ref: React.RefObject<HTMLElement>,
-    title: string,
-    description: string
-  ) => {
+  const showZoom = (ref, title, description) => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect()
       const padding = 10
@@ -38,13 +28,13 @@ export default function Card(): JSX.Element {
     }
   }
 
-  const closeZoom = (): void => setZoom(null)
+  const closeZoom = () => setZoom(null)
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent): void => {
+    const handleClickOutside = (e) => {
       if (
         zoomBoxRef.current &&
-        !zoomBoxRef.current.contains(e.target as Node)
+        !zoomBoxRef.current.contains(e.target)
       ) {
         closeZoom()
       }
@@ -74,12 +64,7 @@ export default function Card(): JSX.Element {
               className={`pokemon-name ${guideMode ? 'highlight' : ''}`}
               onClick={
                 guideMode
-                  ? () =>
-                      showZoom(
-                        nameRef,
-                        'Pikachu',
-                        'Nom du Pokémon, utilisé pour l’identification.'
-                      )
+                  ? () => showZoom(nameRef, 'Pikachu', 'Nom du Pokémon, utilisé pour l’identification.')
                   : undefined
               }
               ref={nameRef}
@@ -91,12 +76,7 @@ export default function Card(): JSX.Element {
               className={`pokemon-type ${guideMode ? 'highlight' : ''}`}
               onClick={
                 guideMode
-                  ? () =>
-                      showZoom(
-                        typeRef,
-                        'Type : Électrique ⚡',
-                        'Le type détermine les forces et faiblesses du Pokémon.'
-                      )
+                  ? () => showZoom(typeRef, 'Type : Électrique ⚡', 'Le type détermine les forces et faiblesses du Pokémon.')
                   : undefined
               }
               ref={typeRef}
@@ -113,12 +93,7 @@ export default function Card(): JSX.Element {
               className={`rarity ${guideMode ? 'highlight' : ''}`}
               onClick={
                 guideMode
-                  ? () =>
-                      showZoom(
-                        rarityRef,
-                        'Rareté ⭐',
-                        'Plus il y a d’étoiles, plus la carte est rare.'
-                      )
+                  ? () => showZoom(rarityRef, 'Rareté ⭐', 'Plus il y a d’étoiles, plus la carte est rare.')
                   : undefined
               }
               ref={rarityRef}
