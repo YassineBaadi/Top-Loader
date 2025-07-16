@@ -117,12 +117,12 @@ const boosterIndex = Number(id)
 
   return (
     <div className="boosterOpenPage">
-      <h1> Ouvre ton booster #{boosterIndex + 1}</h1>
+      <h1 className="h1Opening"> Ouverture booster #{boosterIndex + 1}</h1>
 
       {boosterAdded ? (
         <div style={{ textAlign: "center" }}>
-          <p>  Booster ouvert et ajouté à ta collection !</p>
-          <p>Redirection vers la collection...</p>
+          <p className="pText1">  Booster ouvert et ajouté à ta collection !</p>
+          <p className="pText1">Redirection vers la collection...</p>
         </div>
       ) : currentCard ? (
         <div className="cardRevealArea">
@@ -137,13 +137,13 @@ const boosterIndex = Number(id)
             defense={currentCard.stats?.defense || 0}
             onImageClick={handleRevealNext}
           />
-          <p>
-            Carte {currentIndex + 1} / {booster.length} — Clique pour révéler
+          <p className="pCompteur"> 
+            Carte {currentIndex + 1} / {booster.length} 
           </p>
         </div>
       ) : (
         <>
-          <p>🎉 Toutes les cartes ont été révélées !</p>
+          <p className="pText1">Toutes les cartes ont été révélées !</p>
           {revealedCards.length === booster.length && !boosterAdded && (
             <div style={{ marginTop: "2rem" }}>
               <button

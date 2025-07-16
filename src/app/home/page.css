@@ -1,0 +1,191 @@
+.tendanceContainer{
+  height: 1000px;
+  text-align: center;
+   background-image: url('../../../public/assets/img/bgTendance.jpg');
+   background-size: cover;       /* ajuste l’image pour couvrir tout le conteneur */
+  background-position: center;  /* centre l’image */
+  background-repeat: no-repeat;
+  color: #000;
+
+
+  
+}
+
+
+.h1Tendance {
+  position: relative;
+  top: 100px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 3.2rem;
+  margin-left: auto;
+  font-weight: 900;
+  position: relative;
+  margin-bottom: -50px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+    font-weight: 800;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+.homeContainer{
+
+  
+
+  /* background-image: url('../../public/assets/img/bgArticle.jpg');
+    background-size: cover;       
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed; */
+
+    
+min-height: 100vh;
+  width: 100%;
+  
+}
+
+
+.divider-main {
+    --divider-height: 34px;
+    background-color: white;
+    background-image: url("../../../public/assets/img/divider.jpg");
+    background-repeat: repeat-x;
+    background-position: center center;
+    block-size: var(--divider-height);
+    inline-size: 100%;
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+
+
+.shop-section {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+}
+
+.guideSection{
+    background-image: url('../../../public/assets/img/bgSectionNoir.png'); 
+  background-size: 100%;
+  background-position: center;
+  margin-top: 100px;
+}
+
+.shopSection{
+  background-image: url('../../../public/assets/img/bgSectionGris.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.collectionSection{
+  background-image: url('../../../public/assets/img/bgSectionBleu.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.catchSection{
+  background-image: url('../../../public/assets/img/bgSectionOrange.png'); 
+  background-size: cover;
+  background-position: center;
+}
+
+.guideSection .overlay-darken {
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.418); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  
+}
+
+
+
+.shopSection .overlay-darken{
+    
+    flex: 1;
+  background-color: rgba(0, 0, 0, 0.418); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+}
+
+.collectionSection .overlay-darken{
+
+    flex: 1;
+  background-color: rgba(0, 0, 0, 0.418); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+}
+
+
+.catchSection .overlay-darken {
+
+    flex: 1;
+  background-color: rgba(0, 0, 0, 0.418); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  border-bottom-left-radius: 30px;
+  border-top-left-radius: 30px;
+}
+
+
+.shop-content {
+  color: white;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.shop-content h2 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.shop-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.shop-btn {
+  background-color: #d00000;
+  color: white;
+  font-weight: bold;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 4px 4px 0 #000;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.shop-btn:hover {
+  background-color: #aa0000;
+}

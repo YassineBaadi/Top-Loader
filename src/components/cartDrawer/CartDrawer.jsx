@@ -57,7 +57,7 @@ if (totalQuantity >= 5) {
     return sum + itemPrice * item.quantity
   }, 0) - freePrice
 
-  discountNote = `🎁 ${freeItem.data.name || "Article"} offert (-${freePrice} €)`
+  discountNote = ` ${freeItem.data.name || "Article"} le moins cher offert (-${freePrice} €)`
 } else {
   totalPrice = cartItems.reduce((sum, item) => {
     const itemPrice = item.data.price || 0
@@ -71,7 +71,7 @@ if (totalQuantity >= 5) {
     <>
       <div className={`cart-drawer ${isOpen ? "open" : ""}`}>
         <div className="cart-header">
-          <h2>🛒 Panier</h2>
+          <h2> Panier</h2>
           <button onClick={onClose}>✖</button>
         </div>
 
@@ -95,7 +95,7 @@ if (totalQuantity >= 5) {
 />
 
                   <div className="cart-info">
-                    <span className="cart-name">{item.data.name || "Booster"}</span>
+                    <span className="cart-name">{item.data.name  || "Booster"}</span>
                     <span className="cart-price">
                       {item.data.price || 0} € × {item.quantity} ={" "}
                       {item.data.price * item.quantity || 0} €
@@ -112,7 +112,7 @@ if (totalQuantity >= 5) {
 
             <div className="cart-footer">
               <div className="cart-total">
-  <strong>Total : {totalPrice} €</strong>
+  <strong>Total : {totalPrice.toLocaleString()} €</strong>
   {discountNote && (
     <p style={{ color: "green", fontWeight: "bold", marginTop: "0.5rem" }}>
       {discountNote}
@@ -133,14 +133,14 @@ if (totalQuantity >= 5) {
                   className="cart-checkout"
                   onClick={() => router.push("/paiement")}
                 >
-                  🛒 Commander
+                   Commander
                 </button>
               ) : (
                 <button
                   className="cart-checkout"
                   onClick={() => setShowLoginModal(true)}
                 >
-                  🔐 Se connecter
+                  Se connecter
                 </button>
               )}
             </div>

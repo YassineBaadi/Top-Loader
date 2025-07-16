@@ -7,12 +7,18 @@ import { clearCart } from "@/src/redux/cartSlice"
 import './page.css'
 import { useRouter } from "next/navigation"
 
+// ...imports existants
 export default function PaiementPage() {
   const dispatch = useDispatch()
   const router = useRouter()
   const [userEmail, setUserEmail] = useState(null)
   const [paymentMethod, setPaymentMethod] = useState("Carte bancaire")
   const [success, setSuccess] = useState(false)
+
+  const [cardName, setCardName] = useState("")
+  const [cardNumber, setCardNumber] = useState("")
+  const [cardCVC, setCardCVC] = useState("")
+  const [cardType, setCardType] = useState("")
 
   const cart = useSelector((state) =>
     userEmail ? state.cart.userCarts[userEmail] || [] : []
@@ -29,7 +35,13 @@ export default function PaiementPage() {
     }
   }, [])
 
-  // ✅ Nouveau calcul du total avec réduction
+  useEffect(() => {
+    const firstDigit = cardNumber.charAt(0)
+    if (firstDigit === "5") setCardType("Mastercard")
+    else if (firstDigit === "4") setCardType("VISA")
+    else setCardType("")
+  }, [cardNumber])
+
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0)
   let totalPrice = 0
 
@@ -37,17 +49,13 @@ export default function PaiementPage() {
     const sorted = [...cart].sort(
       (a, b) => (a.data.price || 0) - (b.data.price || 0)
     )
-    const freeItem = sorted[0]
-    const freePrice = freeItem.data.price || 0
-
+    const freePrice = sorted[0]?.data.price || 0
     totalPrice = cart.reduce((sum, item) => {
-      const itemPrice = item.data.price || 0
-      return sum + itemPrice * item.quantity
+      return sum + (item.data.price || 0) * item.quantity
     }, 0) - freePrice
   } else {
     totalPrice = cart.reduce((sum, item) => {
-      const itemPrice = item.data.price || 0
-      return sum + itemPrice * item.quantity
+      return sum + (item.data.price || 0) * item.quantity
     }, 0)
   }
 
@@ -70,6 +78,8 @@ export default function PaiementPage() {
       router.push("/collection")
     }, 2000)
   }
+
+  const isFormValid = cardName && cardNumber && cardCVC
 
   if (!userEmail) return null
 
@@ -104,7 +114,7 @@ export default function PaiementPage() {
             <h3>Total : {totalPrice} €</h3>
             {totalQuantity >= 5 && (
               <p style={{ color: "green", fontWeight: "bold" }}>
-                🎁 Le moins cher est offert !
+               Le moins cher est offert !
               </p>
             )}
           </div>
@@ -119,15 +129,50 @@ export default function PaiementPage() {
               <option>PayPal</option>
               <option>Pokedollars</option>
             </select>
+
+            <input
+              type="text"
+              placeholder="Nom sur la carte"
+              value={cardName}
+              onChange={(e) => setCardName(e.target.value)}
+            />
+
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <input
+                type="text"
+                placeholder="Numéro de carte"
+                value={cardNumber}
+                onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ''))}
+              />
+              <small>{cardType}</small>
+            </div>
+
+            <input
+              type="text"
+              placeholder="CVC"
+              value={cardCVC}
+              onChange={(e) => setCardCVC(e.target.value.replace(/\D/g, ''))}
+              maxLength={4}
+            />
           </div>
 
-          <button className="validate-btn" onClick={handlePaiement}>
+          <button
+            className="validate-btn"
+            onClick={handlePaiement}
+            disabled={!isFormValid}
+            style={{ opacity: isFormValid ? 1 : 0.5, cursor: isFormValid ? "pointer" : "not-allowed" }}
+          >
             Valider la commande
           </button>
         </>
       )}
 
-      {success && <p className="success-msg">✅ Commande validée ! Ajout dans la collection...</p>}
+      {success && (
+        <p className="success-msg">
+          Commande validée ! Ajout dans la collection...
+        </p>
+      )}
     </div>
   )
 }
+

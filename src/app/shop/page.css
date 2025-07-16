@@ -1,3 +1,40 @@
+
+.realShop{
+  width: 400px;
+}
+
+.shop-image-container {
+  position: relative;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.burst-background {
+ 
+  position: absolute;
+  width: 900px;
+  height: 600px;
+ 
+}
+
+.shop-image {
+  position: relative;
+  z-index: 1;
+  max-width:600px;
+  transition: transform 0.3s ease;
+}
+
+.collection-img{
+  width: 400px;
+}
+
+.shop-image:hover {
+  transform: scale(1.05);
+}
+
+
 .pokemonGrid {
   display: grid;
   
@@ -169,7 +206,7 @@
 .collectionCards{
   position: relative;
     background-image: url("../../../public/assets/img/bgShopPage.jpg");
-      background-size: 500px auto;
+    background-size: 500px auto;
     background-attachment: fixed;
 
   height: auto;
@@ -177,11 +214,100 @@
   padding-top: 50px;
 }
 
+.shopContainer{
+  height: 100vh;
+  width: 100vw;
+  background-image: url("../../../public/assets/img/bgShopPage.jpg");
+      background-size: 500px auto;
+    background-attachment: fixed;
+}
 
-h2{
-    margin-top: 100px;
-    font-size: 3rem;
-    text-align: center;
-    margin: 2rem 0;
-    
+
+.articleExtension{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.rocketExtension {
+  background: linear-gradient(to right, #300000, #6e0000);
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.rocketContent {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.rocketText {
+  max-width: 600px;
+  color: white;
+  padding-right: 30px;
+}
+
+.rocketLogo {
+  max-width: 100%;
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+.rocketTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.rocketDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.rocketImages {
+  position: relative;
+  width: 300px;
+  height: 400px;
+}
+
+.card {
+  position: absolute;
+  width: 600px;
+  transition: transform 0.3s ease;
+}
+
+.card1 {
+  top: 0;
+  left: -50px;
+  transform: rotate(-8deg);
+  z-index: 1;
+}
+
+.card2 {
+  top: 80px;
+  left: 80px;
+  transform: rotate(5deg);
+  z-index: 2;
+}
+
+.rocketLogo1{
+  width: 500px;
+}
+
+
+.shopCards{
+  position: relative;
+    background-image: url("../../../public/assets/img/bgShopPage.jpg");
+      background-size: 500px auto;
+    background-attachment: fixed;
+
+  height: auto;
+  width: 100vw;
 }

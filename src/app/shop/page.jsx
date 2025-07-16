@@ -1,9 +1,9 @@
 "use client"
 
 import HeaderPage from "@/src/components/headerPage/HeaderPage"
-import shopBg from '@/public/assets/img/bgHeaderShop.png'
+import shopBg from '@/public/assets/img/bgHeaderShop.avif'
 import logoEtincelles from "@/public/assets/img/logoLumiere.png"
-import card1 from "@/public/assets/img/lumiereBooster.jpg"
+import card1 from "@/public/assets/img/boosterRocket.png"
 import card2 from "@/public/assets/img/arceus.png"
 import logoRocket from '@/public/assets/img/team-rocket-returns.png'
 import Card from "@/src/components/cardsShop/Cards"
@@ -20,6 +20,9 @@ import { addToCart } from "@/src/redux/cartSlice"
 
 import Modal from "../../components/modal/Modal"
 import LoginForm from "../../features/auth/LoginForm"
+
+import './page.css'
+import LoadingPlaceholder from "../carte/[id]/loading"
 
 
 
@@ -93,6 +96,16 @@ const handleAddBooster = () => {
     setFilteredPokemons(result)
   }, [originalPokemons, selectedType, selectedGeneration, search, sort, selectedRarity])
 
+  if (isLoading) {
+    return (
+      <div className="catch-container">
+        <LoadingPlaceholder />
+      </div>
+    )
+  }
+            
+          
+
   return (
 
     <>
@@ -101,36 +114,7 @@ const handleAddBooster = () => {
       <div className="divider-main"></div>
 
       <section className="extensionSection">
-        <div className="rocketExtension">
-          <div className="rocketContent">
-            <div className="rocketText">
-              <img src={logoEtincelles.src} alt="Logo Étincelles" className="rocketLogo" />
-              <h2 className="rocketTitle">
-                Parcourez <em>les cartes</em> de l’extension<br />
-                <strong>Écarlate et Violet – Étincelles Déferlantes</strong><br />
-                <em>du JCC Pokémon.</em>
-              </h2>
-              <p className="rocketDescription">
-                L’extension <em>Écarlate et Violet – Étincelles Déferlantes</em> du JCC Pokémon met en
-                vedette les nouveaux Pokémon-ex Téracristal découverts à Alola dans une
-                ambiance tropicale et décontractée.
-              </p>
-            </div>
-            <div className="rocketImages">
-              <img src={card1.src} alt="Carte 1" className="card card1" />
-              <img src={card2.src} alt="Carte 2" className="card card2" />
-            </div>
-            <div style={{ textAlign: "center", marginTop: "1rem" }}>
-              <button
-                className="addBoosterBtn"
-                onClick={handleAddBooster}
-              >
-                📦 Ajouter ce booster au panier
-              </button>
-
-            </div>
-          </div>
-        </div>
+        
 
         <div className="rocketExtension">
           <div className="rocketContent">
@@ -142,14 +126,24 @@ const handleAddBooster = () => {
               <img src={logoRocket.src} alt="Logo Rocket" className="rocketLogo1" />
               <h2 className="rocketTitle">
                 Parcourez <em>les cartes</em> de l’extension<br />
-                <strong>Écarlate et Violet – Étincelles Déferlantes</strong><br />
+                <strong>Écarlate et Violet – Rivalités Destinées</strong><br />
                 <em>du JCC Pokémon.</em>
               </h2>
               <p className="rocketDescription">
-                L’extension <em>Écarlate et Violet – Étincelles Déferlantes</em> du JCC Pokémon met en
-                vedette les nouveaux Pokémon-ex Téracristal découverts à Alola dans une
-                ambiance tropicale et décontractée.
+                
+L’extension Rivalités Destinée du JCC Pokémon met en scène des affrontements légendaires entre d’anciens rivaux et de nouveaux challengers. 
+À travers ces 10 cartes exclusives, redécouvrez des Pokémon emblématiques confrontés à leur destin, 
+dans une ambiance intense et stratégique où chaque choix peut changer l’issue du combat.
               </p>
+              <div style={{ textAlign: "center", marginTop: "1rem" }}>
+              <button
+                className="addBoosterBtn"
+                onClick={handleAddBooster}
+              >
+                 Ajouter ce booster au panier
+              </button>
+
+            </div>
             </div>
           </div>
         </div>

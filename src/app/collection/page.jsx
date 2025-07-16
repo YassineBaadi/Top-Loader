@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import HeaderPage from "@/src/components/headerPage/HeaderPage"
@@ -10,10 +9,11 @@ import FilterBar from "@/src/components/filterBar/FIlterBar"
 import Link from "next/link"
 import shopBg from "@/public/assets/img/bgHeaderShop.png"
 import boosterImg from "@/public/assets/img/boosterRocket.png"
+import './page.css'
 
 export default function CollectionPage() {
   const purchasedCards = useSelector(state => state.collection.cards)
-  const purchasedBoosters = useSelector(state => state.collection.boosters)
+  const purchasedBoosters = useSelector(state => state.collection.boosters) || []
 
   const [selectedType, setSelectedType] = useState(null)
   const [selectedGeneration, setSelectedGeneration] = useState(null)
@@ -23,22 +23,25 @@ export default function CollectionPage() {
   const [filtered, setFiltered] = useState(purchasedCards)
   const router = useRouter()
 
-    useEffect(() => {
-      const user = JSON.parse(localStorage.getItem("currentUser"))
-      if (!user) {
-        router.push("/login")
-      }
-    }, [])
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+    if (!user) {
+      router.push("/login")
+    }
+  }, [])
 
   // Appliquer les filtres à la collection
   useEffect(() => {
-    let result = [...purchasedCards]
+    let result = purchasedCards.filter(p => Array.isArray(p.apiTypes))
 
-    if (selectedType) {
-      result = result.filter(p =>
-        p.apiTypes.some(t => t.name.toLowerCase() === selectedType.toLowerCase())
-      )
-    }
+
+   if (selectedType) {
+  result = result.filter(p =>
+    Array.isArray(p.apiTypes) &&
+    p.apiTypes.some(t => t?.name?.toLowerCase() === selectedType.toLowerCase())
+  )
+}
+
 
     if (selectedGeneration) {
       result = result.filter(p => p.apiGeneration === Number(selectedGeneration))
@@ -75,17 +78,26 @@ export default function CollectionPage() {
 
   const groupedValues = Object.values(grouped)
 
+  // 🔍 Filtrage des cartes invalides
+  const validGroupedValues = groupedValues.filter(({ card }) =>
+    card && card.stats && Array.isArray(card.apiTypes)
+  )
+
+  const invalidCards = groupedValues.filter(({ card }) =>
+    !card || !card.stats || !Array.isArray(card.apiTypes)
+  )
+  if (invalidCards.length > 0) {
+    console.warn("Cartes invalides détectées :", invalidCards)
+  }
+
   return (
-    <div className="shopContainer">
+    <div className="collectionContainer">
       <HeaderPage title="MA COLLECTION" backgroundImage={shopBg.src} />
       <div className="divider-main"></div>
 
       {/* Boosters achetés */}
-      <section className="shopCards">
-        <h2 style={{ textAlign: "center", fontSize: "2rem", margin: "2rem 0" }}>
-          Boosters achetés
-        </h2>
-
+      <section className="collectionCards">
+        <h2>Boosters achetés</h2>
         <div className="pokemonGrid">
           {purchasedBoosters.length === 0 ? (
             <p style={{ textAlign: "center", width: "100%" }}>
@@ -94,15 +106,15 @@ export default function CollectionPage() {
           ) : (
             purchasedBoosters.map((booster, boosterIndex) => (
               <div key={boosterIndex} className="pokemonCard">
-                <p>Booster #{boosterIndex + 1}</p>
+                <h3>Booster #{boosterIndex + 1}</h3>
                 <img
                   src={booster.image || "/assets/img/boosterRocket.png"}
                   alt="Booster"
                   style={{ width: "100%", objectFit: "contain" }}
                 />
-                <p>({booster.length} cartes)</p>
+                <h4>({booster.length} cartes)</h4>
                 <Link href={`/boosterPage/${boosterIndex}`}>
-                  <button>🎴 Ouvrir ce booster</button>
+                  <button>Ouvrir</button>
                 </Link>
               </div>
             ))
@@ -110,13 +122,11 @@ export default function CollectionPage() {
         </div>
       </section>
 
-      <div className="divider-main"></div>
+      <div className="divider-main secondDivider"></div>
 
       {/* Cartes collectionnées */}
-      <section className="shopCards">
-        <h2 style={{ textAlign: "center", fontSize: "2rem", margin: "2rem 0" }}>
-          Cartes collectionnées
-        </h2>
+      <section className="collectionCards">
+        <h2 className="h2Collection">Cartes collectionnées</h2>
 
         <FilterBar
           selectedType={selectedType}
@@ -134,22 +144,22 @@ export default function CollectionPage() {
         />
 
         <div className="pokemonGrid">
-          {groupedValues.length === 0 ? (
+          {validGroupedValues.length === 0 ? (
             <p style={{ textAlign: "center", width: "100%" }}>
               Aucune carte dans votre collection.
             </p>
           ) : (
-            groupedValues.map(({ card, count }) => (
+            validGroupedValues.map(({ card, count }) => (
               <div key={card.id} style={{ position: "relative" }}>
                 <Card
                   id={card.id}
                   name={card.name}
                   image={card.image}
-                  types={card.apiTypes.map(t => t.name)}
-                  rarity={card.rarity}
-                  hp={card.stats.HP}
-                  attack={card.stats.attack}
-                  defense={card.stats.defense}
+                  types={(card.apiTypes || []).map(t => t.name)}
+                  rarity={card.rarity ?? 1}
+                  hp={card.stats?.HP ?? 0}
+                  attack={card.stats?.attack ?? 0}
+                  defense={card.stats?.defense ?? 0}
                 />
                 {count > 1 && (
                   <span

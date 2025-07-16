@@ -7,6 +7,7 @@ import headerBg1 from '../../../public/assets/img/headerBg.jpg'
 import headerBg2 from '../../../public/assets/img/headerBG2.jpg'
 import cardHeader from '../../../public/assets/img/mewtwocard.webp'
 import teamRocket from '../../../public/assets/img/team-rocket-returns.png'
+import Link from 'next/link'
 
 const images = [headerBg1.src, headerBg2.src]
 
@@ -25,8 +26,8 @@ export default function Header() {
     <div className="headerContainer">
       <div className="leftHeader">
         <img src={teamRocket.src} alt="Team Rocket" />
-        <button className="button">DETAILS DE L'EXTENSION</button>
-        <button className="button">VOIR LES CARTES</button>
+        <Link href='/collection'> <button className="button">MA COLLECTION</button></Link>
+        <Link href='/shop'><button className="button">DETAILS DU BOOSTER</button></Link>
       </div>
 
       {images.map((src, index) => (

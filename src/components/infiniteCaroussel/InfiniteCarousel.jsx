@@ -10,6 +10,7 @@ export default function InfiniteCarousel() {
 
   return (
     <div className="infinite-carousel">
+
       <div className={`carousel-track ${isPaused ? 'paused' : ''}`}>
         {images.map((src, i) => (
           <img

@@ -5,6 +5,8 @@
   min-height: 100vh;
 }
 
+
+
 .mainCardSection {
   display: flex;
   gap: 2rem;
@@ -116,6 +118,8 @@ h4{
 
 
 .loadingPlaceholder {
+  background-image: url('../../../../public//assets//img/bgShopPage.jpg');
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -130,3 +134,5 @@ h4{
   width: 120px;
   margin-bottom: 1rem;
 }
+
+

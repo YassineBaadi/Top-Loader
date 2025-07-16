@@ -1,6 +1,10 @@
 .boosterOpenPage {
+  height: 100%;
   text-align: center;
   padding: 2rem;
+  background-image: url(../../../../public/assets/img/bgShopPage.jpg);
+   background-size: 500px auto;
+    background-attachment: fixed;
 }
 
 .generateBoosterBtn {
@@ -69,4 +73,24 @@
 
 .addCollectionBtn:hover {
   background-color: #27ae60;
+}
+
+
+.h1Opening{
+    font-size: 3rem;
+    text-align: center;
+    border: solid 1px red;
+    background-color: wheat;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.pCompteur{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.pText1{
+  margin-top: 20px;
+  font-size: 2rem;
 }

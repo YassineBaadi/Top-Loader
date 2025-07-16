@@ -13,6 +13,7 @@ import Link from "next/link"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { fetchPokemons } from "@/src/redux/pokemonSlice"
+import './page.css'
 
 
 export default function Home() {
