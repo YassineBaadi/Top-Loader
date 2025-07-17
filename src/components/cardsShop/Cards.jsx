@@ -21,17 +21,18 @@ export function generateRarity(pokemon) {
 
 export function getPrice(name, rarity) {
   const special = ["Darkrai", "Ectoplasma"]
-  if (special.includes(name)) return 100000
+  if (special.includes(name)) return 1000
 
   switch (rarity) {
-    case 1: return 2
-    case 2: return 10
-    case 3: return 50
-    case 4: return 500
-    case 5: return 2000
+    case 1: return 0.5  
+    case 2: return 1     
+    case 3: return 2.5   
+    case 4: return 10    
+    case 5: return 100   
     default: return 0
   }
 }
+
 
 const typePriority = {
   plante: 15,

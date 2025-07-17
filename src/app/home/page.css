@@ -1,34 +1,66 @@
-/* Design sobre pour la page d'accueil Pokémon */
+/* Variables CSS pour la cohérence */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2c3e50;
+  --background-light: #f8f9fa;
+  --white: #ffffff;
+  --shadow-light: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+  --border-radius: 20px;
+  --container-padding: 80px;
+  --section-gap: 80px;
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+}
 
 .homeContainer {
   min-height: 100vh;
   width: 100%;
-  background-color: #f8f9fa;
+  background-color: var(--background-light);
+  position: relative;
 }
 
-/* Section tendances épurée */
+/* Section tendances */
 .tendanceContainer {
-background-image: url('../../../public/assets/img/bgTendance.jpg');
-   background-size: cover;       /* ajuste l’image pour couvrir tout le conteneur */
-  background-position: center;  /* centre l’image */
+  background-image: url('../../../public/assets/img/bgTendance.jpg');
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
-  height: 1000px;
+  min-height: 100vh;
   text-align: center;
   color: #333;
-  padding: 80px 0;
+  padding: var(--container-padding) 20px;
+  position: relative;
+}
+
+.tendance-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .h1Tendance {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 3rem;
-  font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
   text-transform: none;
   letter-spacing: 0.05em;
-  color: #2c3e50;
+  color: var(--secondary-color);
   position: relative;
-  font-weight: bold;
+  margin-bottom: 60px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .h1Tendance::after {
@@ -39,20 +71,27 @@ background-image: url('../../../public/assets/img/bgTendance.jpg');
   transform: translateX(-50%);
   width: 80px;
   height: 3px;
-  background: #3498db;
+  background: var(--primary-color);
+  border-radius: 2px;
 }
 
+.carousel-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Divider */
 .divider-main {
-    --divider-height: 34px;
-    background-color: white;
-    background-image: url("../../../public/assets/img/divider.jpg");
-    background-repeat: repeat-x;
-    background-position: center center;
-    block-size: var(--divider-height);
-    inline-size: 100%;
-    position: absolute;
-    transform: translateY(-50%);
-    z-index: 5;
+  --divider-height: 34px;
+  background-color: var(--white);
+  background-image: url("../../../public/assets/img/divider.jpg");
+  background-repeat: repeat-x;
+  background-position: center center;
+  block-size: var(--divider-height);
+  inline-size: 100%;
+  position: relative;
+  z-index: 5;
 }
 
 /* Container des sections */
@@ -61,55 +100,70 @@ background-image: url('../../../public/assets/img/bgTendance.jpg');
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: 80px 20px;
-   align-items: center;
-  justify-content: space-between;
+  padding: var(--container-padding) 20px;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  gap: var(--section-gap);
 }
 
-/* Sections principales - design en cartes */
+/* Sections principales */
 .shop-section {
-  width: 80%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 80px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
   overflow: hidden;
-  height: 400px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 400px;
+  transition: var(--transition);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
 }
 
 .shop-section:hover {
   transform: translateY(-5px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Alternance des sections */
+/* Positionnement du contenu */
+.section-content {
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+
+.section-image {
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+
+/* Gradients colorés */
 .guideSection {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  color: var(--white);
 }
 
 .shopSection {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-  flex-direction: row-reverse;
+  color: var(--white);
 }
 
 .collectionSection {
   background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
+  color: var(--white);
 }
 
 .catchSection {
   background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-  color: white;
-  flex-direction: row-reverse;
+  color: var(--white);
 }
 
-/* Overlay épuré */
+/* Overlay */
 .overlay-darken {
   flex: 1;
   background: rgba(0, 0, 0, 0.05);
@@ -120,17 +174,7 @@ background-image: url('../../../public/assets/img/bgTendance.jpg');
   height: 100%;
 }
 
-.guideSection .overlay-darken,
-.collectionSection .overlay-darken {
-  border-radius: 20px 0 0 20px;
-}
-
-.shopSection .overlay-darken,
-.catchSection .overlay-darken {
-  border-radius: 0 20px 20px 0;
-}
-
-/* Image container */
+/* Container d'image */
 .shop-image-container {
   flex: 1;
   display: flex;
@@ -139,13 +183,37 @@ background-image: url('../../../public/assets/img/bgTendance.jpg');
   padding: 40px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
 }
 
 .shop-image {
-  max-width: 100%;
+  max-width: 80%;
   max-height: 300px;
   object-fit: contain;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+  transition: var(--transition);
+  z-index: 2;
+}
+
+.shop-image:hover {
+  transform: scale(1.05);
+}
+
+.burst-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.1); }
 }
 
 /* Contenu des sections */
@@ -153,88 +221,44 @@ background-image: url('../../../public/assets/img/bgTendance.jpg');
   color: inherit;
   max-width: 500px;
   z-index: 2;
+  text-align: left;
 }
 
 .shop-content h2 {
-  font-size: 2.5rem;
-  font-weight: 300;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 600;
   margin-bottom: 20px;
   letter-spacing: 0.02em;
 }
 
 .shop-content p {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   margin-bottom: 30px;
   opacity: 0.9;
   line-height: 1.6;
 }
 
-/* Bouton épuré */
+/* Bouton */
 .shop-btn {
   background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-weight: 500;
+  color: var(--white);
+  font-weight: 600;
   padding: 15px 35px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 50px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: var(--transition);
   font-size: 1rem;
   backdrop-filter: blur(10px);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .shop-btn:hover {
   background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.8);
   transform: translateY(-2px);
-}
-
-/* Version sombre pour les sections avec fond coloré */
-.guideSection .shop-btn,
-.shopSection .shop-btn,
-.collectionSection .shop-btn,
-.catchSection .shop-btn {
-  background: rgba(0, 0, 0, 0.1);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.guideSection .shop-btn:hover,
-.shopSection .shop-btn:hover,
-.collectionSection .shop-btn:hover,
-.catchSection .shop-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: white;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .shop-section {
-    flex-direction: column;
-    height: auto;
-    min-height: 500px;
-  }
-  
-  .shopSection,
-  .catchSection {
-    flex-direction: column;
-  }
-  
-  .overlay-darken {
-    padding: 40px 20px;
-  }
-  
-  .shop-content h2 {
-    font-size: 2rem;
-  }
-  
-  .h1Tendance {
-    font-size: 2.5rem;
-  }
-  
-  .sectionHomeContainer {
-    padding: 40px 10px;
-  }
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Animation au scroll */
@@ -249,18 +273,299 @@ background-image: url('../../../public/assets/img/bgTendance.jpg');
   }
 }
 
-.shop-section {
-  animation: fadeInUp 0.6s ease forwards;
+/* Responsive Design */
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+  .sectionHomeContainer {
+    max-width: 1400px;
+  }
+  
+  .shop-section {
+    min-height: 450px;
+  }
 }
 
-.shop-section:nth-child(2) {
-  animation-delay: 0.1s;
+/* Desktop */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .sectionHomeContainer {
+    max-width: 1000px;
+  }
+  
+  .overlay-darken {
+    padding: 50px;
+  }
 }
 
-.shop-section:nth-child(3) {
-  animation-delay: 0.2s;
+/* Tablette */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --container-padding: 60px;
+    --section-gap: 60px;
+  }
+  
+  .tendanceContainer {
+    background-attachment: scroll;
+    min-height: 80vh;
+  }
+  
+  .shop-section {
+    min-height: 350px;
+  }
+  
+  .overlay-darken {
+    padding: 40px;
+  }
+  
+  .shop-image-container {
+    padding: 30px;
+  }
+  
+  .shop-image {
+    max-width: 90%;
+    max-height: 250px;
+  }
+  
+  .shop-content h2 {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+  }
+  
+  .shop-content p {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+  }
+  
+  .shop-btn {
+    padding: 12px 28px;
+    font-size: 0.9rem;
+  }
 }
 
-.shop-section:nth-child(4) {
-  animation-delay: 0.3s;
+/* Mobile Large */
+@media (min-width: 480px) and (max-width: 767px) {
+  :root {
+    --container-padding: 40px;
+    --section-gap: 40px;
+  }
+  
+  .tendanceContainer {
+    background-attachment: scroll;
+    min-height: 70vh;
+    padding: 40px 15px;
+  }
+  
+  .sectionHomeContainer {
+    padding: 40px 15px;
+  }
+  
+  .shop-section {
+    flex-direction: column;
+    min-height: 500px;
+    text-align: center;
+  }
+  
+  .section-content,
+  .section-image {
+    flex: none;
+    width: 100%;
+  }
+  
+  .section-content {
+    order: 2;
+  }
+  
+  .section-image {
+    order: 1;
+  }
+  
+  .overlay-darken {
+    padding: 30px 20px;
+  }
+  
+  .shop-image-container {
+    padding: 20px;
+    min-height: 200px;
+  }
+  
+  .shop-image {
+    max-width: 70%;
+    max-height: 180px;
+  }
+  
+  .shop-content {
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  .shop-content h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 15px;
+  }
+  
+  .shop-content p {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    margin-bottom: 25px;
+  }
+  
+  .shop-btn {
+    padding: 12px 25px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 479px) {
+  :root {
+    --container-padding: 30px;
+    --section-gap: 30px;
+  }
+  
+  .tendanceContainer {
+    background-attachment: scroll;
+    min-height: 60vh;
+    padding: 30px 10px;
+  }
+  
+  .sectionHomeContainer {
+    padding: 30px 10px;
+  }
+  
+  .shop-section {
+    flex-direction: column;
+    min-height: 450px;
+    text-align: center;
+    border-radius: 15px;
+  }
+  
+  .section-content,
+  .section-image {
+    flex: none;
+    width: 100%;
+  }
+  
+  .section-content {
+    order: 2;
+  }
+  
+  .section-image {
+    order: 1;
+  }
+  
+  .overlay-darken {
+    padding: 25px 15px;
+  }
+  
+  .shop-image-container {
+    padding: 15px;
+    min-height: 160px;
+  }
+  
+  .shop-image {
+    max-width: 60%;
+    max-height: 140px;
+  }
+  
+  .shop-content {
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  .shop-content h2 {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+    margin-bottom: 12px;
+  }
+  
+  .shop-content p {
+    font-size: clamp(0.8rem, 4vw, 1rem);
+    margin-bottom: 20px;
+  }
+  
+  .shop-btn {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    border-radius: 25px;
+  }
+  
+  .h1Tendance::after {
+    width: 60px;
+    height: 2px;
+  }
+}
+
+/* Très petit mobile */
+@media (max-width: 320px) {
+  .tendanceContainer {
+    padding: 20px 5px;
+  }
+  
+  .sectionHomeContainer {
+    padding: 20px 5px;
+  }
+  
+  .overlay-darken {
+    padding: 20px 10px;
+  }
+  
+  .shop-btn {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Amélioration de l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .tendanceContainer {
+    background-attachment: scroll;
+  }
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-light: #1a1a1a;
+    --white: #2d2d2d;
+    --secondary-color: #ffffff;
+  }
+  
+  .homeContainer {
+    background-color: var(--background-light);
+  }
+  
+  .h1Tendance {
+    color: var(--white);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Optimisations pour les écrans haute résolution */
+@media (min-resolution: 2dppx) {
+  .shop-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Orientation landscape pour mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .tendanceContainer {
+    min-height: 50vh;
+    padding: 20px;
+  }
+  
+  .shop-section {
+    min-height: 300px;
+  }
+  
+  .overlay-darken {
+    padding: 20px;
+  }
+  
+  .shop-image-container {
+    min-height: 120px;
+  }
 }

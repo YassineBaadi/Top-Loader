@@ -22,8 +22,8 @@ export function generateBooster(pokemons) {
     return arr[Math.floor(Math.random() * arr.length)]
   }
 
-  // Ajouter 6 cartes communes
-  for (let i = 0; i < 6; i++) {
+  // Ajouter 5 cartes communes
+  for (let i = 0; i < 5; i++) {
     booster.push(common.length > 0 ? getRandom(common) : getRandom(pokemonsWithRarity))
   }
 
@@ -47,12 +47,11 @@ export function generateBooster(pokemons) {
     booster.push(getRandom(common.length > 0 ? common : pokemonsWithRarity))
   }
 
-  // Compléter jusqu'à 11 cartes
-  while (booster.length < 11) {
+  // Compléter jusqu'à 10 cartes
+  while (booster.length < 10) {
     booster.push(common.length > 0 ? getRandom(common) : getRandom(pokemonsWithRarity))
   }
 
-  // 🧠 Retourner un objet booster complet avec image et prix
   return {
     id: Date.now(),
     cards: booster,
@@ -60,6 +59,7 @@ export function generateBooster(pokemons) {
     image: "/assets/img/boosterRocket.png",
   }
 }
+
 
 
 

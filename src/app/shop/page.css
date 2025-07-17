@@ -1,7 +1,7 @@
-
-
-.realShop{
-  width: 400px;
+/* BASE STYLES */
+.realShop {
+  width: 100%;
+  max-width: 400px;
 }
 
 .shop-image-container {
@@ -13,28 +13,29 @@
 }
 
 .burst-background {
- 
   position: absolute;
-  width: 900px;
+  width: 100%;
+  max-width: 900px;
   height: 600px;
- 
 }
 
 .shop-image {
   position: relative;
   z-index: 1;
-  max-width:600px;
+  max-width: 100%;
+  width: 100%;
+  max-width: 600px;
   transition: transform 0.3s ease;
 }
 
-.collection-img{
-  width: 400px;
+.collection-img {
+  width: 100%;
+  max-width: 400px;
 }
 
 .shop-image:hover {
   transform: scale(1.05);
 }
-
 
 .pokemonGrid {
   display: grid;
@@ -46,42 +47,32 @@
   width: 100%;
   padding: 20px;
   margin: 0 auto;
- 
-    margin-top: 50px;
- background-color: rgba(255, 0, 0, 0.068);
-      height: 80vh;               
-  overflow-y: auto;           
-  overflow-x: hidden;         
+  margin-top: 50px;
+  background-color: rgba(255, 0, 0, 0.068);
+  height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
-
-
-
-
 
 .divider-main {
-    --divider-height: 34px;
-    background-color: white;
-    background-image: url("../../../public/assets/img/divider.jpg");
-    background-repeat: repeat-x;
-    background-position: center center;
-    block-size: var(--divider-height);
-    inline-size: 100%;
-    position: absolute;
-    transform: translateY(-50%);
-    z-index: 5;
-    margin-top: 20pxx;
-    margin-bottom: 70px;
+  background-color: white;
+  background-image: url("../../../public/assets/img/divider.jpg");
+  background-repeat: repeat-x;
+  background-position: center center;
+  inline-size: 100%;
+  position: relative;
+  z-index: 5;
 }
 
-.secondDivider{
-    margin-top: 70px;
+.secondDivider {
+  margin-top: 70px;
 }
 
 .pokemonCard {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
   background-color: #fff;
   border-radius: 10px;
   padding: 10px;
@@ -89,11 +80,10 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   transition: transform 0.2s ease;
   background-image: url('../../../public/assets/img/bgBooster.avif');
-   background-size: cover;       
-    background-repeat: no-repeat;
-    background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-
 
 .pokemonCard h3 {
   margin: 10px 0 5px;
@@ -109,17 +99,18 @@
   margin: 10px 0 5px;
   font-size: 20px;
   color: rgb(255, 255, 255);
- font-weight: bold;
+  font-weight: bold;
   text-transform: capitalize;
 }
-.pokemonCard button:hover{
+
+.pokemonCard button:hover {
   transform: scale(1.03);
 }
 
-.pokemonCard button{
-    justify-self: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.pokemonCard button {
+  justify-self: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
   --gold: #FFD700;
   --gold-dark: #cc6f55;
   cursor: pointer;
@@ -142,19 +133,17 @@
   filter: drop-shadow(0 8px 10px var(--gold-dark));
 }
 
-.shopCards h2{
-  
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.shopCards h2 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 3rem;
   font-weight: 300;
   text-transform: none;
   letter-spacing: 0.05em;
   color: #2c3e50;
   position: relative;
-  justify-self: center;
+  text-align: center;
   font-weight: bold;
   margin-top: 50px;
-    
 }
 
 .shopCards h2::after {
@@ -167,7 +156,6 @@
   height: 3px;
   background: #3498db;
 }
-
 
 .addBoosterBtn {
   background-color: #f39c12;
@@ -191,12 +179,6 @@
   object-fit: contain;
 }
 
-.pokemonCard h3 {
-  margin: 10px 0 5px;
-  font-size: 2rem;
-  text-transform: capitalize;
-}
-
 .types span {
   display: inline-block;
   background-color: #eee;
@@ -207,17 +189,12 @@
   font-size: 0.8rem;
 }
 
-
 .pokemonGridContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  
-
-
 }
-
 
 .noResults {
   text-align: center;
@@ -227,39 +204,33 @@
   color: #555;
 }
 
-
-.collectionContainer{
-  height: 100vh;
-  width: 100vw;
+.collectionContainer {
+  min-height: 100vh;
+  width: 100%;
   background-image: url("../../../public/assets/img/bgShopPage.jpg");
-      background-size: 500px auto;
-    background-attachment: fixed;
+  background-size: 500px auto;
+  background-attachment: fixed;
 }
 
-
-
-.collectionCards{
+.collectionCards {
   position: relative;
-    background-image: url("../../../public/assets/img/bgShopPage.jpg");
-    background-size: 500px auto;
-    background-attachment: fixed;
-
-  height: auto;
-  width: 100vw;
+  background-image: url("../../../public/assets/img/bgShopPage.jpg");
+  background-size: 500px auto;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
   padding-top: 50px;
 }
 
-.shopContainer{
+.shopContainer {
   min-height: 100vh;
-
-  width: 100vw;
+  width: 100%;
   background-image: url("../../../public/assets/img/bgShopPage.jpg");
-      background-size: 500px auto;
-    background-attachment: fixed;
+  background-size: 500px auto;
+  background-attachment: fixed;
 }
 
-
-.articleExtension{
+.articleExtension {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
@@ -280,11 +251,11 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  flex-wrap: wrap;
+  gap: 40px;
 }
 
 .rocketText {
-  max-width: 600px;
+  flex: 1;
   color: white;
   padding-right: 30px;
 }
@@ -305,17 +276,19 @@
 .rocketDescription {
   font-size: 1rem;
   line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 .rocketImages {
   position: relative;
   width: 300px;
   height: 400px;
+  flex-shrink: 0;
 }
 
 .card {
   position: absolute;
-  width: 600px;
+  width: 250px;
   transition: transform 0.3s ease;
 }
 
@@ -333,18 +306,353 @@
   z-index: 2;
 }
 
-.rocketLogo1{
-  width: 500px;
+.rocketLogo1 {
+  width: 100%;
+  max-width: 500px;
 }
 
-
-.shopCards{
+.shopCards {
   position: relative;
-    background-image: url("../../../public/assets/img/bgShopPage.jpg");
-      background-size: 500px auto;
-    background-attachment: fixed;
-
-  height: auto;
-  width: 100vw;
+  background-image: url("../../../public/assets/img/bgShopPage.jpg");
+  background-size: 500px auto;
+  background-attachment: fixed;
+  min-height: 100vh;
+  width: 100%;
+  padding-bottom: 50px;
 }
 
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+}
+
+/* RESPONSIVE STYLES */
+
+/* Desktop (1024px et plus) */
+@media (min-width: 1024px) {
+  .pokemonGrid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 80px;
+    max-width: 77%;
+  }
+  
+  .shopCards h2 {
+    font-size: 3rem;
+  }
+  
+  .rocketContent {
+    flex-direction: row;
+    gap: 40px;
+  }
+  
+  .rocketText {
+    padding-right: 30px;
+  }
+  
+  .rocketImages {
+    width: 300px;
+    height: 400px;
+  }
+  
+  .card {
+    width: 250px;
+  }
+}
+
+/* Tablette (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .pokemonGrid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+    max-width: 90%;
+    padding: 15px;
+  }
+  
+  .shopCards h2 {
+    font-size: 2.5rem;
+  }
+  
+  .rocketContent {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+  
+  .rocketText {
+    padding-right: 0;
+    max-width: 100%;
+  }
+  
+  .rocketImages {
+    width: 250px;
+    height: 300px;
+    align-self: center;
+  }
+  
+  .card {
+    width: 200px;
+  }
+  
+  .card1 {
+    left: -30px;
+  }
+  
+  .card2 {
+    left: 60px;
+    top: 60px;
+  }
+  
+  .rocketLogo1 {
+    max-width: 400px;
+  }
+  
+  .pokemonCard img {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .pokemonCard h3 {
+    font-size: 24px;
+  }
+  
+  .pokemonCard h4 {
+    font-size: 18px;
+  }
+  
+  .pokemonCard button {
+    width: 130px;
+    height: 44px;
+    font-size: 1rem;
+  }
+}
+
+/* Mobile (767px et moins) */
+@media (max-width: 767px) {
+  .shopContainer {
+    background-attachment: scroll;
+  }
+  
+  .collectionContainer,
+  .collectionCards,
+  .shopCards {
+    background-attachment: scroll;
+  }
+  
+  .pokemonGrid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    max-width: 95%;
+    padding: 10px;
+    height: 70vh;
+  }
+  
+  .shopCards h2 {
+    font-size: 2rem;
+    margin-top: 30px;
+  }
+  
+  .rocketExtension {
+    padding: 40px 15px;
+  }
+  
+  .rocketContent {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .rocketText {
+    padding-right: 0;
+  }
+  
+  .rocketTitle {
+    font-size: 1.4rem;
+  }
+  
+  .rocketDescription {
+    font-size: 0.9rem;
+  }
+  
+  .rocketImages {
+    width: 200px;
+    height: 250px;
+    align-self: center;
+  }
+  
+  .card {
+    width: 150px;
+  }
+  
+  .card1 {
+    left: -20px;
+  }
+  
+  .card2 {
+    left: 40px;
+    top: 50px;
+  }
+  
+  .rocketLogo1 {
+    max-width: 300px;
+  }
+  
+  .pokemonCard {
+    padding: 8px;
+    gap: 15px;
+  }
+  
+  .pokemonCard img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .pokemonCard h3 {
+    font-size: 18px;
+    margin: 5px 0;
+  }
+  
+  .pokemonCard h4 {
+    font-size: 14px;
+  }
+  
+  .pokemonCard button {
+    width: 120px;
+    height: 40px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+  
+  .addBoosterBtn {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .types span {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+}
+
+/* Très petits mobiles (480px et moins) */
+@media (max-width: 480px) {
+  .pokemonGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    max-width: 98%;
+    padding: 8px;
+  }
+  
+  .shopCards h2 {
+    font-size: 1.8rem;
+  }
+  
+  .rocketExtension {
+    padding: 30px 10px;
+  }
+  
+  .rocketTitle {
+    font-size: 1.2rem;
+  }
+  
+  .rocketDescription {
+    font-size: 0.8rem;
+  }
+  
+  .rocketImages {
+    width: 180px;
+    height: 200px;
+  }
+  
+  .card {
+    width: 130px;
+  }
+  
+  .rocketLogo1 {
+    max-width: 250px;
+  }
+  
+  .pokemonCard img {
+    width: 130px;
+    height: 130px;
+  }
+  
+  .pokemonCard h3 {
+    font-size: 16px;
+  }
+  
+  .pokemonCard h4 {
+    font-size: 12px;
+  }
+  
+  .pokemonCard button {
+    width: 100px;
+    height: 36px;
+    font-size: 0.8rem;
+  }
+  
+  .addBoosterBtn {
+    font-size: 0.8rem;
+    padding: 10px 15px;
+  }
+}
+
+/* Landscape orientation pour mobiles */
+@media (max-height: 500px) and (orientation: landscape) {
+  .pokemonGrid {
+    height: 60vh;
+  }
+  
+  .rocketExtension {
+    padding: 20px 15px;
+  }
+  
+  .rocketImages {
+    width: 150px;
+    height: 180px;
+  }
+  
+  .card {
+    width: 120px;
+  }
+}
+
+/* Améliorations pour les interactions tactiles */
+@media (hover: none) and (pointer: coarse) {
+  .pokemonCard button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .addBoosterBtn {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  
+  .pokemonCard {
+    transition: none;
+  }
+  
+  .shop-image:hover {
+    transform: none;
+  }
+}
+
+/* Accessibilité - Réduction des animations */
+@media (prefers-reduced-motion: reduce) {
+  .pokemonCard,
+  .shop-image,
+  .card,
+  .pokemonCard button {
+    transition: none;
+  }
+  
+  .pokemonCard button:hover,
+  .shop-image:hover {
+    transform: none;
+  }
+}

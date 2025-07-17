@@ -1,28 +1,37 @@
-.filtreContainer{
-display: flex;
-flex-direction: column;
-align-items: center;
-
+.filtreContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
 }
-
 
 .filterBar {
   position: sticky;
   top: 0;
   z-index: 100;
-  width: 75%;
+  width: 100%;
+  max-width: 1200px;
   background-color: #6e0000;
-  padding: 10px 20px;
+  padding: 15px 20px;
   border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 100px;
-  flex-wrap: wrap; 
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
   color: white;
   font-family: 'Arial', sans-serif;
-  margin-top: 100px; /* ✅ Supprimé */
+  margin-top: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.filterControls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex: 1;
+}
 
 .filterBtn {
   background: none;
@@ -31,6 +40,19 @@ align-items: center;
   font-weight: bold;
   cursor: pointer;
   position: relative;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.filterBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.filterBtn.active {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .dropdown {
@@ -48,6 +70,7 @@ align-items: center;
   left: 0;
   min-width: 160px;
   border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .dropdownContent button {
@@ -58,6 +81,16 @@ align-items: center;
   width: 100%;
   text-align: left;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+.dropdownContent button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdownContent button.active {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .dropdown:hover .dropdownContent {
@@ -65,12 +98,13 @@ align-items: center;
 }
 
 .searchContainer {
-  margin-left: auto;
   display: flex;
   align-items: center;
   background: white;
   border-radius: 999px;
   padding: 4px 8px;
+  min-width: 200px;
+  flex-shrink: 0;
 }
 
 .searchContainer input {
@@ -79,6 +113,8 @@ align-items: center;
   outline: none;
   padding: 6px 12px;
   border-radius: 999px;
+  width: 100%;
+  font-size: 14px;
 }
 
 .clearBtn {
@@ -88,4 +124,157 @@ align-items: center;
   cursor: pointer;
   color: black;
   padding-left: 8px;
+  flex-shrink: 0;
+}
+
+/* RESPONSIVE STYLES */
+
+/* Desktop (1024px et plus) */
+@media (min-width: 1024px) {
+  .filterBar {
+    width: 75%;
+    gap: 30px;
+    padding: 10px 20px;
+  }
+  
+  .filterControls {
+    gap: 30px;
+  }
+  
+  .searchContainer {
+    margin-left: auto;
+    min-width: 250px;
+  }
+}
+
+/* Tablette (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .filterBar {
+    width: 90%;
+    gap: 20px;
+    padding: 12px 18px;
+  }
+  
+  .filterControls {
+    gap: 20px;
+  }
+  
+  .searchContainer {
+    min-width: 200px;
+    order: 2;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .filterBtn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+
+/* Mobile (767px et moins) */
+@media (max-width: 767px) {
+  .filtreContainer {
+    padding: 0 5px;
+  }
+  
+  .filterBar {
+    width: 95%;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 12px;
+    margin-top: 10px;
+  }
+  
+  .filterControls {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  .filterBtn {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  
+  .searchContainer {
+    width: 100%;
+    max-width: none;
+    min-width: auto;
+    order: 2;
+  }
+  
+  .dropdownContent {
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 140px;
+  }
+  
+  /* Amélioration pour les petits écrans */
+  .dropdown {
+    position: static;
+  }
+  
+  .dropdownContent {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 60vh;
+    overflow-y: auto;
+    width: 80%;
+    max-width: 250px;
+  }
+}
+
+/* Très petits mobiles (480px et moins) */
+@media (max-width: 480px) {
+  .filterBar {
+    width: 98%;
+    padding: 12px 8px;
+    gap: 10px;
+  }
+  
+  .filterControls {
+    gap: 8px;
+  }
+  
+  .filterBtn {
+    font-size: 11px;
+    padding: 5px 6px;
+  }
+  
+  .searchContainer input {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  
+  .dropdownContent {
+    width: 90%;
+    max-width: 200px;
+  }
+  
+  .dropdownContent button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* Amélioration pour les interactions tactiles */
+@media (hover: none) and (pointer: coarse) {
+  .filterBtn {
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  
+  .dropdownContent button {
+    padding: 12px 16px;
+    min-height: 44px;
+  }
+  
+  .clearBtn {
+    padding: 8px;
+    min-height: 44px;
+    min-width: 44px;
+  }
 }

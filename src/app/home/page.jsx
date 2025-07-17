@@ -16,7 +16,6 @@ import { fetchPokemons } from "@/src/redux/pokemonSlice"
 import './page.css'
 import Footer from '../../components/footer/Footer'
 
-
 export default function Home() {
   const dispatch = useDispatch()
 
@@ -24,78 +23,95 @@ export default function Home() {
     dispatch(fetchPokemons())
   }, [dispatch])
 
+  const sections = [
+    {
+      id: 'shop',
+      title: 'Boutique',
+      description: 'Découvrez nos tous nouveaux produits',
+      image: imgShop,
+      link: '/shop',
+      className: 'shopSection',
+      imagePosition: 'left'
+    },
+    {
+      id: 'collection',
+      title: 'Collection',
+      description: 'Accédez à la collection de plus de 900 pokémons',
+      image: imgCollection,
+      link: '/collection',
+      className: 'collectionSection',
+      imagePosition: 'right'
+    },
+    {
+      id: 'catch',
+      title: 'Attrapez-les tous',
+      description: 'Tentez de capturer un pokémon',
+      image: imgAttrapez,
+      link: '/catchGame',
+      className: 'catchSection',
+      imagePosition: 'left'
+    },
+    {
+      id: 'guide',
+      title: 'Guide Pokémon',
+      description: 'Découvrez tous les secrets des cartes',
+      image: imgGuide,
+      link: '/guide',
+      className: 'guideSection',
+      imagePosition: 'right'
+    }
+  ]
+
   return (
     <div className="homeContainer">
       <Header />
       <div className="divider-main"></div>
 
       <div className="tendanceContainer">
-        <h1 className="h1Tendance">Top tendance</h1>
-        <InfiniteCarousel />
+        <div className="tendance-content">
+          <h1 className="h1Tendance">Top tendance</h1>
+          <div className="carousel-wrapper">
+            <InfiniteCarousel />
+          </div>
+        </div>
       </div>
+      
       <div className="divider-main"></div>
 
-      <article className="sectionHomeContainer">
-        
-
-        <section className="shop-section shopSection">
-          <div className="shop-image-container">
-            <div className="burst-background" />
-            <img src={imgShop.src} alt="Boutique" className="shop-image" />
-          </div>
-          <div className="overlay-darken">
-            <div className="shop-content">
-              <h2>Boutique</h2>
-              <p>Découvrez nos tous nouveaux produits</p>
-              <Link href='/shop'><button className="shop-btn">Explorer</button></Link>
+      <main className="sectionHomeContainer">
+        {sections.map((section, index) => (
+          <section 
+            key={section.id}
+            className={`shop-section ${section.className}`}
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <div className={`section-content ${section.imagePosition === 'left' ? 'content-right' : 'content-left'}`}>
+              <div className="overlay-darken">
+                <div className="shop-content">
+                  <h2>{section.title}</h2>
+                  <p>{section.description}</p>
+                  <Link href={section.link}>
+                    <button className="shop-btn">Explorer</button>
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
-
-        <section className="shop-section collectionSection">
-          <div className="overlay-darken">
-            <div className="shop-content">
-              <h2>Collection</h2>
-              <p>Accédez à la collection de plus de 900 pokémons</p>
-              <Link href='/collection'><button className="shop-btn">Explorer</button></Link>
+            
+            <div className={`section-image ${section.imagePosition === 'left' ? 'image-left' : 'image-right'}`}>
+              <div className="shop-image-container">
+                <div className="burst-background" />
+                <img 
+                  src={section.image.src} 
+                  alt={section.title} 
+                  className="shop-image" 
+                />
+              </div>
             </div>
-          </div>
-          <div className="shop-image-container">
-            <div className="burst-background" />
-            <img src={imgCollection.src} alt="Collection" className="shop-image" />
-          </div>
-        </section>
-
-        <section className="shop-section catchSection">
-          <div className="shop-image-container">
-            <div className="burst-background" />
-            <img src={imgAttrapez.src} alt="Attrapez-les tous" className="shop-image" />
-          </div>
-          <div className="overlay-darken">
-            <div className="shop-content">
-              <h2>Attrapez-les tous</h2>
-              <p>Tentez de capturer un pokémon</p>
-              <Link href='/catchGame'><button className="shop-btn">Explorer</button></Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="shop-section guideSection">
-          <div className="overlay-darken">
-            <div className="shop-content">
-              <h2>Guide Pokémon</h2>
-              <p>Découvrez tous les secrets des cartes</p>
-              <Link href='/guide'><button className="shop-btn">Explorer</button></Link>
-            </div>
-          </div>
-          <div className="shop-image-container">
-            <div className="burst-background" />
-            <img src={imgGuide.src} alt="Guide Pokémon" className="shop-image" />
-          </div>
-        </section>
-      </article>
+          </section>
+        ))}
+      </main>
+      
       <Footer/>
     </div>
-    
   )
 }

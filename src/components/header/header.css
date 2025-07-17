@@ -10,14 +10,6 @@
   position: relative;
 }
 
-.headerContainer {
-  position: relative; /* nécessaire pour les images en absolute */
-  overflow: hidden;
-  /* le reste de ton style */
-}
-
-
-
 .leftHeader {
   position: absolute;
   left: 10%;
@@ -107,4 +99,155 @@
   letter-spacing: 0;
   transform: skew(-10deg) translateY(8px);
   box-shadow: none;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Tablette (768px - 1024px) */
+@media (max-width: 1024px) {
+  .headerContainer {
+    padding: 0 20px;
+  }
+  
+  .leftHeader {
+    left: 5%;
+    max-width: 250px;
+  }
+  
+  .leftHeader img {
+    width: 200px;
+    height: auto;
+  }
+  
+  .rightHeader {
+    right: 5%;
+    max-width: 250px;
+  }
+  
+  .rightHeader img {
+    width: 250px;
+  }
+  
+  .button {
+    width: 160px;
+    height: 44px;
+    font-size: 1em;
+  }
+}
+
+/* Tablette portrait (768px et moins) */
+@media (max-width: 768px) {
+  .headerContainer {
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    gap: 30px;
+    height: auto;
+    min-height: calc(100vh - 60px);
+  }
+  
+  .leftHeader {
+    position: static;
+    transform: none;
+    order: 1;
+    width: 100%;
+    max-width: none;
+    gap: 15px;
+  }
+  
+  .leftHeader img {
+    width: 180px;
+    height: auto;
+  }
+  
+  .rightHeader {
+    position: static;
+    transform: none;
+    order: 3;
+    width: 100%;
+    max-width: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .rightHeader img {
+    width: 200px;
+  }
+  
+  .headerContainer > img {
+    order: 2;
+    position: static;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  .button {
+    width: 180px;
+    height: 48px;
+    font-size: 0.9em;
+  }
+}
+
+/* Mobile (480px et moins) */
+@media (max-width: 480px) {
+  .headerContainer {
+    padding: 15px;
+    gap: 20px;
+  }
+  
+  .leftHeader {
+    gap: 12px;
+  }
+  
+  .leftHeader img {
+    width: 150px;
+  }
+  
+  .rightHeader img {
+    width: 150px;
+  }
+  
+  .headerContainer > img {
+    height: 250px;
+  }
+  
+  .button {
+    width: 160px;
+    height: 44px;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+  }
+  
+  .button:active {
+    letter-spacing: 0;
+  }
+}
+
+/* Très petit mobile (320px et moins) */
+@media (max-width: 320px) {
+  .headerContainer {
+    padding: 10px;
+    gap: 15px;
+  }
+  
+  .leftHeader img {
+    width: 120px;
+  }
+  
+  .rightHeader img {
+    width: 120px;
+  }
+  
+  .headerContainer > img {
+    height: 200px;
+  }
+  
+  .button {
+    width: 140px;
+    height: 40px;
+    font-size: 0.7em;
+    padding: 8px 12px;
+  }
 }
