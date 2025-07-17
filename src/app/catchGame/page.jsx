@@ -6,7 +6,6 @@ import { addCardsToCollection } from "@/src/redux/collectionSlice"
 import { generateRarity } from "@/src/components/cardsShop/Cards"
 import { fetchPokemons } from "@/src/redux/pokemonSlice"
 import { useRouter } from "next/navigation"
-import dresseurGame from '../../../public/assets/img/dresseurGame.gif'
 import LoadingPlaceholder from "../carte/[id]/loading"
 import './page.css'
 import HeaderPage from "../../components/headerPage/HeaderPage"
@@ -25,11 +24,30 @@ export default function CatchGame() {
   const [messageType, setMessageType] = useState("")
   const [nextResetTime, setNextResetTime] = useState(null)
   const [timeLeft, setTimeLeft] = useState("")
+  const [isClient, setIsClient] = useState(false);
+const [user, setUser] = useState(null);
 
-  const user = JSON.parse(localStorage.getItem("currentUser"))
+const [checkingAuth, setCheckingAuth] = useState(true); // pour bloquer le render tant qu’on ne sait pas
+
+  
+
   const email = user?.email
   const gameKey = `catchGameData_${email}`
   const messageKey = `catchMessage_${email}`
+
+ useEffect(() => {
+  if (typeof window !== "undefined") {
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (storedUser) {
+      setUser(storedUser);
+    } else {
+      router.push("/login");
+    }
+    setCheckingAuth(false); // on a fini de vérifier
+  }
+}, []);
+
+
 
   useEffect(() => {
     if (message && (caught || attempts === 0 || messageType === "failure")) {
@@ -42,10 +60,7 @@ export default function CatchGame() {
   }, [message, caught, attempts, messageType])
 
   useEffect(() => {
-    if (!email) {
-      router.push("/login")
-      return
-    }
+ 
 
     if (allPokemons.length === 0) {
       dispatch(fetchPokemons())
@@ -143,40 +158,42 @@ export default function CatchGame() {
   }
 
   function attemptCatch() {
-    if (attempts === 0 || caught) return
+  // Protection supplémentaire
+  if (attempts <= 0 || caught || !pokemon) return
 
-    const chance = getCatchChance(pokemon.rarity)
-    const success = Math.random() <= chance
-    const newAttempts = attempts - 1
-    setAttempts(newAttempts)
+  const chance = getCatchChance(pokemon.rarity)
+  const success = Math.random() <= chance
+  const newAttempts = attempts - 1
+  setAttempts(newAttempts)
 
-    const msgText = success
-      ? `🎉 ${pokemon.name} attrapé ! Ajouté à votre collection !`
-      : newAttempts === 0
-        ? `😞 ${pokemon.name} s'est échappé ! Plus de Pokéballs...`
-        : `❌ ${pokemon.name} a évité la Pokéball ! Essayez encore !`
+  const msgText = success
+    ? `🎉 ${pokemon.name} attrapé ! Ajouté à votre collection !`
+    : newAttempts === 0
+      ? `😞 ${pokemon.name} s'est échappé ! Plus de Pokéballs...`
+      : `❌ ${pokemon.name} a évité la Pokéball ! Essayez encore !`
 
-    const msgType = success ? "success" : "failure"
+  const msgType = success ? "success" : "failure"
 
-   if (success) {
-  dispatch(addCardsToCollection({ email, cards: pokemon }))
-  setCaught(true)
-}
-    setMessage(msgText)
-    setMessageType(msgType)
-
-    localStorage.setItem(gameKey, JSON.stringify({
-      pokemon,
-      attemptsLeft: newAttempts,
-      lastCatchDate: new Date().toISOString(),
-      caught: success
-    }))
-
-    localStorage.setItem(messageKey, JSON.stringify({
-      text: msgText,
-      type: msgType
-    }))
+  if (success) {
+    dispatch(addCardsToCollection({ email, cards: pokemon }))
+    setCaught(true)
   }
+
+  setMessage(msgText)
+  setMessageType(msgType)
+
+  localStorage.setItem(gameKey, JSON.stringify({
+    pokemon,
+    attemptsLeft: newAttempts,
+    lastCatchDate: new Date().toISOString(),
+    caught: success
+  }))
+
+  localStorage.setItem(messageKey, JSON.stringify({
+    text: msgText,
+    type: msgType
+  }))
+}
 
   function renderPokeballs() {
     return Array.from({ length: 5 }, (_, i) => (
@@ -198,10 +215,14 @@ export default function CatchGame() {
       default: return '#9E9E9E'
     }
   }
+  
+if (checkingAuth || !user) {
+  return <LoadingPlaceholder />;
+}
 
-  if (loading) return <LoadingPlaceholder />
 
   return (
+    <>
     <div className="body">
       <HeaderPage
         title="Attrapez-les tous"
@@ -292,7 +313,9 @@ export default function CatchGame() {
           )}
         </div>
       </div>
-      <Footer />
+      
     </div>
+    <Footer />
+    </>
   )
 }
