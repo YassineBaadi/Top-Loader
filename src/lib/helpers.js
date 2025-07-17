@@ -1,6 +1,5 @@
 "use client"
 import { generateRarity } from "@/src/components/cardsShop/Cards"
-import imgBooster from '@/public/assets/img/boosterRocket.png'
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 

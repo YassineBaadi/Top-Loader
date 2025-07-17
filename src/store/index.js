@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import storage from "redux-persist/lib/storage"
 import { combineReducers } from "redux"
 import pokemonReducer from "@/src/redux/pokemonSlice"
 import collectionReducer from "@/src/redux/collectionSlice"
