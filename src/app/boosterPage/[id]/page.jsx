@@ -9,6 +9,11 @@ import {
   removeBooster,
 } from "@/src/redux/collectionSlice"
 import "./page.css"
+import Footer from "../../../components/footer/Footer"
+import { useSession } from "next-auth/react"
+import { selectUserCollection } from "../../../redux/collectionSlice"
+
+
 
 export default function BoosterOpenPage() {
   const dispatch = useDispatch()
@@ -30,7 +35,12 @@ const boosterIndex = Number(id)
     )
   }
 
-  const boosters = useSelector((state) => state.collection.boosters)
+const { data: session } = useSession()
+const localUser = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("currentUser")) : null
+const email = session?.user?.email || localUser?.email
+
+const { boosters = [] } = useSelector(state => selectUserCollection(state, email))
+
   const booster = boosters[boosterIndex]
 
   const [revealedCards, setRevealedCards] = useState([])
@@ -83,8 +93,10 @@ const boosterIndex = Number(id)
 
   const handleFinishOpening = () => {
     console.log("Ajout des cartes à la collection:", revealedCards)
-    dispatch(addCardsToCollection(revealedCards))
-    dispatch(removeBooster(boosterIndex))
+    dispatch(addCardsToCollection({ email, cards: revealedCards }))
+
+    dispatch(removeBooster({ email, index: boosterIndex }))
+
     setBoosterAdded(true)
     
     // Redirection après 2 secondes
@@ -116,6 +128,7 @@ const boosterIndex = Number(id)
   }
 
   return (
+    <>
     <div className="boosterOpenPage">
       <h1 className="h1Opening"> Ouverture booster #{boosterIndex + 1}</h1>
 
@@ -177,6 +190,10 @@ const boosterIndex = Number(id)
           </div>
         </>
       )}
+
+      
     </div>
+    <Footer/>
+    </>
   )
 }

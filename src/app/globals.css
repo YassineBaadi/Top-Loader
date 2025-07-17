@@ -57,7 +57,18 @@ background-color: aliceblue;
   margin-top: -35%;
 }
 
-
+.divider-main {
+    --divider-height: 34px;
+    background-color: white;
+    background-image: url("../../public/assets/img/divider.jpg");
+    background-repeat: repeat-x;
+    background-position: center center;
+    block-size: var(--divider-height);
+    inline-size: 100%;
+    position: absolute;
+    transform: translateY(-50%);
+    z-index: 5;
+}
 
 .sectionHomeContainer{
   background-image: url('../../public/assets/img/bgArticle.jpg');
@@ -96,17 +107,6 @@ background-color: aliceblue;
   align-items: center;     
   text-align: center;
 }
-
-
-
-
-/* --------------------------
-
-
-    SHOP PAGE
-
-
--------------------------- */
 
 
 

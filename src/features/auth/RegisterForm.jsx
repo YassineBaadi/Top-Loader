@@ -16,7 +16,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <form onSubmit={handleRegister} className="authContainer">
+    <form onSubmit={handleRegister} className="modalAuthContainer">
       <h2>Créer un compte</h2>
       <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
       <input placeholder="Mot de passe" type="password" value={password} onChange={e => setPassword(e.target.value)} />

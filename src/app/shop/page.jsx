@@ -1,13 +1,14 @@
 "use client"
 
 import HeaderPage from "@/src/components/headerPage/HeaderPage"
-import shopBg from '@/public/assets/img/bgHeaderShop.avif'
-import logoEtincelles from "@/public/assets/img/logoLumiere.png"
+
 import card1 from "@/public/assets/img/boosterRocket.png"
 import card2 from "@/public/assets/img/arceus.png"
 import logoRocket from '@/public/assets/img/team-rocket-returns.png'
 import Card from "@/src/components/cardsShop/Cards"
 import PikachuLoading from '@/public/assets/img/pikachuGif.gif'
+import useCurrentUser from "@/src/lib/helpers"
+import { useRouter } from "next/navigation"
 
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -23,6 +24,8 @@ import LoginForm from "../../features/auth/LoginForm"
 
 import './page.css'
 import LoadingPlaceholder from "../carte/[id]/loading"
+import Footer from "../../components/footer/Footer"
+import { useSession } from "next-auth/react"
 
 
 
@@ -30,7 +33,7 @@ export default function Shop() {
   const dispatch = useDispatch()
   const pokemons = useSelector((state) => state.pokemons.data)
 
-  const { data: originalPokemons, loading: isLoading } = useSelector((state) => state.pokemons)
+const { data: originalPokemons, loading: isPokemonsLoading } = useSelector((state) => state.pokemons)
 
   const [filteredPokemons, setFilteredPokemons] = useState(originalPokemons)
 
@@ -41,23 +44,34 @@ export default function Shop() {
   const [selectedRarity, setSelectedRarity] = useState(null)
 
   const [showLoginModal, setShowLoginModal] = useState(false)
+  const { data: session, status } = useSession()
+
+const { user, isLoading } = useCurrentUser()
+const router = useRouter()
 
 const handleAddBooster = () => {
-  const user = JSON.parse(localStorage.getItem("currentUser"))
-  if (!user) {
-    setShowLoginModal(true)
-    return
+  if (isLoading) return;
+
+  if (!user || !user.email) {
+    router.push("/login");
+    return;
   }
 
   if (pokemons.length === 0) {
-    alert("Aucun Pokémon disponible.")
-    return
+    alert("Aucun Pokémon disponible.");
+    return;
   }
 
-  const booster = generateBooster(pokemons)
-  dispatch(addToCart({ type: "booster", data: booster }))
-  alert("📦 Booster ajouté au panier !")
+  const booster = generateBooster(pokemons);
+  const email = user.email;
+
+  dispatch(addToCart({ type: "booster", data: booster, email }));
+  console.log("🛒 Booster ajouté au panier pour :", email);
+  alert("📦 Booster ajouté au panier !");
 }
+
+console.log("➡️ Dispatching booster to cart for:", user?.email)
+
 
 
   useEffect(() => {
@@ -98,9 +112,9 @@ const handleAddBooster = () => {
 
   if (isLoading) {
     return (
-      <div className="catch-container">
+      
         <LoadingPlaceholder />
-      </div>
+      
     )
   }
             
@@ -110,7 +124,12 @@ const handleAddBooster = () => {
 
     <>
     <div className="shopContainer">
-      <HeaderPage title="BOUTIQUE" backgroundImage={shopBg.src} />
+      <HeaderPage
+  title="Boutique"
+  subtitle="Produits exclusifs et nouveautés"
+  theme="boutique"
+  icon="🛍️"
+/>
       <div className="divider-main"></div>
 
       <section className="extensionSection">
@@ -131,9 +150,9 @@ const handleAddBooster = () => {
               </h2>
               <p className="rocketDescription">
                 
-L’extension Rivalités Destinée du JCC Pokémon met en scène des affrontements légendaires entre d’anciens rivaux et de nouveaux challengers. 
-À travers ces 10 cartes exclusives, redécouvrez des Pokémon emblématiques confrontés à leur destin, 
-dans une ambiance intense et stratégique où chaque choix peut changer l’issue du combat.
+          L’extension Rivalités Destinée du JCC Pokémon met en scène des affrontements légendaires entre d’anciens rivaux et de nouveaux challengers. 
+          À travers ces 10 cartes exclusives, redécouvrez des Pokémon emblématiques confrontés à leur destin, 
+          dans une ambiance intense et stratégique où chaque choix peut changer l’issue du combat.
               </p>
               <div style={{ textAlign: "center", marginTop: "1rem" }}>
               <button
@@ -152,6 +171,8 @@ dans une ambiance intense et stratégique où chaque choix peut changer l’issu
       <div className="divider-main"></div>
 
       <section className="shopCards">
+        <h2>Cartes à l'unité</h2>
+
         <FilterBar
           selectedType={selectedType}
           setSelectedType={setSelectedType}
@@ -200,6 +221,7 @@ dans une ambiance intense et stratégique où chaque choix peut changer l’issu
           )}
         </section>
       </section>
+      <Footer/>
     </div>
 
     <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>

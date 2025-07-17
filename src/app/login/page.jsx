@@ -1,6 +1,9 @@
 "use client"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import './page.css'
+import Footer from "../../components/footer/Footer"
+import { signIn } from "next-auth/react"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -18,21 +21,55 @@ export default function LoginPage() {
       return
     }
 
-    localStorage.setItem("currentUser", JSON.stringify(user))
-    router.push("/home")
+ localStorage.setItem("currentUser", JSON.stringify(user))
+router.refresh() // force Next.js à recharger les données client (Navbar)
+window.location.href = "/home"
+
+
+
   }
 
+
+
   return (
+    <>
+
+    
     <div className="authContainer">
       <h2>Connexion</h2>
       <form onSubmit={handleLogin}>
-        <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-        <input placeholder="Mot de passe" type="password" value={password} onChange={e => setPassword(e.target.value)} />
+        <input
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <input
+          placeholder="Mot de passe"
+          type="password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
         <button type="submit">Se connecter</button>
       </form>
+
+      <div className="social-login">
+        
+        <button className="social-button google" onClick={() => signIn('google', { callbackUrl: '/home' })}
+>
+          🔵 Se connecter avec Google
+        </button>
+        <button className="social-button github">
+          🐱 Se connecter avec GitHub
+        </button>
+      </div>
+
       <p style={{ marginTop: "1rem" }}>
         Pas encore de compte ? <a href="/register">S'inscrire</a>
       </p>
     </div>
+    
+    <Footer/>
+    </>
   )
 }
+

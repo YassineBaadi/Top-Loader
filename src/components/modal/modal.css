@@ -42,20 +42,21 @@
   }
 }
 
-.authContainer {
+/* ✅ MODIFIÉ : anciennement .authContainer */
+.modalAuthContainer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.authContainer input {
+.modalAuthContainer input {
   padding: 0.8rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
 }
 
-.authContainer button {
+.modalAuthContainer button {
   padding: 0.8rem;
   background: #2c3e50;
   color: white;

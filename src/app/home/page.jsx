@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux"
 import { useEffect } from "react"
 import { fetchPokemons } from "@/src/redux/pokemonSlice"
 import './page.css'
+import Footer from '../../components/footer/Footer'
 
 
 export default function Home() {
@@ -35,19 +36,7 @@ export default function Home() {
       <div className="divider-main"></div>
 
       <article className="sectionHomeContainer">
-        <section className="shop-section guideSection">
-          <div className="overlay-darken">
-            <div className="shop-content">
-              <h2>Guide Pokémon</h2>
-              <p>Découvrez tous les secrets des cartes</p>
-              <Link href='/guide'><button className="shop-btn">Explorer</button></Link>
-            </div>
-          </div>
-          <div className="shop-image-container">
-            <div className="burst-background" />
-            <img src={imgGuide.src} alt="Guide Pokémon" className="shop-image" />
-          </div>
-        </section>
+        
 
         <section className="shop-section shopSection">
           <div className="shop-image-container">
@@ -58,7 +47,7 @@ export default function Home() {
             <div className="shop-content">
               <h2>Boutique</h2>
               <p>Découvrez nos tous nouveaux produits</p>
-              <button className="shop-btn">Explorer</button>
+              <Link href='/shop'><button className="shop-btn">Explorer</button></Link>
             </div>
           </div>
         </section>
@@ -68,7 +57,7 @@ export default function Home() {
             <div className="shop-content">
               <h2>Collection</h2>
               <p>Accédez à la collection de plus de 900 pokémons</p>
-              <button className="shop-btn">Explorer</button>
+              <Link href='/collection'><button className="shop-btn">Explorer</button></Link>
             </div>
           </div>
           <div className="shop-image-container">
@@ -86,12 +75,27 @@ export default function Home() {
             <div className="shop-content">
               <h2>Attrapez-les tous</h2>
               <p>Tentez de capturer un pokémon</p>
-              <button className="shop-btn">Explorer</button>
+              <Link href='/catchGame'><button className="shop-btn">Explorer</button></Link>
             </div>
           </div>
         </section>
+
+        <section className="shop-section guideSection">
+          <div className="overlay-darken">
+            <div className="shop-content">
+              <h2>Guide Pokémon</h2>
+              <p>Découvrez tous les secrets des cartes</p>
+              <Link href='/guide'><button className="shop-btn">Explorer</button></Link>
+            </div>
+          </div>
+          <div className="shop-image-container">
+            <div className="burst-background" />
+            <img src={imgGuide.src} alt="Guide Pokémon" className="shop-image" />
+          </div>
+        </section>
       </article>
-      <footer />
+      <Footer/>
     </div>
+    
   )
 }

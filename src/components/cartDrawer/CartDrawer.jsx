@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
+import useCurrentUser from "@/src/lib/helpers"
 import {
   clearCart,
   increaseQty,
@@ -11,19 +12,21 @@ import LoginForm from "@/src/features/auth/LoginForm"
 import "./CartDrawer.css"
 
 export default function CartDrawer({ isOpen, onClose }) {
+  const { user, isLoading } = useCurrentUser()
+  const email = user?.email
+
   const dispatch = useDispatch()
   const router = useRouter()
-const user = JSON.parse(localStorage.getItem("currentUser"))
-const email = user?.email
-const cartItems = useSelector((state) => state.cart.userCarts[email] || [])
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  // 🛠️ ✅ Corrigé : éviter de lire une mauvaise clé si email pas encore dispo
+  const cartItems = useSelector((state) => {
+    if (!email) return []
+    return state.cart.userCarts[email] || []
+  })
+
   const [showLoginModal, setShowLoginModal] = useState(false)
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"))
-    setIsLoggedIn(!!user)
-  }, [])
+  const isLoggedIn = !!email
 
   const handleImageClick = (item) => {
     if (item.type === "card") {
@@ -34,44 +37,47 @@ const cartItems = useSelector((state) => state.cart.userCarts[email] || [])
     onClose()
   }
 
+  const sortedItems = [...cartItems].sort(
+    (a, b) => (a.data.price || 0) - (b.data.price || 0)
+  )
 
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
-// Clone et trier les articles par prix unitaire croissant
-const sortedItems = [...cartItems].sort(
-  (a, b) => (a.data.price || 0) - (b.data.price || 0)
-)
+  let totalPrice = 0
+  let discountNote = null
 
-const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0)
+  if (totalQuantity >= 5) {
+    const freeItem = sortedItems[0]
+    const freePrice = freeItem?.data?.price || 0
 
-let totalPrice = 0
-let discountNote = null
+    totalPrice = cartItems.reduce((sum, item) => {
+      const itemPrice = item.data.price || 0
+      return sum + itemPrice * item.quantity
+    }, 0) - freePrice
 
-if (totalQuantity >= 5) {
-  // Trouver l'article le moins cher (unitaire)
-  const freeItem = sortedItems[0]
-  const freePrice = freeItem.data.price || 0
+    discountNote = ` ${freeItem.data.name || "Article"} le moins cher offert (-${freePrice} €)`
+  } else {
+    totalPrice = cartItems.reduce((sum, item) => {
+      const itemPrice = item.data.price || 0
+      return sum + itemPrice * item.quantity
+    }, 0)
+  }
 
-  // Calculer le prix total avec une unité gratuite
-  totalPrice = cartItems.reduce((sum, item) => {
-    const itemPrice = item.data.price || 0
-    return sum + itemPrice * item.quantity
-  }, 0) - freePrice
-
-  discountNote = ` ${freeItem.data.name || "Article"} le moins cher offert (-${freePrice} €)`
-} else {
-  totalPrice = cartItems.reduce((sum, item) => {
-    const itemPrice = item.data.price || 0
-    return sum + itemPrice * item.quantity
-  }, 0)
-}
-
-
+  // 🔄 Chargement : on attend que le user soit disponible
+  if (isLoading || !email) {
+    return null
+  }
 
   return (
     <>
-      <div className={`cart-drawer ${isOpen ? "open" : ""}`}>
+      {isOpen && <div className="cart-overlay" onClick={onClose} />}
+
+      <div
+        className={`cart-drawer ${isOpen ? "open" : ""}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="cart-header">
-          <h2> Panier</h2>
+          <h2>Panier</h2>
           <button onClick={onClose}>✖</button>
         </div>
 
@@ -83,27 +89,26 @@ if (totalQuantity >= 5) {
               {cartItems.map((item, index) => (
                 <li key={index} className="cart-item">
                   <img
-  src={
-    item.type === "booster"
-      ? item.data.image || "/assets/img/boosterRocket.png"
-
-      : item.data.image
-  }
-  alt={item.data.name || "Booster"}
-  onClick={() => handleImageClick(item)}
-  className="cart-img"
-/>
+                    src={
+                      item.type === "booster"
+                        ? item.data.image || "/assets/img/boosterRocket.png"
+                        : item.data.image
+                    }
+                    alt={item.data.name || "Booster"}
+                    onClick={() => handleImageClick(item)}
+                    className="cart-img"
+                  />
 
                   <div className="cart-info">
-                    <span className="cart-name">{item.data.name  || "Booster"}</span>
+                    <span className="cart-name">{item.data.name || "Booster"}</span>
                     <span className="cart-price">
                       {item.data.price || 0} € × {item.quantity} ={" "}
                       {item.data.price * item.quantity || 0} €
                     </span>
                     <div className="cart-qty">
-                      <button onClick={() => dispatch(decreaseQty(index))}>−</button>
+                      <button onClick={() => dispatch(decreaseQty({ index, email }))}>−</button>
                       <span>{item.quantity}</span>
-                      <button onClick={() => dispatch(increaseQty(index))}>+</button>
+                      <button onClick={() => dispatch(increaseQty({ index, email }))}>+</button>
                     </div>
                   </div>
                 </li>
@@ -112,17 +117,16 @@ if (totalQuantity >= 5) {
 
             <div className="cart-footer">
               <div className="cart-total">
-  <strong>Total : {totalPrice.toLocaleString()} €</strong>
-  {discountNote && (
-    <p style={{ color: "green", fontWeight: "bold", marginTop: "0.5rem" }}>
-      {discountNote}
-    </p>
-  )}
-</div>
-
+                <strong>Total : {totalPrice.toLocaleString()} €</strong>
+                {discountNote && (
+                  <p style={{ color: "green", fontWeight: "bold", marginTop: "0.5rem" }}>
+                    {discountNote}
+                  </p>
+                )}
+              </div>
 
               <button
-                onClick={() => dispatch(clearCart())}
+                onClick={() => dispatch(clearCart({ email }))}
                 className="cart-clear"
               >
                 Vider le panier
@@ -131,9 +135,12 @@ if (totalQuantity >= 5) {
               {isLoggedIn ? (
                 <button
                   className="cart-checkout"
-                  onClick={() => router.push("/paiement")}
+                  onClick={() => {
+                    onClose()
+                    router.push("/paiement")
+                  }}
                 >
-                   Commander
+                  Commander
                 </button>
               ) : (
                 <button
@@ -148,7 +155,6 @@ if (totalQuantity >= 5) {
         )}
       </div>
 
-      {/* 🔐 Modal de connexion */}
       <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
         <LoginForm />
       </Modal>

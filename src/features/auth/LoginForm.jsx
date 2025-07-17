@@ -16,7 +16,7 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="authContainer">
+    <div className="modalAuthContainer">
       <h2>Connexion</h2>
       <form onSubmit={handleLocalLogin}>
         <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />

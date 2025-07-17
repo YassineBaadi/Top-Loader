@@ -10,6 +10,9 @@
   transition: right 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
+  border-bottom-left-radius: 20px;
+   border-top-left-radius: 20px;
+ 
 }
 
 .cart-drawer.open {
@@ -24,12 +27,37 @@
   color: white;
   font-weight: bold;
   border-bottom: 2px solid black;
+   border-top-left-radius: 20px;
 }
 
+.cart-header h2{
+  font-size: 50px;
+}
+
+.cart-empty {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
 .cart-header button:hover{
   cursor: pointer;
   transform: scale(1.05);
 }
+
+.cart-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* assombrissement */
+  z-index: 999; /* juste derrière le drawer */
+}
+
 
 .cart-list {
   padding: 1rem;

@@ -59,6 +59,23 @@
   top: -60px; /* Réduit depuis -75px */
 }
 
+.pokemon-type {
+  color: white;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 6px;
+  width: 80px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-blend-mode: multiply;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-clip: padding-box;
+}
+
+
 .pokemon-logo {
   text-align: center;
   font-size: 12px; /* Réduit depuis 14px */
@@ -124,6 +141,30 @@
 .details-button:hover {
   background-color: #500000;
 }
+
+.legendary-aura {
+  position: relative;
+  box-shadow: 0 0 25px 8px rgba(255, 215, 0, 0.6), 
+              0 0 50px 15px rgba(255, 223, 0, 0.3) inset;
+  animation: legendary-glow 2s infinite ease-in-out;
+  border: 2px solid gold;
+}
+
+@keyframes legendary-glow {
+  0% {
+    box-shadow: 0 0 25px 8px rgba(255, 215, 0, 0.6),
+                0 0 50px 15px rgba(255, 223, 0, 0.3) inset;
+  }
+  50% {
+    box-shadow: 0 0 35px 12px rgba(255, 215, 0, 0.8),
+                0 0 60px 20px rgba(255, 223, 0, 0.5) inset;
+  }
+  100% {
+    box-shadow: 0 0 25px 8px rgba(255, 215, 0, 0.6),
+                0 0 50px 15px rgba(255, 223, 0, 0.3) inset;
+  }
+}
+
 
 
 /* FEU */

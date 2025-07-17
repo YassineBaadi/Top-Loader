@@ -1,6 +1,8 @@
 "use client"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import './page.css'
+import Footer from "../../components/footer/Footer"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -22,17 +24,25 @@ export default function RegisterPage() {
     localStorage.setItem("users", JSON.stringify(users))
 
     alert("Inscription réussie !")
-    router.push("/login")
+    window.location.href = "/login"
+
   }
 
   return (
+    <>
     <div className="authContainer">
       <h2>Créer un compte</h2>
       <form onSubmit={handleRegister}>
         <input placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
         <input placeholder="Mot de passe" type="password" value={password} onChange={e => setPassword(e.target.value)} />
         <button type="submit">S'inscrire</button>
+        
       </form>
+      <p style={{ marginTop: "1rem" }}>
+        Déjà inscrit ? <a href="/login">Se connecter</a>
+      </p>
     </div>
+    <Footer/>
+    </>
   )
 }

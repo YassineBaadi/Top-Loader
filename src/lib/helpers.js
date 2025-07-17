@@ -1,5 +1,8 @@
+"use client"
 import { generateRarity } from "@/src/components/cardsShop/Cards"
 import imgBooster from '@/public/assets/img/boosterRocket.png'
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
 
 export function generateBooster(pokemons) {
   if (!pokemons || pokemons.length === 0) return []
@@ -55,5 +58,50 @@ export function generateBooster(pokemons) {
     cards: booster,
     price: 10,
     image: "/assets/img/boosterRocket.png",
+  }
+}
+
+
+
+export default function useCurrentUser() {
+  const { data: session, status } = useSession()
+  const [localUser, setLocalUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("currentUser")
+      if (stored) setLocalUser(JSON.parse(stored))
+      setLoading(false)
+    }
+  }, [])
+
+  if (status === "authenticated" && session?.user) {
+    return {
+      user: {
+        email: session.user.email,
+        name: session.user.name,
+        image: session.user.image,
+        from: "nextauth",
+      },
+      isLoading: false
+    }
+  }
+
+  if (!loading && localUser) {
+    return {
+      user: {
+        email: localUser.email,
+        name: localUser.name,
+        image: null,
+        from: "local",
+      },
+      isLoading: false
+    }
+  }
+
+  return {
+    user: null,
+    isLoading: loading || status === "loading"
   }
 }

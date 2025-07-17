@@ -4,7 +4,7 @@ import Link from 'next/link'
 import './navbar.css'
 import Logo from './../../../public/assets/img/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faCartShopping, faGear } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import Modal from '../modal/Modal'
@@ -13,80 +13,108 @@ import RegisterForm from '../../features/auth/RegisterForm'
 import CartDrawer from "../../components/cartDrawer/CartDrawer"
 import { useSelector } from "react-redux"
 import { selectCartCount } from "@/src/redux/cartSlice"
-
-
+import { signOut } from "next-auth/react"
+import useCurrentUser from "../../lib/helpers"
 
 export default function Navbar() {
   const pathname = usePathname()
   const isActive = (path) => pathname === path
+
   const [showCart, setShowCart] = useState(false)
-
-
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [showRegisterModal, setShowRegisterModal] = useState(false)
-  const [user, setUser] = useState(null)
   const [showDropdown, setShowDropdown] = useState(false)
   const dropdownRef = useRef(null)
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("currentUser")
-      if (stored) setUser(JSON.parse(stored))
-    }
+  const { user } = useCurrentUser()
+  const cartCount = useSelector((state) => selectCartCount(state, user?.email))
 
+  useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setShowDropdown(false)
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-
-  const [userEmail, setUserEmail] = useState(null)
-
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    const user = JSON.parse(localStorage.getItem("currentUser"))
-    if (user) setUserEmail(user.email)
-  }
-}, [])
-
-const cartCount = useSelector((state) => selectCartCount(state, userEmail))
-
-
   return (
-
     <>
-    <div className="navbarContainer">
-      <div className="logo">
-        <img src={Logo.src} alt="Logo" style={{ width: 200, height: 180 }} />
-      </div>
+      <div className="navbarContainer">
+        <div className="logo">
+          <img src={Logo.src} alt="Logo" style={{ width: 200, height: 180 }} />
+        </div>
 
-      <div className="navbarSettings">
-        <ul className="containerList">
-          <li>
-            <Link href="/home" className={isActive('/') ? 'active' : ''}>Home</Link>
-          </li>
-          <li>
-            <Link href="/collection" className={isActive('/collection') ? 'active' : ''}>Collection</Link>
-          </li>
-          <li>
-            <Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Shop</Link>
-          </li>
-          <li>
-            <Link href="/catchGame" className={isActive('/catchGame') ? 'active' : ''}>
-              Attrapez les tous
-            </Link>
-          </li>
+        <div className="navbarSettings">
+          <ul className="containerList">
+            <li>
+              <Link href="/home" className={isActive('/') ? 'active' : ''}>Accueil</Link>
+            </li>
+            <li>
+              <Link href="/collection" className={isActive('/collection') ? 'active' : ''}>Collection</Link>
+            </li>
+            <li>
+              <Link href="/shop" className={isActive('/shop') ? 'active' : ''}>Boutique</Link>
+            </li>
+            <li>
+              <Link href="/catchGame" className={isActive('/catchGame') ? 'active' : ''}>
+                Attrapez les tous
+              </Link>
+            </li>
 
-          <li ref={dropdownRef} style={{ position: "relative" }}>
-            {user ? (
-              <>
+            <li ref={dropdownRef} style={{ position: "relative" }}>
+              {user ? (
+                <>
+                  <button
+                    onClick={() => setShowDropdown(prev => !prev)}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "white",
+                      cursor: "pointer"
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faUser} /> {user.email}
+                  </button>
+
+                  {showDropdown && (
+                    <div style={{
+                      position: "absolute",
+                      top: "2.5rem",
+                      right: 0,
+                      background: "#fff",
+                      color: "#333",
+                      border: "1px solid #ccc",
+                      borderRadius: "6px",
+                      padding: "0.5rem",
+                      zIndex: 1000,
+                      minWidth: "160px",
+                      textAlign: "left"
+                    }}>
+                      <button
+                        onClick={() => {
+                          localStorage.removeItem("currentUser")
+                          signOut()
+                          setShowDropdown(false)
+                        }}
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          color: "#333",
+                          cursor: "pointer",
+                          width: "100%",
+                          padding: "0.5rem"
+                        }}
+                      >
+                        Se déconnecter
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
                 <button
-                  onClick={() => setShowDropdown(prev => !prev)}
+                  onClick={() => setShowLoginModal(true)}
                   style={{
                     background: "transparent",
                     border: "none",
@@ -94,105 +122,50 @@ const cartCount = useSelector((state) => selectCartCount(state, userEmail))
                     cursor: "pointer"
                   }}
                 >
-                  <FontAwesomeIcon icon={faUser} /> {user.email}
+                  <FontAwesomeIcon icon={faUser} size="lg" />
                 </button>
+              )}
+            </li>
 
-                {showDropdown && (
-                  <div style={{
-                    position: "absolute",
-                    top: "2.5rem",
-                    right: 0,
-                    background: "#fff",
-                    color: "#333",
-                    border: "1px solid #ccc",
-                    borderRadius: "6px",
-                    padding: "0.5rem",
-                    zIndex: 1000,
-                    minWidth: "160px",
-                    textAlign: "left"
-                  }}>
-                    <button
-                      onClick={() => {
-                        localStorage.removeItem("currentUser")
-                        setUser(null)
-                        setShowDropdown(false)
-                        window.location.reload()
-                      }}
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        color: "#333",
-                        cursor: "pointer",
-                        width: "100%",
-                        padding: "0.5rem"
-                      }}
-                    >
-                      Se déconnecter
-                    </button>
-                  </div>
-                )}
+            <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
+              <>
+                <LoginForm />
+                <p style={{ textAlign: "center", marginTop: "1rem" }}>
+                  Pas encore de compte ?{" "}
+                  <span
+                    style={{ color: "#3498db", cursor: "pointer" }}
+                    onClick={() => {
+                      setShowLoginModal(false)
+                      setShowRegisterModal(true)
+                    }}
+                  >
+                    S’inscrire
+                  </span>
+                </p>
               </>
-            ) : (
+            </Modal>
+
+            <Modal isOpen={showRegisterModal} onClose={() => setShowRegisterModal(false)}>
+              <RegisterForm />
+            </Modal>
+
+            <li style={{ position: "relative" }}>
               <button
-                onClick={() => setShowLoginModal(true)}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "white",
-                  cursor: "pointer"
-                }}
+                onClick={() => setShowCart(true)}
+                style={{ background: "transparent", border: "none", color: "white", cursor: "pointer", position: "relative" }}
               >
-                <FontAwesomeIcon icon={faUser} size="lg" />
+                <FontAwesomeIcon icon={faCartShopping} />
+                {cartCount > 0 && (
+                  <span className="cart-badge">{cartCount}</span>
+                )}
               </button>
-            )}
-          </li>
+            </li>
 
-          <Modal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}>
-            <>
-              <LoginForm />
-              <p style={{ textAlign: "center", marginTop: "1rem" }}>
-                Pas encore de compte ?{" "}
-                <span
-                  style={{ color: "#3498db", cursor: "pointer" }}
-                  onClick={() => {
-                    setShowLoginModal(false)
-                    setShowRegisterModal(true)
-                  }}
-                >
-                  S’inscrire
-                </span>
-              </p>
-            </>
-          </Modal>
-
-          <Modal isOpen={showRegisterModal} onClose={() => setShowRegisterModal(false)}>
-            <RegisterForm />
-          </Modal>
-
-          <li style={{ position: "relative" }}>
-  <button
-    onClick={() => setShowCart(true)}
-    style={{ background: "transparent", border: "none", color: "white", cursor: "pointer", position: "relative" }}
-  >
-    <FontAwesomeIcon icon={faCartShopping} />
-    {cartCount > 0 && (
-      <span className="cart-badge">{cartCount}</span>
-    )}
-  </button>
-</li>
-
-
-          <li>
-            <Link href="/settings"><FontAwesomeIcon icon={faGear} /></Link>
-          </li>
-        </ul>
+          </ul>
+        </div>
       </div>
-    </div>
 
-    
-    <CartDrawer isOpen={showCart} onClose={() => setShowCart(false)} />
-
+      <CartDrawer isOpen={showCart} onClose={() => setShowCart(false)} />
     </>
-    
   )
 }

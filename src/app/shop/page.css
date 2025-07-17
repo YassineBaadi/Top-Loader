@@ -1,4 +1,5 @@
 
+
 .realShop{
   width: 400px;
 }
@@ -37,17 +38,20 @@
 
 .pokemonGrid {
   display: grid;
-  
+  border-bottom: 5px solid;
+  border-top: 5px solid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 80px;
   max-width: 77%;
   width: 100%;
   padding: 20px;
   margin: 0 auto;
-  background-image: url("../../../public/assets/img/bgShopPage.jpg");
-      background-size: 500px auto;
-    background-attachment: fixed;
-    margin-top: 100px;
+ 
+    margin-top: 50px;
+ background-color: rgba(255, 0, 0, 0.068);
+      height: 80vh;               
+  overflow-y: auto;           
+  overflow-x: hidden;         
 }
 
 
@@ -138,6 +142,32 @@
   filter: drop-shadow(0 8px 10px var(--gold-dark));
 }
 
+.shopCards h2{
+  
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 3rem;
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: 0.05em;
+  color: #2c3e50;
+  position: relative;
+  justify-self: center;
+  font-weight: bold;
+  margin-top: 50px;
+    
+}
+
+.shopCards h2::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: #3498db;
+}
+
 
 .addBoosterBtn {
   background-color: #f39c12;
@@ -178,11 +208,16 @@
 }
 
 
-.pokemonGridContainer{
+.pokemonGridContainer {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
+  
+
+
 }
+
 
 .noResults {
   text-align: center;
@@ -215,7 +250,8 @@
 }
 
 .shopContainer{
-  height: 100vh;
+  min-height: 100vh;
+
   width: 100vw;
   background-image: url("../../../public/assets/img/bgShopPage.jpg");
       background-size: 500px auto;
@@ -311,3 +347,4 @@
   height: auto;
   width: 100vw;
 }
+

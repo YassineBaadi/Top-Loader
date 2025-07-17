@@ -45,23 +45,23 @@ export default function Card() {
   }, [])
 
   return (
-    <div className="card-with-guide-button">
+    <div className="guide-card-with-guide-button">
       <button
         onClick={() => setGuideMode(!guideMode)}
-        className="guide-toggle-btn"
+        className="guide-guide-toggle-btn"
       >
         {guideMode ? 'Quitter le mode guide' : 'Mode guide'}
       </button>
 
-      <div className="pokemon-card-container">
-        <div className="pokemon-card">
-          <div className="background">
-            <img src={Pikachu.src} alt="Pikachu" className="image" />
+      <div className="guide-pokemon-card-container">
+        <div className="guide-pokemon-card">
+          <div className="guide-background">
+            <img src={Pikachu.src} alt="Pikachu" className="guide-image" />
           </div>
 
-          <div className="content">
+          <div className="guide-content">
             <h1
-              className={`pokemon-name ${guideMode ? 'highlight' : ''}`}
+              className={`guide-pokemon-name ${guideMode ? 'guide-highlight' : ''}`}
               onClick={
                 guideMode
                   ? () => showZoom(nameRef, 'Pikachu', 'Nom du Pokémon, utilisé pour l’identification.')
@@ -73,7 +73,7 @@ export default function Card() {
             </h1>
 
             <span
-              className={`pokemon-type ${guideMode ? 'highlight' : ''}`}
+              className={`guide-pokemon-type ${guideMode ? 'guide-highlight' : ''}`}
               onClick={
                 guideMode
                   ? () => showZoom(typeRef, 'Type : Électrique ⚡', 'Le type détermine les forces et faiblesses du Pokémon.')
@@ -84,13 +84,13 @@ export default function Card() {
               Electric
             </span>
 
-            <div className="pokemon-stats">
+            <div className="guide-pokemon-stats">
               <p>Power : 75</p>
               <p>Power : 75</p>
             </div>
 
             <div
-              className={`rarity ${guideMode ? 'highlight' : ''}`}
+              className={`guide-rarity ${guideMode ? 'guide-highlight' : ''}`}
               onClick={
                 guideMode
                   ? () => showZoom(rarityRef, 'Rareté ⭐', 'Plus il y a d’étoiles, plus la carte est rare.')
@@ -101,23 +101,23 @@ export default function Card() {
               <span>⭐</span>
             </div>
 
-            <h1 className="pokemon-logo">Pokémon cards</h1>
+            <h1 className="guide-pokemon-logo">Pokémon cards</h1>
           </div>
         </div>
       </div>
 
       {zoom && (
         <div
-          className="zoom-container"
+          className="guide-zoom-container"
           style={{
             top: zoom.coords.top,
             left: zoom.coords.left,
           }}
           ref={zoomBoxRef}
         >
-          <div className="arrow"></div>
-          <div className="zoom-box">
-            <button className="close-btn" onClick={closeZoom}>
+          <div className="guide-arrow"></div>
+          <div className="guide-zoom-box">
+            <button className="guide-close-btn" onClick={closeZoom}>
               ✕
             </button>
             <h2>{zoom.title}</h2>

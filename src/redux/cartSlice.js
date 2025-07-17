@@ -4,7 +4,7 @@ const initialState = {
   userCarts: {},
 }
 
-// ✅ Sécurise l’accès à localStorage
+// Sécurité accès localStorage
 function safeGetLocalStorage(key) {
   if (typeof window === "undefined") return null
   return JSON.parse(localStorage.getItem(key))
@@ -27,58 +27,53 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const user = safeGetLocalStorage("currentUser")
-      if (!user) return
-      const email = user.email
+      const { email, type, data } = action.payload
+      if (!email) return
 
       if (!state.userCarts[email]) {
-        // Charger depuis le localStorage si disponible
         const savedCarts = safeGetLocalStorage("savedCarts") || {}
         state.userCarts[email] = savedCarts[email] || []
       }
 
       const existing = state.userCarts[email].findIndex(
-        (item) =>
-          item.type === action.payload.type &&
-          item.data.id === action.payload.data.id
+        (item) => item.type === type && item.data.id === data.id
       )
+      console.log("🛒 Booster reçu dans cartSlice:", action.payload)
 
       if (existing !== -1) {
         state.userCarts[email][existing].quantity += 1
       } else {
-        state.userCarts[email].push({ ...action.payload, quantity: 1 })
+        state.userCarts[email].push({ type, data, quantity: 1 })
+        
       }
 
       saveCartToLocalStorage(email, state.userCarts[email])
     },
 
     increaseQty: (state, action) => {
-      const user = safeGetLocalStorage("currentUser")
-      if (!user) return
-      const email = user.email
+      const { index, email } = action.payload
+      if (!email || !state.userCarts[email]) return
 
-      state.userCarts[email][action.payload].quantity += 1
+      state.userCarts[email][index].quantity += 1
       saveCartToLocalStorage(email, state.userCarts[email])
     },
 
     decreaseQty: (state, action) => {
-      const user = safeGetLocalStorage("currentUser")
-      if (!user) return
-      const email = user.email
+      const { index, email } = action.payload
+      if (!email || !state.userCarts[email]) return
 
-      if (state.userCarts[email][action.payload].quantity > 1) {
-        state.userCarts[email][action.payload].quantity -= 1
+      if (state.userCarts[email][index].quantity > 1) {
+        state.userCarts[email][index].quantity -= 1
       } else {
-        state.userCarts[email].splice(action.payload, 1)
+        state.userCarts[email].splice(index, 1)
       }
 
       saveCartToLocalStorage(email, state.userCarts[email])
     },
 
-    clearCart: (state) => {
-      const user = safeGetLocalStorage("currentUser")
-      if (!user) return
-      const email = user.email
+    clearCart: (state, action) => {
+      const { email } = action.payload
+      if (!email) return
 
       state.userCarts[email] = []
       saveCartToLocalStorage(email, [])

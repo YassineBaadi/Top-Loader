@@ -22,6 +22,10 @@
  
 }
 
+.logo img{
+  width: fit-content;
+}
+
 
 
 .logo, .navbarItem, .navbarSettings {

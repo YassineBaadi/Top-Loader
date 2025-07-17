@@ -1,173 +1,112 @@
 
-*{
-    margin: 0;
-    padding: 0;
+.guide-pokemon-card-container {
+  background-color: red;
+  width: 350px;
+  margin: 10%;
+  padding: 10px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #ffd44a, #ffd54ac9);
 }
 
-.pokemon-card-container{
-
-    background-color: red;
-    width: 350px;
-    height: auto;
-    margin: 10%;
-    padding: 10px;
-    border-radius: 10px;
-    background: linear-gradient(to right, #ffd44a, #ffd54ac9);
+.guide-background {
+  background: linear-gradient(to right, #7c6723, #614f17);
+  text-align: center;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
-
-.background {
-    background: linear-gradient(to right, #7c6723, #614f17);
-    text-align: center; 
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+.guide-image {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin: 0 auto;
 }
 
-.background .image {
-    display: block;
-    margin: 0 auto;
-}
-
-
-.image{
-    width: 200px;
-    height: 200px;
-}
-
-.content{
-    background: linear-gradient(to right, #f0d16d, #ede8d7);
-    padding: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    justify-content: left; 
-   
+.guide-content {
+  background: linear-gradient(to right, #f0d16d, #ede8d7);
+  padding: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   text-align: center;
 }
-.pokemon-name {
-  display: inline-block;
+
+.guide-pokemon-name {
   font-size: 19px;
   font-weight: lighter;
   padding: 10px;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-
-
-.pokemon-type{
-    background-color: black;
-    padding: 7px;
-    color: white;
-    border-radius: 5px;
-    width: 100px;
-    display: block;
-    text-align: center;
-    position: relative;
-    top: -75px;
+.guide-pokemon-type {
+  font-weight: bold;
+  color: #555;
 }
 
-
-.pokemon-logo{
-    text-align:center;
-    font-size: 14px;
-    padding: 20px;
+.guide-pokemon-stats p {
+  margin: 5px 0;
 }
 
-.pokemon-stats > p {
-    letter-spacing: 1px;
+.guide-rarity span {
+  font-size: 22px;
 }
 
-.card-with-guide-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.guide-pokemon-logo {
+  font-size: 12px;
+  font-weight: lighter;
+  margin-top: 10px;
+  color: #999;
 }
 
-.guide-toggle-btn {
-    margin-top: 30%;
+.guide-highlight {
+  outline: 2px dashed #ff9800;
+  outline-offset: 4px;
+  cursor: pointer;
+}
+
+.guide-guide-toggle-btn {
+  margin-top: 30%;
   margin-bottom: 10px;
   padding: 10px 20px;
   font-size: 30px;
   border-radius: 5px;
-  border: none;
   background-color: #333;
   color: white;
   cursor: pointer;
+  border: none;
 }
 
-.highlight {
-  outline: 2px dashed #ff9800;
-  outline-offset: 4px;
-  cursor: pointer;
-  transition: outline 0.3s ease;
-}
-
-.pokemon-name {
-  display: inline-block;
-  font-size: 19px;
-  font-weight: lighter;
-  padding: 10px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.pokemon-type {
-  background-color: black;
-  padding: 7px;
-  color: white;
-  border-radius: 5px;
-  width: 100px;
-  display: block;
-  text-align: center;
-  position: relative;
-  top: -75px;
-}
-
-.rarity {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px;
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.zoom-container {
+.guide-zoom-container {
   position: absolute;
-  z-index: 100;
-  display: flex;
-  align-items: center;
+  z-index: 1000;
 }
 
-.arrow {
+.guide-zoom-box {
+  background: white;
+  border: 2px solid #ff9800;
+  padding: 15px;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.guide-arrow {
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  margin-top: -5px;
   width: 0;
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 15px solid #333;
-  margin-right: 10px;
+  border-right: 10px solid #ff9800;
 }
 
-.zoom-box {
-  position: relative;
-  background-color: white;
-  padding: 15px 20px;
-  border: 1px solid #333;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  max-width: 220px;
-}
-
-.close-btn {
+.guide-close-btn {
   position: absolute;
   top: 5px;
   right: 8px;
-  background: transparent;
+  background: none;
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: #333;
 }

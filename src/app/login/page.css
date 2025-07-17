@@ -1,0 +1,90 @@
+.authContainer {
+  max-width: 400px;
+  margin: 5rem auto;
+  padding: 2.5rem;
+  background: #f4f4f4;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.authContainer h2 {
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.authContainer form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.authContainer input {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.authContainer input:focus {
+  border-color: #ffcb05; /* Jaune Pokémon */
+}
+
+.authContainer button[type="submit"] {
+  padding: 0.9rem;
+  background-color: #3b4cca; /* Bleu Pokémon */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.authContainer button[type="submit"]:hover {
+  background-color: #2a2d94;
+}
+
+.authContainer .social-login {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.authContainer .social-button {
+  padding: 0.7rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.authContainer .google {
+  background-color: #fff;
+  color: #444;
+  border: 1px solid #ccc;
+}
+
+.authContainer .github {
+  background-color: #24292e;
+  color: white;
+}
+
+.authContainer a {
+  color: #3b4cca;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.authContainer a:hover {
+  text-decoration: underline;
+}

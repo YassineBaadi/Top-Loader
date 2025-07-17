@@ -1,55 +1,99 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { generateRarity } from "@/src/components/cardsShop/Cards"
 
-const LOCAL_STORAGE_KEY = "pokemon-collection"
+function getCollectionKey(email) {
+  return `pokemon-collection-${email}`
+}
 
-function loadCollection() {
-  if (typeof window === "undefined") return { cards: [], boosters: [] }
-  const stored = localStorage.getItem(LOCAL_STORAGE_KEY)
+function loadCollection(email) {
+  if (typeof window === "undefined" || !email) return { cards: [], boosters: [] }
+
+  const stored = localStorage.getItem(getCollectionKey(email))
   if (stored) return JSON.parse(stored)
+
   return { cards: [], boosters: [] }
 }
 
-const initialState = loadCollection()
+function saveCollection(email, state) {
+  if (typeof window === "undefined" || !email) return
+  localStorage.setItem(getCollectionKey(email), JSON.stringify(state))
+}
+
+const initialState = {
+  userCollections: {}, // Clé = email
+}
 
 const collectionSlice = createSlice({
   name: "collection",
   initialState,
   reducers: {
     addCardsToCollection: (state, action) => {
-  state.cards.push(action.payload)  // ✅ On ajoute un seul objet
-  saveCollection(state)
-},
-    addBoosterToCollection: (state, action) => {
-      // Ajouter la rareté aux cartes du booster si elle manque
-      const boosterWithRarity = action.payload.map(pokemon => ({
-        ...pokemon,
-        rarity: pokemon.rarity || generateRarity(pokemon)
-      }))
-      state.boosters.push(boosterWithRarity)
-      saveCollection(state)
-    },
-    resetCollection: () => {
-      saveCollection({ cards: [], boosters: [] })
-      return { cards: [], boosters: [] }
-    },
-    removeBooster: (state, action) => {
-      state.boosters.splice(action.payload, 1)
-      saveCollection(state)
-    }
-  }
-})
+      const { email, cards } = action.payload
+      if (!email) return
 
-function saveCollection(state) {
-  if (typeof window === "undefined") return
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state))
+      if (!state.userCollections[email]) {
+        state.userCollections[email] = loadCollection(email)
+      }
+
+      const cardList = Array.isArray(cards) ? cards : [cards]
+      state.userCollections[email].cards.push(...cardList)
+      saveCollection(email, state.userCollections[email])
+    },
+
+    addBoosterToCollection: (state, action) => {
+      const { email, booster } = action.payload
+      if (!email) return
+
+      if (!state.userCollections[email]) {
+        state.userCollections[email] = loadCollection(email)
+      }
+
+      const boosterWithRarity = booster.map(pokemon => ({
+        ...pokemon,
+        rarity: pokemon.rarity || generateRarity(pokemon),
+      }))
+
+      state.userCollections[email].boosters.push(boosterWithRarity)
+      saveCollection(email, state.userCollections[email])
+    },
+
+    resetCollection: (state, action) => {
+      const { email } = action.payload
+      if (!email) return
+
+      state.userCollections[email] = { cards: [], boosters: [] }
+      saveCollection(email, state.userCollections[email])
+    },
+
+    removeBooster: (state, action) => {
+      const { email, index } = action.payload
+      if (!email || !state.userCollections[email]) return
+
+      state.userCollections[email].boosters.splice(index, 1)
+      saveCollection(email, state.userCollections[email])
+    },
+    loadUserCollection: (state, action) => {
+  const { email } = action.payload
+  if (!email) return
+
+  state.userCollections[email] = loadCollection(email)
 }
+  },
+})
 
 export const {
   addCardsToCollection,
   addBoosterToCollection,
   resetCollection,
-  removeBooster 
+  removeBooster,
+  loadUserCollection
 } = collectionSlice.actions
 
 export default collectionSlice.reducer
+
+// 🧠 Helper pour sélectionner la collection depuis Redux
+const emptyCollection = { cards: [], boosters: [] }
+
+export const selectUserCollection = (state, email) =>
+  state.collection.userCollections[email] || emptyCollection
+

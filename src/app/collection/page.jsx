@@ -2,46 +2,53 @@
 
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import HeaderPage from "@/src/components/headerPage/HeaderPage"
 import Card from "@/src/components/cardsShop/Cards"
 import FilterBar from "@/src/components/filterBar/FIlterBar"
 import Link from "next/link"
-import shopBg from "@/public/assets/img/bgHeaderShop.png"
-import boosterImg from "@/public/assets/img/boosterRocket.png"
 import './page.css'
+import Footer from "../../components/footer/Footer"
+import { selectUserCollection, loadUserCollection } from "@/src/redux/collectionSlice"
+import useCurrentUser from '../../lib/helpers'
 
 export default function CollectionPage() {
-  const purchasedCards = useSelector(state => state.collection.cards)
-  const purchasedBoosters = useSelector(state => state.collection.boosters) || []
+  const { user, isLoading } = useCurrentUser()
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  const email = user?.email ?? null
+  const { cards: purchasedCards, boosters: purchasedBoosters } = useSelector(state =>
+    selectUserCollection(state, email)
+  )
 
   const [selectedType, setSelectedType] = useState(null)
   const [selectedGeneration, setSelectedGeneration] = useState(null)
   const [search, setSearch] = useState("")
   const [sort, setSort] = useState(null)
   const [selectedRarity, setSelectedRarity] = useState(null)
-  const [filtered, setFiltered] = useState(purchasedCards)
-  const router = useRouter()
+  const [filtered, setFiltered] = useState([])
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("currentUser"))
-    if (!user) {
+    if (!isLoading && !user) {
       router.push("/login")
     }
-  }, [])
+  }, [isLoading, user])
 
-  // Appliquer les filtres à la collection
   useEffect(() => {
-    let result = purchasedCards.filter(p => Array.isArray(p.apiTypes))
+    if (email) {
+      dispatch(loadUserCollection({ email }))
+    }
+  }, [email, dispatch])
 
+  useEffect(() => {
+    let result = purchasedCards.filter(p => p && Array.isArray(p.apiTypes))
 
-   if (selectedType) {
-  result = result.filter(p =>
-    Array.isArray(p.apiTypes) &&
-    p.apiTypes.some(t => t?.name?.toLowerCase() === selectedType.toLowerCase())
-  )
-}
-
+    if (selectedType) {
+      result = result.filter(p =>
+        p.apiTypes.some(t => t?.name?.toLowerCase() === selectedType.toLowerCase())
+      )
+    }
 
     if (selectedGeneration) {
       result = result.filter(p => p.apiGeneration === Number(selectedGeneration))
@@ -66,8 +73,18 @@ export default function CollectionPage() {
     setFiltered(result)
   }, [purchasedCards, selectedType, selectedGeneration, search, sort, selectedRarity])
 
-  // Grouper les cartes par ID
-  const grouped = filtered.reduce((acc, card) => {
+  if (isLoading || !user) {
+    return <div>Chargement...</div>
+  }
+
+  const validFiltered = filtered.filter(card =>
+    card &&
+    card.id &&
+    card.stats &&
+    Array.isArray(card.apiTypes)
+  )
+
+  const grouped = validFiltered.reduce((acc, card) => {
     if (acc[card.id]) {
       acc[card.id].count++
     } else {
@@ -77,25 +94,24 @@ export default function CollectionPage() {
   }, {})
 
   const groupedValues = Object.values(grouped)
-
-  // 🔍 Filtrage des cartes invalides
   const validGroupedValues = groupedValues.filter(({ card }) =>
     card && card.stats && Array.isArray(card.apiTypes)
   )
 
-  const invalidCards = groupedValues.filter(({ card }) =>
-    !card || !card.stats || !Array.isArray(card.apiTypes)
-  )
-  if (invalidCards.length > 0) {
-    console.warn("Cartes invalides détectées :", invalidCards)
-  }
+  const totalCollectionPrice = validGroupedValues.reduce((sum, { card, count }) => {
+    return sum + (card.price || 0) * count
+  }, 0)
 
   return (
     <div className="collectionContainer">
-      <HeaderPage title="MA COLLECTION" backgroundImage={shopBg.src} />
+      <HeaderPage
+        title="Collection"
+        subtitle="Découvrez plus de 900 Pokémon"
+        theme="collection"
+        icon="🎴"
+      />
       <div className="divider-main"></div>
 
-      {/* Boosters achetés */}
       <section className="collectionCards">
         <h2>Boosters achetés</h2>
         <div className="pokemonGrid">
@@ -124,7 +140,6 @@ export default function CollectionPage() {
 
       <div className="divider-main secondDivider"></div>
 
-      {/* Cartes collectionnées */}
       <section className="collectionCards">
         <h2 className="h2Collection">Cartes collectionnées</h2>
 
@@ -142,6 +157,10 @@ export default function CollectionPage() {
           selectedRarity={selectedRarity}
           setSelectedRarity={setSelectedRarity}
         />
+
+        <div className="collection-total-price">
+          💰 Valeur totale de la collection : <strong>{totalCollectionPrice.toLocaleString()} €</strong>
+        </div>
 
         <div className="pokemonGrid">
           {validGroupedValues.length === 0 ? (
@@ -183,6 +202,7 @@ export default function CollectionPage() {
           )}
         </div>
       </section>
+      <Footer/>
     </div>
   )
 }

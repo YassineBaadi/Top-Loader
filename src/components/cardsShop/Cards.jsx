@@ -77,7 +77,8 @@ export default function Cards({
   return (
     <div className="card-wrapper">
       {/* CARTE VISUELLE */}
-      <div className={`pokemon-card-container type-${dominantType}`}>
+      <div className={`pokemon-card-container type-${dominantType} ${rarity === 5 ? 'legendary-aura' : ''}`}>
+
         <div className="pokemon-card" onClick={(e) => {
           e.stopPropagation()
           if (onImageClick) onImageClick()
@@ -88,9 +89,10 @@ export default function Cards({
           <div className="content">
             <div className="typesContainer">
               {sortedTypes.map((type) => (
-                <span className="pokemon-type" key={type}>
-                  {type}
-                </span>
+                <span className={`pokemon-type type-${type.toLowerCase()}`} key={type}>
+  {type}
+</span>
+
               ))}
             </div>
             <h1 className="pokemon-name">{name}</h1>
