@@ -63,8 +63,8 @@ export default function CartDrawer({ isOpen, onClose }) {
     }, 0)
   }
 
-
-  if (isLoading || !email) {
+  // Modifiez cette condition pour permettre l'affichage même sans utilisateur connecté
+  if (isLoading) {
     return null
   }
 
@@ -81,7 +81,24 @@ export default function CartDrawer({ isOpen, onClose }) {
           <button onClick={onClose}>✖</button>
         </div>
 
-        {cartItems.length === 0 ? (
+        {/* Affichage différent selon l'état de connexion */}
+        {!isLoggedIn ? (
+          <div className="cart-not-logged">
+            <p style={{ padding: "1rem" }}>Veuillez vous connecter pour voir votre panier</p>
+
+            <div className="cart-footer">
+              <button
+                className="cart-checkout"
+                onClick={() => {
+                  onClose()
+                  setTimeout(() => router.push('/login'), 300)
+                }}
+              >
+                Se connecter
+              </button>
+            </div>
+          </div>
+        ) : cartItems.length === 0 ? (
           <p className="cart-empty">Votre panier est vide.</p>
         ) : (
           <>
@@ -132,24 +149,15 @@ export default function CartDrawer({ isOpen, onClose }) {
                 Vider le panier
               </button>
 
-              {isLoggedIn ? (
-                <button
-                  className="cart-checkout"
-                  onClick={() => {
-                    onClose()
-                    router.push("/paiement")
-                  }}
-                >
-                  Commander
-                </button>
-              ) : (
-                <button
-                  className="cart-checkout"
-                  onClick={() => setShowLoginModal(true)}
-                >
-                  Se connecter
-                </button>
-              )}
+              <button
+                className="cart-checkout"
+                onClick={() => {
+                  onClose()
+                  router.push("/paiement")
+                }}
+              >
+                Commander
+              </button>
             </div>
           </>
         )}
