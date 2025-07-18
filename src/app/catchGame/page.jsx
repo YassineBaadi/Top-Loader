@@ -27,7 +27,7 @@ export default function CatchGame() {
   const [isClient, setIsClient] = useState(false);
 const [user, setUser] = useState(null);
 
-const [checkingAuth, setCheckingAuth] = useState(true); // pour bloquer le render tant qu’on ne sait pas
+const [checkingAuth, setCheckingAuth] = useState(true); 
 
   
 
@@ -43,7 +43,7 @@ const [checkingAuth, setCheckingAuth] = useState(true); // pour bloquer le rende
     } else {
       router.push("/login");
     }
-    setCheckingAuth(false); // on a fini de vérifier
+    setCheckingAuth(false); 
   }
 }, []);
 
@@ -60,7 +60,10 @@ const [checkingAuth, setCheckingAuth] = useState(true); // pour bloquer le rende
   }, [message, caught, attempts, messageType])
 
   useEffect(() => {
- 
+    if (!email) {
+      router.push("/login")
+      return
+    }
 
     if (allPokemons.length === 0) {
       dispatch(fetchPokemons())
@@ -158,42 +161,40 @@ const [checkingAuth, setCheckingAuth] = useState(true); // pour bloquer le rende
   }
 
   function attemptCatch() {
-  // Protection supplémentaire
-  if (attempts <= 0 || caught || !pokemon) return
+    if (attempts === 0 || caught) return
 
-  const chance = getCatchChance(pokemon.rarity)
-  const success = Math.random() <= chance
-  const newAttempts = attempts - 1
-  setAttempts(newAttempts)
+    const chance = getCatchChance(pokemon.rarity)
+    const success = Math.random() <= chance
+    const newAttempts = attempts - 1
+    setAttempts(newAttempts)
 
-  const msgText = success
-    ? `🎉 ${pokemon.name} attrapé ! Ajouté à votre collection !`
-    : newAttempts === 0
-      ? `😞 ${pokemon.name} s'est échappé ! Plus de Pokéballs...`
-      : `❌ ${pokemon.name} a évité la Pokéball ! Essayez encore !`
+    const msgText = success
+      ? `🎉 ${pokemon.name} attrapé ! Ajouté à votre collection !`
+      : newAttempts === 0
+        ? `😞 ${pokemon.name} s'est échappé ! Plus de Pokéballs...`
+        : `❌ ${pokemon.name} a évité la Pokéball ! Essayez encore !`
 
-  const msgType = success ? "success" : "failure"
+    const msgType = success ? "success" : "failure"
 
-  if (success) {
-    dispatch(addCardsToCollection({ email, cards: pokemon }))
-    setCaught(true)
-  }
-
-  setMessage(msgText)
-  setMessageType(msgType)
-
-  localStorage.setItem(gameKey, JSON.stringify({
-    pokemon,
-    attemptsLeft: newAttempts,
-    lastCatchDate: new Date().toISOString(),
-    caught: success
-  }))
-
-  localStorage.setItem(messageKey, JSON.stringify({
-    text: msgText,
-    type: msgType
-  }))
+   if (success) {
+  dispatch(addCardsToCollection({ email, cards: pokemon }))
+  setCaught(true)
 }
+    setMessage(msgText)
+    setMessageType(msgType)
+
+    localStorage.setItem(gameKey, JSON.stringify({
+      pokemon,
+      attemptsLeft: newAttempts,
+      lastCatchDate: new Date().toISOString(),
+      caught: success
+    }))
+
+    localStorage.setItem(messageKey, JSON.stringify({
+      text: msgText,
+      type: msgType
+    }))
+  }
 
   function renderPokeballs() {
     return Array.from({ length: 5 }, (_, i) => (
@@ -216,9 +217,10 @@ const [checkingAuth, setCheckingAuth] = useState(true); // pour bloquer le rende
     }
   }
   
-if (checkingAuth || !user) {
+if (checkingAuth) {
   return <LoadingPlaceholder />;
 }
+
 
 
   return (
@@ -241,7 +243,7 @@ if (checkingAuth || !user) {
           <h1 className="title">Attrapez-les tous !</h1>
 
           <button className="collection-btn" onClick={() => router.push("/collection")}>
-            🗂️ Collection
+             Collection
           </button>
 
           {pokemon && (
@@ -294,7 +296,7 @@ if (checkingAuth || !user) {
                 onClick={attemptCatch}
                 disabled={attempts === 0 || caught}
               >
-                🎯 Lancer Pokéball
+                 Lancer Pokéball
               </button>
 
               <div className={`message ${messageType}`}>{message}</div>
@@ -305,7 +307,7 @@ if (checkingAuth || !user) {
                     className="final-button"
                     onClick={() => router.push("/collection")}
                   >
-                    📋 Voir ma collection
+                     Voir ma collection
                   </button>
                 </div>
               )}

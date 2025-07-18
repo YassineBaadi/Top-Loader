@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧩 TOP-LOADER — Frontend (Next.js + Redux)
 
-## Getting Started
+Bienvenue dans le dépôt du frontend du **TOP-LOADER**, une application e-commerce de cartes Pokémon permettant la navigation, l'achat, la collection, et l'ouverture de boosters.
 
-First, run the development server:
+## 🚀 Tech Stack
+
+- **Framework principal** : [Next.js](https://nextjs.org/)
+- **Langage** : JavaScript (ES6+)
+- **State management** : [Redux Toolkit](https://redux-toolkit.js.org/)
+- **Authentification** : NextAuth + localStorage (double source de vérité)
+- **UI Components** : React / CSS modules
+- **Backend API** : Connecté à une API distante (non incluse ici)
+- **Images et assets** : Gérés localement ou via URL
+
+---
+
+## 🧠 Fonctionnalités principales
+
+- 🔐 Authentification via Google ou formulaire local
+- 🛒 Système de panier multi-profil (géré par `user.email`)
+- 🎴 Ajout automatique à la collection après paiement
+- 📦 Boosters contenant des cartes aléatoires
+- 🎨 Filtres dynamiques dans le shop
+- 🗃 Affichage conditionnel selon l’état d’authentification
+
+---
+
+## 📁 Structure du projet
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+/src
+  ├── app/                    # Pages Next.js (client side)
+  ├── components/             # UI components réutilisables (Header, Footer, etc.)
+  ├── features/auth/          # Authentification locale (formulaire)
+  ├── lib/helpers.js          # Hook `useCurrentUser()` pour centraliser l'utilisateur
+  ├── redux/                  # Slices Redux (cart, pokemons, collection)
+  ├── public/                 # Assets statiques (images)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧩 Authentification : `useCurrentUser`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Le hook `useCurrentUser()` permet de **centraliser l'accès à l'utilisateur connecté** :
 
-## Learn More
+- Si l'utilisateur est connecté via Google → il récupère `session.user`
+- Sinon → il lit `localStorage.getItem("currentUser")`
+- Renvoie `{ user, isLoading }` pour compatibilité SSR/client
 
-To learn more about Next.js, take a look at the following resources:
+Exemple :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```js
+const { user, isLoading } = useCurrentUser()
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ⚠️ Accès restreint aux pages
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Certaines pages (ex: `/collection`, `/paiement`) redirigent automatiquement vers `/login` si l’utilisateur n’est pas connecté :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```js
+useEffect(() => {
+  if (isLoading) return
+  if (!user?.email) router.push('/login')
+}, [isLoading, user])
+```
+
+---
+
+## 🧪 Lancer le projet en local
+
+```bash
+# 1. Installer les dépendances
+npm install
+
+# 2. Démarrer le serveur de développement
+npm run dev
+
+# 3. Accéder à l'application
+http://localhost:3000
+```
+
+---
+
+## ✅ TODO développeur
+
+- [ ] Ajouter une vérification centralisée dans toutes les pages critiques
+- [ ] Extraire les types (ex: `CartItem`, `Booster`, etc.) dans un fichier partagé
+- [ ] Ajouter une gestion des erreurs côté Redux
+- [ ] Optimiser le catchGame
+- [ ] Migrer vers TypeScript (optionnel)
+
+
+---
+
+## 📩 Contact
+
+Pour toute question technique ou bug bloquant :
+**[Yasmix]** – yasmix@pokeapp.dev

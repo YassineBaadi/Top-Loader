@@ -15,7 +15,6 @@ export default function PaiementPage() {
   const { user, isLoading } = useCurrentUser()
   const email = user?.email
 
-  // 💡 Toujours appeler les hooks avant tout return ou logique conditionnelle
   const cart = useSelector((state) => {
     if (!email) return []
     return state.cart.userCarts[email] || []
@@ -28,22 +27,22 @@ export default function PaiementPage() {
   const [cardCVC, setCardCVC] = useState("")
   const [cardType, setCardType] = useState("")
 
-  // 🔁 Redirection si non connecté
+  //  Redirection si non connecté
   useEffect(() => {
-    console.log("🔍 Vérification utilisateur - isLoading:", isLoading, ", user:", user)
+    console.log(" Vérification utilisateur - isLoading:", isLoading, ", user:", user)
     if (!isLoading && !email) {
       console.warn("🚨 Redirection vers /login car email manquant")
       router.push("/login")
     }
   }, [isLoading, email, router, user])
 
-  // 📦 Détection du type de carte
+  //  Détection du type de carte
   useEffect(() => {
     const firstDigit = cardNumber.charAt(0)
     setCardType(firstDigit === "5" ? "Mastercard" : firstDigit === "4" ? "VISA" : "")
   }, [cardNumber])
 
-  // 🧮 Calcul du prix total
+  //  Calcul du prix total
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = totalQuantity >= 5
   ? cart.reduce((sum, item) => sum + (item.data.price || 0) * item.quantity, 0) -
@@ -73,7 +72,6 @@ export default function PaiementPage() {
 
   const isFormValid = cardName && cardNumber && cardCVC
 
-  // 🔄 Affichage de chargement temporaire
   if (isLoading || !email) return <p>Chargement...</p>
 
   return (

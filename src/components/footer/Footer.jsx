@@ -83,8 +83,8 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="footer-bottom">
-          <p>&copy; 2024 PokéCards. Tous droits réservés.</p>
-          <p>Pokémon est une marque déposée de Nintendo/Game Freak/The Pokémon Company</p>
+          <p>&copy; 2025 TOP-LOADER. Tous droits réservés.</p>
+          <p>Créer par Yasmix - Projet Front-end</p>
         </div>
       </div>
     </footer>

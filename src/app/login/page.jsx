@@ -22,7 +22,7 @@ export default function LoginPage() {
     }
 
  localStorage.setItem("currentUser", JSON.stringify(user))
-router.refresh() // force Next.js à recharger les données client (Navbar)
+router.refresh() 
 window.location.href = "/home"
 
 

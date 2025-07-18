@@ -1,4 +1,4 @@
-// HeaderPage.jsx
+
 import './headerPage.css'
 
 export default function HeaderPage({ title, subtitle, theme = 'default', icon }) {

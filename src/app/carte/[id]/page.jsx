@@ -7,9 +7,6 @@ import { fetchPokemons } from "@/src/redux/pokemonSlice"
 import Card, { getPrice } from "@/src/components/cardsShop/Cards"
 import './page.css'
 import HeaderPage from "@/src/components/headerPage/HeaderPage"
-import bgDetail from '@/public/assets/img/bgDetail.jpg'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import LoadingPlaceholder from "./loading"
 import { addToCart } from "@/src/redux/cartSlice"
 import Modal from "../../../components/modal/Modal"

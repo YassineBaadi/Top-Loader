@@ -47,7 +47,7 @@ const { boosters = [] } = useSelector(state => selectUserCollection(state, email
   const [currentIndex, setCurrentIndex] = useState(0)
   const [boosterAdded, setBoosterAdded] = useState(false)
 
-  // Debug: Afficher les informations du booster
+
   useEffect(() => {
     console.log("Booster Index:", boosterIndex)
     console.log("All Boosters:", boosters)
@@ -55,9 +55,8 @@ const { boosters = [] } = useSelector(state => selectUserCollection(state, email
     console.log("Booster Length:", booster?.length)
   }, [boosterIndex, boosters, booster])
 
-  // Vérification plus précise du booster
+  // Vérification du booster
   useEffect(() => {
-    // Attendre que le state soit chargé
     if (boosters.length === 0) {
       console.log("Aucun booster trouvé, redirection...")
       router.push("/collection")
@@ -99,7 +98,7 @@ const { boosters = [] } = useSelector(state => selectUserCollection(state, email
 
     setBoosterAdded(true)
     
-    // Redirection après 2 secondes
+    
     setTimeout(() => {
       router.push("/collection")
     }, 2000)
@@ -118,7 +117,7 @@ const { boosters = [] } = useSelector(state => selectUserCollection(state, email
   if (!booster || !Array.isArray(booster) || booster.length === 0) {
     return (
       <div className="boosterOpenPage">
-        <h1>❌ Booster non trouvé</h1>
+        <h1> Booster non trouvé</h1>
         <p>Le booster #{boosterIndex + 1} n'existe pas ou est vide.</p>
         <button onClick={() => router.push("/collection")}>
           Retour à la collection

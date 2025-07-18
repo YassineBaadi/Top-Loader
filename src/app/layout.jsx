@@ -37,7 +37,7 @@ const current = JSON.stringify({ email: session.user.email, from: "nextauth" })
       }
     }
 
-    // 💡 Ne pas supprimer si aucun user NextAuth actif mais un user local existe
+    // Ne pas supprimer si aucun user NextAuth actif mais un user local existe
     if (status === "unauthenticated") {
       const existing = localStorage.getItem("currentUser")
       if (existing) {

@@ -1,6 +1,5 @@
 import HeaderPage from "@/src/components/headerPage/HeaderPage"
 import Card from "@/src/components/card/Card"
-import guideBg from "@/public/assets/img/bgGuide.jpg"
 import Footer from "../../components/footer/Footer"
 
 export default function Guide() {

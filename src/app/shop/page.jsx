@@ -66,11 +66,11 @@ const handleAddBooster = () => {
   const email = user.email;
 
   dispatch(addToCart({ type: "booster", data: booster, email }));
-  console.log("🛒 Booster ajouté au panier pour :", email);
-  alert("📦 Booster ajouté au panier !");
+  console.log(" Booster ajouté au panier pour :", email);
+  alert("Booster ajouté au panier !");
 }
 
-console.log("➡️ Dispatching booster to cart for:", user?.email)
+console.log(" booster to cart pour:", user?.email)
 
 
 
@@ -208,7 +208,7 @@ console.log("➡️ Dispatching booster to cart for:", user?.email)
       name={pokemon.name}
       image={pokemon.image}
       types={pokemon.apiTypes.map((t) => t.name)}
-      rarity={rarity} // ← maintenant bien défini
+      rarity={rarity} 
       id={pokemon.id}
       hp={pokemon.stats.HP}
       attack={pokemon.stats.attack}

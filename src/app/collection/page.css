@@ -1,6 +1,4 @@
-/* CSS RESPONSIVE POUR PAGE COLLECTION */
 
-/* STYLES DE BASE */
 * {
   margin: 0;
   padding: 0;
@@ -78,7 +76,6 @@
 
 /* DIVIDER */
 .divider-main {
-  --divider-height: 34px;
   background-color: white;
   background-image: url("../../../public/assets/img/divider.jpg");
   background-repeat: repeat-x;
@@ -87,14 +84,13 @@
   inline-size: 100%;
   position: relative;
   z-index: 5;
-  margin: 20px 0;
 }
 
 .secondDivider {
   margin-top: 70px;
 }
 
-/* GRILLE POKÉMON - RESPONSIVE */
+/* GRILLE POKÉMON */
 .pokemonGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -239,7 +235,7 @@
   font-weight: 500;
 }
 
-/* NO RESULTS */
+
 .noResults {
   text-align: center;
   margin: 40px 0;
@@ -249,7 +245,7 @@
   grid-column: 1 / -1;
 }
 
-/* RESPONSIVE BREAKPOINTS */
+/* RESPONSIVE */
 
 /* MOBILE PORTRAIT (320px - 480px) */
 @media (max-width: 480px) {
@@ -311,10 +307,7 @@
   .h2Collection {
     margin-top: 60px;
   }
-  
-  .divider-main {
-    --divider-height: 25px;
-  }
+
 }
 
 /* MOBILE LANDSCAPE & SMALL TABLETS (481px - 768px) */
@@ -373,12 +366,9 @@
     margin-top: 80px;
   }
   
-  .divider-main {
-    --divider-height: 30px;
-  }
-}
 
-/* TABLETS (769px - 1024px) */
+}
+/* TABLETTE */
 @media (min-width: 769px) and (max-width: 1024px) {
   .pokemonGrid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -425,13 +415,10 @@
   .h2Collection {
     margin-top: 90px;
   }
-  
-  .divider-main {
-    --divider-height: 32px;
-  }
+
 }
 
-/* DESKTOP & LARGE SCREENS (1025px+) */
+
 @media (min-width: 1025px) {
   .pokemonGrid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

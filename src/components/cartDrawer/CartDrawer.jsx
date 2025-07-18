@@ -18,7 +18,7 @@ export default function CartDrawer({ isOpen, onClose }) {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  // 🛠️ ✅ Corrigé : éviter de lire une mauvaise clé si email pas encore dispo
+  //  éviter de lire une mauvaise clé si email pas encore dispo
   const cartItems = useSelector((state) => {
     if (!email) return []
     return state.cart.userCarts[email] || []
@@ -63,7 +63,7 @@ export default function CartDrawer({ isOpen, onClose }) {
     }, 0)
   }
 
-  // 🔄 Chargement : on attend que le user soit disponible
+
   if (isLoading || !email) {
     return null
   }
