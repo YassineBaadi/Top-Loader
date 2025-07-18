@@ -6,12 +6,14 @@ import { addCardsToCollection } from "@/src/redux/collectionSlice"
 import { generateRarity } from "@/src/components/cardsShop/Cards"
 import { fetchPokemons } from "@/src/redux/pokemonSlice"
 import { useRouter } from "next/navigation"
+import useCurrentUser from "@/src/lib/helpers"
 import LoadingPlaceholder from "../carte/[id]/loading"
 import './page.css'
 import HeaderPage from "../../components/headerPage/HeaderPage"
 import Footer from "../../components/footer/Footer"
 
 export default function CatchGame() {
+  const { user, isLoading } = useCurrentUser() 
   const dispatch = useDispatch()
   const router = useRouter()
   const allPokemons = useSelector((state) => state.pokemons.data)
@@ -24,30 +26,20 @@ export default function CatchGame() {
   const [messageType, setMessageType] = useState("")
   const [nextResetTime, setNextResetTime] = useState(null)
   const [timeLeft, setTimeLeft] = useState("")
-  const [isClient, setIsClient] = useState(false);
-const [user, setUser] = useState(null);
 
-const [checkingAuth, setCheckingAuth] = useState(true); 
+  // Vérification d'authentification simplifiée
+  useEffect(() => {
+    if (isLoading) return // Attendre le chargement
 
-  
+    if (!user) {
+      router.push("/login")
+      return
+    }
+  }, [user, isLoading, router])
 
   const email = user?.email
   const gameKey = `catchGameData_${email}`
   const messageKey = `catchMessage_${email}`
-
- useEffect(() => {
-  if (typeof window !== "undefined") {
-    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (storedUser) {
-      setUser(storedUser);
-    } else {
-      router.push("/login");
-    }
-    setCheckingAuth(false); 
-  }
-}, []);
-
-
 
   useEffect(() => {
     if (message && (caught || attempts === 0 || messageType === "failure")) {
@@ -60,36 +52,47 @@ const [checkingAuth, setCheckingAuth] = useState(true);
   }, [message, caught, attempts, messageType])
 
   useEffect(() => {
-    if (!email) {
-      router.push("/login")
-      return
-    }
+    
+    if (isLoading || !email) return
 
     if (allPokemons.length === 0) {
       dispatch(fetchPokemons())
     } else {
-      const stored = JSON.parse(localStorage.getItem(gameKey))
-      const now = new Date()
+      const stored = localStorage.getItem(gameKey)
+      if (stored) {
+        try {
+          const parsedData = JSON.parse(stored)
+          const now = new Date()
 
-      if (stored?.lastCatchDate) {
-        const lastDate = new Date(stored.lastCatchDate)
-        const nextReset = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000)
-        setNextResetTime(nextReset)
+          if (parsedData?.lastCatchDate) {
+            const lastDate = new Date(parsedData.lastCatchDate)
+            const nextReset = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000)
+            setNextResetTime(nextReset)
 
-        const hoursDiff = (now - lastDate) / (1000 * 60 * 60)
-        if (hoursDiff < 24) {
-          setPokemon(stored.pokemon)
-          setAttempts(stored.attemptsLeft)
-          setCaught(stored.caught || false)
+            const hoursDiff = (now - lastDate) / (1000 * 60 * 60)
+            if (hoursDiff < 24) {
+              setPokemon(parsedData.pokemon)
+              setAttempts(parsedData.attemptsLeft)
+              setCaught(parsedData.caught || false)
 
-          const savedMsg = JSON.parse(localStorage.getItem(messageKey))
-          if (savedMsg && (stored.caught || stored.attemptsLeft === 0)) {
-            setMessage(savedMsg.text)
-            setMessageType(savedMsg.type)
+              const savedMsg = localStorage.getItem(messageKey)
+              if (savedMsg && (parsedData.caught || parsedData.attemptsLeft === 0)) {
+                try {
+                  const msgData = JSON.parse(savedMsg)
+                  setMessage(msgData.text)
+                  setMessageType(msgData.type)
+                } catch (e) {
+                  console.error("Error parsing saved message:", e)
+                }
+              }
+
+              setLoading(false)
+              return
+            }
           }
-
-          setLoading(false)
-          return
+        } catch (e) {
+          console.error("Error parsing game data:", e)
+          localStorage.removeItem(gameKey)
         }
       }
 
@@ -98,7 +101,7 @@ const [checkingAuth, setCheckingAuth] = useState(true);
         setLoading(false)
       }, 1000)
     }
-  }, [allPokemons])
+  }, [allPokemons, isLoading, email, gameKey, messageKey]) 
 
   useEffect(() => {
     if (!nextResetTime) return
@@ -124,6 +127,8 @@ const [checkingAuth, setCheckingAuth] = useState(true);
   }, [nextResetTime])
 
   function spawnNewPokemon() {
+    if (allPokemons.length === 0) return
+
     const base = allPokemons[Math.floor(Math.random() * allPokemons.length)]
     const newPokemon = {
       ...base,
@@ -161,7 +166,7 @@ const [checkingAuth, setCheckingAuth] = useState(true);
   }
 
   function attemptCatch() {
-    if (attempts === 0 || caught) return
+    if (attempts === 0 || caught || !email) return
 
     const chance = getCatchChance(pokemon.rarity)
     const success = Math.random() <= chance
@@ -176,10 +181,10 @@ const [checkingAuth, setCheckingAuth] = useState(true);
 
     const msgType = success ? "success" : "failure"
 
-   if (success) {
-  dispatch(addCardsToCollection({ email, cards: pokemon }))
-  setCaught(true)
-}
+    if (success) {
+      dispatch(addCardsToCollection({ email, cards: pokemon }))
+      setCaught(true)
+    }
     setMessage(msgText)
     setMessageType(msgType)
 
@@ -216,108 +221,111 @@ const [checkingAuth, setCheckingAuth] = useState(true);
       default: return '#9E9E9E'
     }
   }
-  
-if (checkingAuth) {
-  return <LoadingPlaceholder />;
-}
 
 
+  if (isLoading) {
+    return <LoadingPlaceholder />
+  }
+
+  // Si pas d'utilisateur, ne rien afficher 
+  if (!user) {
+    return null
+  }
 
   return (
     <>
-    <div className="body">
-      <HeaderPage
-        title="Attrapez-les tous"
-        subtitle="Tentez de capturer un pokémon"
-        theme="catch"
-        icon="⚡"
-      />
-      <div className="divider-main"></div>
-      <div className="clouds">
-        <div className="cloud cloud1"></div>
-        <div className="cloud cloud2"></div>
-      </div>
+      <div className="body">
+        <HeaderPage
+          title="Attrapez-les tous"
+          subtitle="Tentez de capturer un pokémon"
+          theme="catch"
+          icon="⚡"
+        />
+        <div className="divider-main"></div>
+        <div className="clouds">
+          <div className="cloud cloud1"></div>
+          <div className="cloud cloud2"></div>
+        </div>
 
-      <div className="game-container">
-        <div className="game-screen">
-          <h1 className="title">Attrapez-les tous !</h1>
+        <div className="game-container">
+          <div className="game-screen">
+            <h1 className="title">Attrapez-les tous !</h1>
 
-          <button className="collection-btn" onClick={() => router.push("/collection")}>
-             Collection
-          </button>
+            <button className="collection-btn" onClick={() => router.push("/collection")}>
+              Collection
+            </button>
 
-          {pokemon && (
-            <>
-              <div className="battle-area">
-                <div className="pokemon-container">
-                  <img
-                    src={pokemon.image}
-                    alt={pokemon.name}
-                    className="pokemon-sprite"
-                    onClick={attemptCatch}
-                  />
+            {pokemon && (
+              <>
+                <div className="battle-area">
+                  <div className="pokemon-container">
+                    <img
+                      src={pokemon.image}
+                      alt={pokemon.name}
+                      className="pokemon-sprite"
+                      onClick={attemptCatch}
+                    />
 
-                  <div className="pokemon-info">
-                    <div className="pokemon-nom">{pokemon.name}</div>
-                    <div className="stats-container">
-                      <div className="stat">
-                        <div>Rareté</div>
-                        <div
-                          className="rarity"
-                          style={{ color: getRarityColor(pokemon.rarity) }}
-                        >
-                          {getRarityStars(pokemon.rarity)}
+                    <div className="pokemon-info">
+                      <div className="pokemon-nom">{pokemon.name}</div>
+                      <div className="stats-container">
+                        <div className="stat">
+                          <div>Rareté</div>
+                          <div
+                            className="rarity"
+                            style={{ color: getRarityColor(pokemon.rarity) }}
+                          >
+                            {getRarityStars(pokemon.rarity)}
+                          </div>
                         </div>
-                      </div>
-                      <div className="stat">
-                        <div>Prix</div>
-                        <div>{pokemon.price}€</div>
-                      </div>
-                      <div className="stat">
-                        <div>Capture</div>
-                        <div>{Math.round(getCatchChance(pokemon.rarity) * 100)}%</div>
+                        <div className="stat">
+                          <div>Prix</div>
+                          <div>{pokemon.price}€</div>
+                        </div>
+                        <div className="stat">
+                          <div>Capture</div>
+                          <div>{Math.round(getCatchChance(pokemon.rarity) * 100)}%</div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="pokeball-counter">
-                <div>Pokéballs restantes: {attempts}</div>
-                <div className="pokeball-display">{renderPokeballs()}</div>
-              </div>
-
-              <div className="countdown">
-                ⏳ Prochain Pokémon dans : <strong>{timeLeft}</strong>
-              </div>
-
-              <button
-                className="catch-button"
-                onClick={attemptCatch}
-                disabled={attempts === 0 || caught}
-              >
-                 Lancer Pokéball
-              </button>
-
-              <div className={`message ${messageType}`}>{message}</div>
-
-              {(caught || attempts === 0) && (
-                <div className="final-actions">
-                  <button
-                    className="final-button"
-                    onClick={() => router.push("/collection")}
-                  >
-                     Voir ma collection
-                  </button>
+                <div className="pokeball-counter">
+                  <div>Pokéballs restantes: {attempts}</div>
+                  <div className="pokeball-display">{renderPokeballs()}</div>
                 </div>
-              )}
-            </>
-          )}
+
+                <div className="countdown">
+                  ⏳ Prochain Pokémon dans : <strong>{timeLeft}</strong>
+                </div>
+
+                <button
+                  className="catch-button"
+                  onClick={attemptCatch}
+                  disabled={attempts === 0 || caught}
+                >
+                  Lancer Pokéball
+                </button>
+
+                <div className={`message ${messageType}`}>{message}</div>
+
+                {(caught || attempts === 0) && (
+                  <div className="final-actions">
+                    <button
+                      className="final-button"
+                      onClick={() => router.push("/collection")}
+                    >
+                      Voir ma collection
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
-      
-    </div>
-    <Footer />
+      <Footer />
     </>
   )
 }
